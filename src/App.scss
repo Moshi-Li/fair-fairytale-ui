@@ -1,0 +1,30 @@
+.App {
+  text-align: center;
+}
+
+.paragraph {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+
+  .paragraph--reactive {
+    text-align: left;
+
+    span {
+      cursor: pointer;
+    }
+    .person {
+      color: red;
+      background-color: blue;
+    }
+    .character {
+      color: red;
+      background-color: green;
+    }
+  }
+}
