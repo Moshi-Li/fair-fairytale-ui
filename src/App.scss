@@ -17,7 +17,10 @@
 
     span {
       cursor: pointer;
+      background-color: white;
+      color: black;
     }
+
     .person {
       color: red;
       background-color: blue;
@@ -26,5 +29,12 @@
       color: red;
       background-color: green;
     }
+  }
+
+  .directed--graph {
+    width: 1200px;
+    height: 500px;
+    border: 1px solid red;
+    background-color: white;
   }
 }

@@ -17,7 +17,7 @@ interface DataI {
   characters: {
     occurrences: OccurrenceI[];
   };
-  occurrenceMap?: Record<string | number, OccurrenceI>;
+  occurrenceMap: Record<string | number, OccurrenceI>;
   occurrenceList?: OccurrenceI[];
 }
 
@@ -29,7 +29,7 @@ interface OccurrenceI {
   startIndex: number;
 
   // nextOccurrenceId is used to generate graph
-  nextOccurrenceId: number[] | null;
+  nextOccurrenceId: number[];
 
   //name of the character for person occurrence
   //original text of character for character occurrence
@@ -161,7 +161,7 @@ const Data: DataI = {
         type: "character",
         occurrenceText: "hunting",
         startIndex: 155,
-        nextOccurrenceId: null,
+        nextOccurrenceId: [17],
 
         originalText: "hunt",
         correspondingOccurrenceIds: [3],
@@ -171,7 +171,7 @@ const Data: DataI = {
         type: "character",
         occurrenceText: "kill",
         startIndex: 187,
-        nextOccurrenceId: [],
+        nextOccurrenceId: [7],
 
         originalText: "kill",
         correspondingOccurrenceIds: [6],
@@ -181,7 +181,7 @@ const Data: DataI = {
         type: "character",
         occurrenceText: "save",
         startIndex: 218,
-        nextOccurrenceId: [],
+        nextOccurrenceId: [17],
 
         originalText: "save",
         correspondingOccurrenceIds: [8],
@@ -191,7 +191,7 @@ const Data: DataI = {
         type: "character",
         occurrenceText: "kidnapped",
         startIndex: 273,
-        nextOccurrenceId: [],
+        nextOccurrenceId: [11],
 
         originalText: "kidnap",
         correspondingOccurrenceIds: [9],
@@ -201,7 +201,7 @@ const Data: DataI = {
         type: "character",
         occurrenceText: "saved",
         startIndex: 286,
-        nextOccurrenceId: [9],
+        nextOccurrenceId: [13],
 
         originalText: "save",
         correspondingOccurrenceIds: [],
@@ -211,7 +211,7 @@ const Data: DataI = {
         type: "character",
         occurrenceText: "baked",
         startIndex: 322,
-        nextOccurrenceId: [],
+        nextOccurrenceId: [17],
 
         originalText: "bake",
         correspondingOccurrenceIds: [12],
@@ -221,7 +221,7 @@ const Data: DataI = {
         type: "character",
         occurrenceText: "crying",
         startIndex: 385,
-        nextOccurrenceId: [],
+        nextOccurrenceId: [18],
 
         originalText: "cry",
         correspondingOccurrenceIds: [12],
@@ -231,7 +231,7 @@ const Data: DataI = {
         type: "character",
         occurrenceText: "wearing",
         startIndex: 431,
-        nextOccurrenceId: [],
+        nextOccurrenceId: [18],
 
         originalText: "wear",
         correspondingOccurrenceIds: [15, 16],
