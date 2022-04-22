@@ -1,30 +1,33 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React from "react";
+import { useSelector } from "react-redux";
 import { OccurrenceI } from "../MockData";
+import { RootStoreI } from "../Store";
 
 const ReactiveSpan = ({
   id,
   type,
   occurrenceText,
-  animatedOccurrenceId,
 }: {
   id: string | number;
   type: string;
   occurrenceText: string;
-  animatedOccurrenceId: Record<string | number, boolean | undefined>;
-}) => (
-  <span className={`${animatedOccurrenceId[id] ? "person" : ""}`}>
-    {occurrenceText}
-  </span>
-);
+}) => {
+  const { animatedOccurrence } = useSelector(
+    (store: RootStoreI) => store.animationReducer
+  );
+  return (
+    <span className={`${animatedOccurrence[id] ? "person" : ""}`}>
+      {occurrenceText}
+    </span>
+  );
+};
 
 const ReactiveParagraph = ({
   occurrenceList,
   paragraph,
-  animatedOccurrenceId,
 }: {
   paragraph: string;
   occurrenceList: OccurrenceI[];
-  animatedOccurrenceId: Record<string | number, boolean | undefined>;
 }) => {
   const content = [];
   let index = 0;
@@ -40,7 +43,6 @@ const ReactiveParagraph = ({
         id={item.id}
         type={item.type}
         occurrenceText={item.occurrenceText}
-        animatedOccurrenceId={animatedOccurrenceId}
       />
     );
     index = item.startIndex;

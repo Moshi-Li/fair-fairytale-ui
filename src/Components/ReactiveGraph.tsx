@@ -1,4 +1,5 @@
-import React, { useState, Dispatch, SetStateAction } from "react";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -7,14 +8,23 @@ import ReactFlow, {
 } from "react-flow-renderer";
 
 import { OccurrenceI } from "../MockData";
+import { RootStoreI } from "../Store";
+import {
+  updateAnimationOccurrences,
+  updateAnimationType,
+} from "../Slices/AnimationSlice";
 
 const getNodesFromOccurrences = (
   occurrences: OccurrenceI[],
-  requestAnimation: (id: string) => void,
+  dispatchAction: (id: string | number) => {
+    payload: string | number;
+    type: string;
+  },
   initialX: number = 0,
   initialY: number = 0
 ) => {
   const nodes: any[] = [];
+
   occurrences.forEach((item: OccurrenceI, index: number) => {
     const nodeToBeAdded = {
       id: `${item.id}`,
@@ -22,9 +32,7 @@ const getNodesFromOccurrences = (
       data: {
         label: (
           <span
-            onDoubleClick={() => {
-              requestAnimation(`${item.id}`);
-            }}
+            onDoubleClick={() => dispatchAction(item.id)}
           >{`${item.occurrenceText}`}</span>
         ),
       },
@@ -78,23 +86,19 @@ const onInit = (reactFlowInstance: any) =>
 const ReactiveGraph = ({
   occurrences,
   occurrenceMap,
-  animatedOccurrenceId,
-  setAnimatedOccurrenceId,
 }: {
   occurrences: OccurrenceI[];
   occurrenceMap: Record<string | number, OccurrenceI>;
-  animatedOccurrenceId: Record<string | number, boolean | undefined>;
-  setAnimatedOccurrenceId: Dispatch<
-    SetStateAction<Record<string | number, boolean | undefined>>
-  >;
 }) => {
-  const [animationType, setAnimationType] = useState("self");
-  const requestAnimation = (id: string) => {
-    setAnimatedOccurrenceId({ [id]: true });
-  };
+  const dispatchAction = useDispatch();
+  const { animationType } = useSelector(
+    (store: RootStoreI) => store.animationReducer
+  );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
-    getNodesFromOccurrences(occurrences, requestAnimation)
+    getNodesFromOccurrences(occurrences, (id: string | number) =>
+      dispatchAction(updateAnimationOccurrences(id))
+    )
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState(
     getEdgesFromOccurrences(occurrences, occurrenceMap)
@@ -110,7 +114,7 @@ const ReactiveGraph = ({
             value="self"
             checked={animationType === "self"}
             onChange={(e) => {
-              setAnimationType(e.target.value);
+              dispatchAction(updateAnimationType(e.target.value));
             }}
           />
           Color Self
@@ -121,7 +125,7 @@ const ReactiveGraph = ({
             value="relative"
             checked={animationType === "relative"}
             onChange={(e) => {
-              setAnimationType(e.target.value);
+              dispatchAction(updateAnimationType(e.target.value));
             }}
           />
           Color Relatives
