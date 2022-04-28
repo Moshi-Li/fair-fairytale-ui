@@ -252,6 +252,8 @@ const Data: DataI = {
   occurrenceList: [],
 };
 
+export const rawData = JSON.parse(JSON.stringify(Data));
+
 const sourceData = () => {
   Data.people.occurrences.forEach((item: OccurrenceI) => {
     item.occurrenceTextLength = item.occurrenceText.length;

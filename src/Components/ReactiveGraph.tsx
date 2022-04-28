@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
   addEdge,
   Background,
+  Controls,
 } from "react-flow-renderer";
 
 import { OccurrenceI } from "../MockData";
@@ -20,6 +21,7 @@ const getNodesFromOccurrences = (
     payload: string | number;
     type: string;
   },
+
   initialX: number = 0,
   initialY: number = 0
 ) => {
@@ -91,7 +93,7 @@ const ReactiveGraph = ({
   occurrenceMap: Record<string | number, OccurrenceI>;
 }) => {
   const dispatchAction = useDispatch();
-  const { animationType } = useSelector(
+  const { animationType, animatedOccurrence } = useSelector(
     (store: RootStoreI) => store.animationReducer
   );
 
@@ -104,6 +106,18 @@ const ReactiveGraph = ({
     getEdgesFromOccurrences(occurrences, occurrenceMap)
   );
   const onConnect = (params: any) => setEdges((eds) => addEdge(params, eds));
+
+  useEffect(() => {
+    setNodes((nodes) =>
+      nodes.map((node) => {
+        node.style = {
+          ...node.style,
+          backgroundColor: animatedOccurrence[node.id] ? "red" : "white",
+        };
+        return node;
+      })
+    );
+  }, [animatedOccurrence]);
 
   return (
     <React.Fragment>
@@ -143,6 +157,7 @@ const ReactiveGraph = ({
           attributionPosition="top-right"
         >
           <Background color="#aaa" gap={16} />
+          <Controls></Controls>
         </ReactFlow>
       </div>
     </React.Fragment>

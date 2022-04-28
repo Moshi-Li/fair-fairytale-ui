@@ -1,7 +1,8 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { OccurrenceI } from "../MockData";
 import { RootStoreI } from "../Store";
+import { updateAnimationOccurrences } from "../Slices/AnimationSlice";
 
 const ReactiveSpan = ({
   id,
@@ -15,8 +16,12 @@ const ReactiveSpan = ({
   const { animatedOccurrence } = useSelector(
     (store: RootStoreI) => store.animationReducer
   );
+  const dispatchAction = useDispatch();
   return (
-    <span className={`${animatedOccurrence[id] ? "person" : ""}`}>
+    <span
+      onDoubleClick={() => dispatchAction(updateAnimationOccurrences(id))}
+      className={`${animatedOccurrence[id] ? "person" : ""}`}
+    >
       {occurrenceText}
     </span>
   );
