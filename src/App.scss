@@ -14,20 +14,21 @@
 
   .paragraph--reactive {
     text-align: left;
+  }
+  .paragraph--filter {
+    width: 100%;
+    .filter--content {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
 
-    span {
-      cursor: pointer;
-      background-color: white;
-      color: black;
-    }
-
-    .person {
-      color: red;
-      background-color: blue;
-    }
-    .character {
-      color: red;
-      background-color: green;
+      .filter--content--module {
+        display: flex;
+        flex-direction: column;
+        p {
+          margin: 5px;
+        }
+      }
     }
   }
 
@@ -40,5 +41,20 @@
   .selected-node {
     color: red;
     background-color: blue;
+  }
+
+  span {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+  }
+
+  .person {
+    color: red;
+    background-color: blue;
+  }
+  .character {
+    color: red;
+    background-color: green;
   }
 }

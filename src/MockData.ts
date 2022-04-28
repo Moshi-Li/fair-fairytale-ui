@@ -13,7 +13,7 @@ const Data = {
       hunter: {
         name: "hunter",
         gender: "male",
-        race: "non-foo",
+        race: "foo",
         age: 1,
         occurrenceIds: [],
       },

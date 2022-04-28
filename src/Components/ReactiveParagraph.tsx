@@ -4,7 +4,7 @@ import { OccurrenceI } from "../Slices/DataSlice";
 import { RootStoreI, useAppDispatch } from "../Store";
 import { updateAnimationOccurrences } from "../Slices/AnimationSlice";
 
-const ReactiveSpan = ({
+export const ReactiveSpan = ({
   id,
   type,
   occurrenceText,
@@ -18,9 +18,12 @@ const ReactiveSpan = ({
   );
 
   const appDispatchAction = useAppDispatch();
+
   return (
     <span
-      onDoubleClick={() => appDispatchAction(updateAnimationOccurrences(id))}
+      onDoubleClick={() => {
+        appDispatchAction(updateAnimationOccurrences(id));
+      }}
       className={`${animatedOccurrence[id] ? "person" : ""}`}
     >
       {occurrenceText}

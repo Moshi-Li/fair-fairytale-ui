@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -10,10 +10,7 @@ import ReactFlow, {
 
 import { OccurrenceI } from "../Slices/DataSlice";
 import { RootStoreI, useAppDispatch } from "../Store";
-import {
-  updateAnimationOccurrences,
-  updateAnimationType,
-} from "../Slices/AnimationSlice";
+import { updateAnimationOccurrences } from "../Slices/AnimationSlice";
 
 const getNodesFromOccurrences = (
   occurrences: OccurrenceI[],
@@ -82,12 +79,12 @@ const onInit = (reactFlowInstance: any) =>
   console.log("flow loaded:", reactFlowInstance);
 
 const ReactiveGraph = () => {
-  const dispatchAction = useDispatch();
   const appDispatchAction = useAppDispatch();
 
-  const { animationType, animatedOccurrence } = useSelector(
+  const { animatedOccurrence } = useSelector(
     (store: RootStoreI) => store.animationReducer
   );
+
   const { characters, occurrenceMap } = useSelector(
     (store: RootStoreI) => store.dataReducer
   );
@@ -112,34 +109,10 @@ const ReactiveGraph = () => {
         return node;
       })
     );
-  }, [animatedOccurrence]);
+  }, [animatedOccurrence, setNodes]);
 
   return (
     <React.Fragment>
-      <div className="graph--selector">
-        <label>
-          <input
-            type="radio"
-            value="self"
-            checked={animationType === "self"}
-            onChange={(e) => {
-              dispatchAction(updateAnimationType(e.target.value));
-            }}
-          />
-          Color Self
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="relative"
-            checked={animationType === "relative"}
-            onChange={(e) => {
-              dispatchAction(updateAnimationType(e.target.value));
-            }}
-          />
-          Color Relatives
-        </label>
-      </div>
       <div className="directed--graph">
         <ReactFlow
           nodes={nodes}

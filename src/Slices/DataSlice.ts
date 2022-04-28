@@ -1,19 +1,22 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { rawData as Data } from "../MockData";
+
+export interface PersonalInformationI {
+  [key: string | number]: {
+    name: string;
+    gender: "male" | "female";
+    race: "foo" | "non-foo";
+    age: number;
+
+    // occurrenceId could be traced and generated from occurrences.
+    occurrenceIds: number[];
+  };
+}
+
 interface RawDataI {
   paragraph: string;
   people: {
-    personalInformation: {
-      [key: string | number]: {
-        name: string;
-        gender: "male" | "female";
-        race: "foo" | "non-foo";
-        age: number;
-
-        // occurrenceId could be traced and generated from occurrences.
-        occurrenceIds: number[];
-      };
-    };
+    personalInformation: PersonalInformationI;
     occurrences: OccurrenceI[];
   };
   characters: {

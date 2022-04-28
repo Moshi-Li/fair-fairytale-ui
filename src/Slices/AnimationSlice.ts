@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
-import Store, { RootStoreI } from "../Store";
+import { RootStoreI } from "../Store";
 import { OccurrenceI } from "../Slices/DataSlice";
-import Data from "../MockData";
 
 export interface AnimationStateI {
   animatedOccurrence: Record<string | number, boolean>;
@@ -17,7 +16,7 @@ export const updateAnimationOccurrences = createAsyncThunk<
   { occurrenceMap: Record<string | number, OccurrenceI>; id: number | string },
   number | string,
   { state: RootStoreI }
->("animationSlice/getPosts", async (id, thunkAPI) => {
+>("animationSlice/updateAnimationOccurrences", async (id, thunkAPI) => {
   const { occurrenceMap } = thunkAPI.getState().dataReducer;
   return { occurrenceMap, id };
 });
@@ -38,9 +37,12 @@ export const animationSlice = createSlice({
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(updateAnimationOccurrences.fulfilled, (state, action) => {
       // Add user to the state array
+
       const { occurrenceMap, id } = action.payload;
+
       state.animatedOccurrence = {};
       state.animatedOccurrence[id] = true;
+
       if (
         state.animationType === "relative" &&
         occurrenceMap[id] !== undefined

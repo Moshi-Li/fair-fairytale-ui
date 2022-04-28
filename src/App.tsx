@@ -6,18 +6,20 @@ import "./App.scss";
 import ReactiveParagraph from "./Components/ReactiveParagraph";
 import ReactiveGraph from "./Components/ReactiveGraph";
 import RawData from "./Components/RawData";
+import Filter from "./Components/Filter";
 
 import { RootStoreI } from "./Store";
 import { sourceData } from "./Slices/DataSlice";
 
 function App() {
   const dispatchAction = useDispatch();
-  const { sourced, paragraph, occurrenceList, occurrenceMap, characters } =
-    useSelector((store: RootStoreI) => store.dataReducer);
+  const { sourced, paragraph, occurrenceList } = useSelector(
+    (store: RootStoreI) => store.dataReducer
+  );
 
   useEffect(() => {
     dispatchAction(sourceData());
-  }, []);
+  }, [dispatchAction]);
 
   return (
     <div className="App">
@@ -25,12 +27,12 @@ function App() {
         <p className="paragraph--content">{paragraph}</p>
         {sourced && (
           <React.Fragment>
+            <Filter></Filter>
             <ReactiveParagraph
               paragraph={paragraph}
               occurrenceList={occurrenceList}
             ></ReactiveParagraph>
 
-            <h1>Double Click on text to try interaction</h1>
             <ReactiveGraph></ReactiveGraph>
             <h1>Raw Data</h1>
             <RawData></RawData>
