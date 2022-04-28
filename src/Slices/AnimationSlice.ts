@@ -1,17 +1,26 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
+import Store, { RootStoreI } from "../Store";
+import { OccurrenceI } from "../Slices/DataSlice";
 import Data from "../MockData";
-
-const { occurrenceMap } = Data;
 
 export interface AnimationStateI {
   animatedOccurrence: Record<string | number, boolean>;
   animationType: string;
 }
 
-export const animationDefaultState: AnimationStateI = {
+const animationDefaultState: AnimationStateI = {
   animatedOccurrence: {},
   animationType: "self",
 };
+
+export const updateAnimationOccurrences = createAsyncThunk<
+  { occurrenceMap: Record<string | number, OccurrenceI>; id: number | string },
+  number | string,
+  { state: RootStoreI }
+>("animationSlice/getPosts", async (id, thunkAPI) => {
+  const { occurrenceMap } = thunkAPI.getState().dataReducer;
+  return { occurrenceMap, id };
+});
 
 export const animationSlice = createSlice({
   name: "animationSlice",
@@ -23,26 +32,26 @@ export const animationSlice = createSlice({
     ) => {
       state.animationType = action.payload;
     },
-    updateAnimationOccurrences: (
-      state: AnimationStateI,
-      action: PayloadAction<string | number>
-    ) => {
+  },
+
+  extraReducers: (builder) => {
+    // Add reducers for additional action types here, and handle loading state as needed
+    builder.addCase(updateAnimationOccurrences.fulfilled, (state, action) => {
+      // Add user to the state array
+      const { occurrenceMap, id } = action.payload;
       state.animatedOccurrence = {};
-      state.animatedOccurrence[action.payload] = true;
+      state.animatedOccurrence[id] = true;
       if (
         state.animationType === "relative" &&
-        occurrenceMap[action.payload] !== undefined
+        occurrenceMap[id] !== undefined
       ) {
-        occurrenceMap[action.payload].correspondingOccurrenceIds.forEach(
-          (id) => {
-            state.animatedOccurrence[id] = true;
-          }
-        );
+        occurrenceMap[id].correspondingOccurrenceIds.forEach((childId) => {
+          state.animatedOccurrence[childId] = true;
+        });
       }
-    },
+    });
   },
 });
 
-export const { updateAnimationType, updateAnimationOccurrences } =
-  animationSlice.actions;
+export const { updateAnimationType } = animationSlice.actions;
 export default animationSlice.reducer;

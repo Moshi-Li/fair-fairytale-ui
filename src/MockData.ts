@@ -1,46 +1,4 @@
-interface DataI {
-  paragraph: string;
-  people: {
-    personalInformation: {
-      [key: string | number]: {
-        name: string;
-        gender: "male" | "female";
-        race: "foo" | "non-foo";
-        age: number;
-
-        // occurrenceId could be traced and generated from occurrences.
-        occurrenceIds: number[];
-      };
-    };
-    occurrences: OccurrenceI[];
-  };
-  characters: {
-    occurrences: OccurrenceI[];
-  };
-  occurrenceMap: Record<string | number, OccurrenceI>;
-  occurrenceList?: OccurrenceI[];
-}
-
-interface OccurrenceI {
-  id: number;
-  type: string;
-  occurrenceText: string;
-  occurrenceTextLength?: number;
-  startIndex: number;
-
-  // nextOccurrenceId is used to generate graph
-  nextOccurrenceId: number[];
-
-  //name of the character for person occurrence
-  //original text of character for character occurrence
-  originalText: string;
-
-  //Ids of corresponding person for character occurrence
-  //Ids of corresponding character for person occurrence
-  correspondingOccurrenceIds: number[];
-}
-
-const Data: DataI = {
+const Data = {
   paragraph:
     "Once upon a time in Snow White’s multiverse, there was a hunter. He was commanded by the Dark Queen to murder the princess. Although the hunter is good at hunting, he had no intention to kill the princess and aimed to save the princess. As a result, the princess was never kidnapped or saved. And in the end, the princess baked a cake the night before the wedding while trying to stop crying. During a sunny afternoon, she and he, wearing clothes, married.",
   people: {
@@ -254,35 +212,6 @@ const Data: DataI = {
 
 export const rawData = JSON.parse(JSON.stringify(Data));
 
-const sourceData = () => {
-  Data.people.occurrences.forEach((item: OccurrenceI) => {
-    item.occurrenceTextLength = item.occurrenceText.length;
-
-    Data.occurrenceList?.push(item);
-
-    if (Data.occurrenceMap) Data.occurrenceMap[item.id] = item;
-
-    Data.people.personalInformation[item.originalText].occurrenceIds.push(
-      item.id
-    );
-  });
-
-  Data.characters.occurrences.forEach((item: OccurrenceI) => {
-    item.occurrenceTextLength = item.occurrenceText.length;
-    Data.occurrenceList?.push(item);
-    if (Data.occurrenceMap) Data.occurrenceMap[item.id] = item;
-  });
-
-  Data.characters.occurrences.forEach((item: OccurrenceI) => {
-    item.correspondingOccurrenceIds.forEach((id: number) => {
-      if (Data.occurrenceMap)
-        Data.occurrenceMap[id].correspondingOccurrenceIds.push(item.id);
-    });
-  });
-  Data.occurrenceList?.sort((a, b) => a.startIndex - b.startIndex);
-};
-sourceData();
-export type { DataI, OccurrenceI };
 export default Data;
 
 /**

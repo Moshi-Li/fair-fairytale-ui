@@ -8,8 +8,8 @@ import ReactFlow, {
   Controls,
 } from "react-flow-renderer";
 
-import { OccurrenceI } from "../MockData";
-import { RootStoreI } from "../Store";
+import { OccurrenceI } from "../Slices/DataSlice";
+import { RootStoreI, useAppDispatch } from "../Store";
 import {
   updateAnimationOccurrences,
   updateAnimationType,
@@ -17,11 +17,7 @@ import {
 
 const getNodesFromOccurrences = (
   occurrences: OccurrenceI[],
-  dispatchAction: (id: string | number) => {
-    payload: string | number;
-    type: string;
-  },
-
+  dispatchAction: any,
   initialX: number = 0,
   initialY: number = 0
 ) => {
@@ -85,25 +81,24 @@ const getEdgesFromOccurrences = (
 const onInit = (reactFlowInstance: any) =>
   console.log("flow loaded:", reactFlowInstance);
 
-const ReactiveGraph = ({
-  occurrences,
-  occurrenceMap,
-}: {
-  occurrences: OccurrenceI[];
-  occurrenceMap: Record<string | number, OccurrenceI>;
-}) => {
+const ReactiveGraph = () => {
   const dispatchAction = useDispatch();
+  const appDispatchAction = useAppDispatch();
+
   const { animationType, animatedOccurrence } = useSelector(
     (store: RootStoreI) => store.animationReducer
   );
+  const { characters, occurrenceMap } = useSelector(
+    (store: RootStoreI) => store.dataReducer
+  );
 
   const [nodes, setNodes, onNodesChange] = useNodesState(
-    getNodesFromOccurrences(occurrences, (id: string | number) =>
-      dispatchAction(updateAnimationOccurrences(id))
+    getNodesFromOccurrences(characters.occurrences, (id: string | number) =>
+      appDispatchAction(updateAnimationOccurrences(id))
     )
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState(
-    getEdgesFromOccurrences(occurrences, occurrenceMap)
+    getEdgesFromOccurrences(characters.occurrences, occurrenceMap)
   );
   const onConnect = (params: any) => setEdges((eds) => addEdge(params, eds));
 
