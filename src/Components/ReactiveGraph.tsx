@@ -1,25 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import { useSelector } from "react-redux";
+import dagre from "dagre";
+
 import ReactFlow, {
   useNodesState,
   useEdgesState,
   addEdge,
   Background,
   Controls,
+  ConnectionLineType,
 } from "react-flow-renderer";
 
 import { OccurrenceI } from "../Slices/DataSlice";
 import { RootStoreI, useAppDispatch } from "../Store";
 import { updateAnimationOccurrences } from "../Slices/AnimationSlice";
 
-const getNodesFromOccurrences = (
-  occurrences: OccurrenceI[],
-  dispatchAction: any,
-  initialX: number = 0,
-  initialY: number = 0
-) => {
-  const nodes: any[] = [];
+const dagreGraph = new dagre.graphlib.Graph();
+dagreGraph.setDefaultEdgeLabel(() => ({}));
+const nodeWidth = 172;
+const nodeHeight = 36;
 
+const getLayoutGraph = (
+  occurrences: OccurrenceI[],
+  occurrenceMap: Record<string | number, OccurrenceI>,
+  dispatchAction: any
+) => {
+  dagreGraph.setGraph({ rankdir: "LR" });
+
+  const nodes: any[] = [];
   occurrences.forEach((item: OccurrenceI, index: number) => {
     const nodeToBeAdded = {
       id: `${item.id}`,
@@ -31,18 +39,11 @@ const getNodesFromOccurrences = (
           >{`${item.occurrenceText}`}</span>
         ),
       },
-      position: { x: initialX + index * 50, y: initialY + index * 50 },
+      position: { x: 0, y: 0 },
     };
     nodes.push(nodeToBeAdded);
   });
-  return nodes;
-};
 
-const getEdgesFromOccurrences = (
-  occurrences: OccurrenceI[],
-  occurrenceMap: Record<string | number, OccurrenceI>
-) => {
-  // Generate Edges Using BFS
   const edges: any[] = [];
   const visitedOccurrences: Record<string | number, boolean> = {};
   const occurrenceBuffer: number[] = occurrences.map((item) => item.id);
@@ -60,7 +61,8 @@ const getEdgesFromOccurrences = (
           id: `e${parentId}-${childId}`,
           source: `${parentId}`,
           target: `${childId}`,
-          label: `${occurrenceMap[parentId].occurrenceText}=>${occurrenceMap[childId].occurrenceText}`,
+          animated: true,
+          //label: `${occurrenceMap[parentId].occurrenceText}=>${occurrenceMap[childId].occurrenceText}`,
         };
         edges.push(edgeToBeAdded);
 
@@ -71,8 +73,36 @@ const getEdgesFromOccurrences = (
       visitedOccurrences[parentId] = true;
     }
   }
-  //console.log(edges);
-  return edges;
+
+  // Dagre Operation
+
+  nodes.forEach((node) => {
+    dagreGraph.setNode(node.id, { width: nodeWidth, height: nodeHeight });
+  });
+
+  edges.forEach((edge) => {
+    dagreGraph.setEdge(edge.source, edge.target);
+  });
+
+  dagre.layout(dagreGraph);
+
+  nodes.forEach((node) => {
+    const nodeWithPosition = dagreGraph.node(node.id);
+    console.log(nodeWithPosition);
+    node.targetPosition = "left";
+    node.sourcePosition = "right";
+
+    // We are shifting the dagre node position (anchor=center center) to the top left
+    // so it matches the React Flow node anchor point (top left).
+    node.position = {
+      x: nodeWithPosition.x - nodeWidth / 2,
+      y: nodeWithPosition.y - nodeHeight / 2,
+    };
+
+    return node;
+  });
+
+  return { nodes, edges };
 };
 
 const onInit = (reactFlowInstance: any) =>
@@ -85,19 +115,24 @@ const ReactiveGraph = () => {
     (store: RootStoreI) => store.animationReducer
   );
 
-  const { characters, occurrenceMap } = useSelector(
+  const { occurrenceMap } = useSelector(
     (store: RootStoreI) => store.dataReducer
   );
 
+  const { occurrences } = useSelector(
+    (store: RootStoreI) => store.dataReducer.characters
+  );
+
   const [nodes, setNodes, onNodesChange] = useNodesState(
-    getNodesFromOccurrences(characters.occurrences, (id: string | number) =>
+    getLayoutGraph(occurrences, occurrenceMap, (id: string | number) =>
       appDispatchAction(updateAnimationOccurrences(id))
-    )
+    ).nodes
   );
   const [edges, setEdges, onEdgesChange] = useEdgesState(
-    getEdgesFromOccurrences(characters.occurrences, occurrenceMap)
+    getLayoutGraph(occurrences, occurrenceMap, (id: string | number) =>
+      appDispatchAction(updateAnimationOccurrences(id))
+    ).edges
   );
-  const onConnect = (params: any) => setEdges((eds) => addEdge(params, eds));
 
   useEffect(() => {
     setNodes((nodes) =>
@@ -111,6 +146,16 @@ const ReactiveGraph = () => {
     );
   }, [animatedOccurrence, setNodes]);
 
+  const onConnect = useCallback(
+    (params: any) =>
+      setEdges((eds) =>
+        addEdge(
+          { ...params, type: ConnectionLineType.SmoothStep, animated: true },
+          eds
+        )
+      ),
+    [setEdges]
+  );
   return (
     <React.Fragment>
       <div className="directed--graph">
@@ -119,8 +164,9 @@ const ReactiveGraph = () => {
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
-          onConnect={onConnect}
           onInit={onInit}
+          onConnect={onConnect}
+          connectionLineType={ConnectionLineType.SmoothStep}
           fitView
           attributionPosition="top-right"
         >
@@ -132,5 +178,4 @@ const ReactiveGraph = () => {
   );
 };
 
-export { getEdgesFromOccurrences, getNodesFromOccurrences };
 export default ReactiveGraph;
