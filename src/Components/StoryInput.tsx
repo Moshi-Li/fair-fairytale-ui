@@ -1,5 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 import { RootStoreI, useAppDispatch } from "../Store";
 import { fetchData } from "../Slices/DataSlice";
@@ -20,7 +21,7 @@ const StoryInput = () => {
           Test
         </button>
       )}
-      {fetching && <p>loading</p>}
+      {fetching && <AiOutlineLoading3Quarters className="loader" />}
     </div>
   );
 };

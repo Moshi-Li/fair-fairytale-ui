@@ -69,7 +69,7 @@ export const fetchData = createAsyncThunk<
   { state: RootStoreI }
 >("dataSlice/fetchData", async (text, thunkAPI) => {
   const res: RawDataI = await new Promise((resolve) =>
-    setTimeout(() => resolve(Data), 1000)
+    setTimeout(() => resolve(JSON.parse(JSON.stringify(Data))), 1000)
   );
 
   return res;
@@ -117,6 +117,12 @@ export const dataSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchData.pending, (state, action) => {
+      state.characters = { occurrences: [] };
+      state.people = { personalInformation: {}, occurrences: [] };
+      state.occurrenceList = [];
+      state.occurrenceMap = {};
+
+      state.paragraph = "";
       state.fetching = true;
     });
     builder.addCase(fetchData.fulfilled, (state, action) => {
