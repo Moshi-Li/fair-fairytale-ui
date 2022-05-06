@@ -1,0 +1,20 @@
+.report--filter {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  .filter--content {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    .filter--content--module {
+      display: flex;
+
+      flex-direction: column;
+      p {
+        margin: 5px;
+      }
+    }
+  }
+}

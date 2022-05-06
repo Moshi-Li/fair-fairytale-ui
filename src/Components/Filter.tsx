@@ -4,23 +4,21 @@ import { useSelector } from "react-redux";
 import { RootStoreI, useAppDispatch } from "../Store";
 
 import { updateFilterKey } from "../Slices/FilterSlice";
-import { updateAnimationType } from "../Slices/AnimationSlice";
 
 import { ReactiveSpan } from "./ReactiveParagraph";
 
+import "./Filter.scss";
+
 const Filter = () => {
   const appDispatchAction = useAppDispatch();
-  const { animationType } = useSelector(
-    (store: RootStoreI) => store.animationReducer
-  );
+
   const { filterKey, filteredOccurrences } = useSelector(
     (store: RootStoreI) => store.filterReducer
   );
 
-  // appDispatchAction(updateFilterKey("gender"));
   return (
-    <div className="paragraph--filter">
-      <div className="selector">
+    <div className="report--filter">
+      <div>
         <label>
           <input
             type="radio"
@@ -48,30 +46,7 @@ const Filter = () => {
           Race
         </label>
       </div>
-      <div className="selector">
-        <label>
-          <input
-            type="radio"
-            value="self"
-            checked={animationType === "self"}
-            onChange={(e) => {
-              appDispatchAction(updateAnimationType(e.target.value));
-            }}
-          />
-          Color Self
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="relative"
-            checked={animationType === "relative"}
-            onChange={(e) => {
-              appDispatchAction(updateAnimationType(e.target.value));
-            }}
-          />
-          Color Relatives
-        </label>
-      </div>
+
       <div className="filter--content">
         {Object.keys(filteredOccurrences).map((sectionName: string) => {
           return (

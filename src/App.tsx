@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
+import { useSelector } from "react-redux";
 
 import "./App.scss";
 
@@ -7,38 +7,39 @@ import ReactiveParagraph from "./Components/ReactiveParagraph";
 import ReactiveGraph from "./Components/ReactiveGraph";
 import RawData from "./Components/RawData";
 import Filter from "./Components/Filter";
+import StoryInput from "./Components/StoryInput";
+import ClickOption from "./Components/ClickOption";
+import { ReportSectionLabel, ReportDivider } from "./Components/Utility";
 
 import { RootStoreI } from "./Store";
-import { sourceData } from "./Slices/DataSlice";
 
 function App() {
-  const dispatchAction = useDispatch();
-  const { sourced, paragraph, occurrenceList } = useSelector(
-    (store: RootStoreI) => store.dataReducer
-  );
-
-  useEffect(() => {
-    dispatchAction(sourceData());
-  }, [dispatchAction]);
+  const { sourced } = useSelector((store: RootStoreI) => store.dataReducer);
 
   return (
     <div className="App">
-      <header className="paragraph">
-        <p className="paragraph--content">{paragraph}</p>
-        {sourced && (
-          <React.Fragment>
-            <Filter></Filter>
-            <ReactiveParagraph
-              paragraph={paragraph}
-              occurrenceList={occurrenceList}
-            ></ReactiveParagraph>
+      <StoryInput></StoryInput>
+      {sourced && (
+        <div className="report--content">
+          <ReportSectionLabel text="Click Type" />
+          <ClickOption></ClickOption>
 
-            <ReactiveGraph></ReactiveGraph>
-            <h1>Raw Data</h1>
-            <RawData></RawData>
-          </React.Fragment>
-        )}
-      </header>
+          <ReportSectionLabel text="Filter" />
+          <Filter></Filter>
+          <ReportDivider />
+
+          <ReportSectionLabel text="Story" />
+          <ReactiveParagraph></ReactiveParagraph>
+          <ReportDivider />
+
+          <ReportSectionLabel text="Graph" />
+          <ReactiveGraph></ReactiveGraph>
+          <ReportDivider />
+
+          <ReportSectionLabel text="Raw Data" />
+          <RawData></RawData>
+        </div>
+      )}
     </div>
   );
 }

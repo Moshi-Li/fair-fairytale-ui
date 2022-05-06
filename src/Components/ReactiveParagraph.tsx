@@ -1,8 +1,10 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { OccurrenceI } from "../Slices/DataSlice";
+
 import { RootStoreI, useAppDispatch } from "../Store";
 import { updateAnimationOccurrences } from "../Slices/AnimationSlice";
+
+import "./ReactiveParagraph.scss";
 
 export const ReactiveSpan = ({
   id,
@@ -31,13 +33,11 @@ export const ReactiveSpan = ({
   );
 };
 
-const ReactiveParagraph = ({
-  occurrenceList,
-  paragraph,
-}: {
-  paragraph: string;
-  occurrenceList: OccurrenceI[];
-}) => {
+const ReactiveParagraph = () => {
+  const { paragraph, occurrenceList } = useSelector(
+    (store: RootStoreI) => store.dataReducer
+  );
+
   const content = [];
   let index = 0;
   occurrenceList?.forEach((item) => {
@@ -59,7 +59,7 @@ const ReactiveParagraph = ({
   });
   content.push(paragraph.substring(index, paragraph.length));
 
-  return <p className="paragraph--reactive">{content}</p>;
+  return <p className="report--reactive--paragraph">{content}</p>;
 };
 
 export default ReactiveParagraph;

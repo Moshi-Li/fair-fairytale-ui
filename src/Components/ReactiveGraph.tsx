@@ -88,7 +88,6 @@ const getLayoutGraph = (
 
   nodes.forEach((node) => {
     const nodeWithPosition = dagreGraph.node(node.id);
-    console.log(nodeWithPosition);
     node.targetPosition = "left";
     node.sourcePosition = "right";
 
@@ -156,6 +155,7 @@ const ReactiveGraph = () => {
       ),
     [setEdges]
   );
+
   return (
     <React.Fragment>
       <div className="directed--graph">
