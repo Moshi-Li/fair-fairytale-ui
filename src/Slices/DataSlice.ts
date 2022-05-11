@@ -124,6 +124,7 @@ export const dataSlice = createSlice({
 
       state.paragraph = "";
       state.fetching = true;
+      state.sourced = false;
     });
     builder.addCase(fetchData.fulfilled, (state, action) => {
       state.characters = action.payload.characters;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
 
 import "./App.scss";
@@ -9,18 +9,31 @@ import RawData from "./Components/RawData";
 import Filter from "./Components/Filter";
 import StoryInput from "./Components/StoryInput";
 import ClickOption from "./Components/ClickOption";
-import { ReportSectionLabel, ReportDivider } from "./Components/Utility";
+import {
+  ReportSectionLabel,
+  ReportDivider,
+  ReportBackToTop,
+} from "./Components/Utility";
 
 import { RootStoreI } from "./Store";
 
 function App() {
   const { sourced } = useSelector((store: RootStoreI) => store.dataReducer);
+  const scrollDestination = useRef<null | HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (sourced) {
+      scrollDestination.current?.scrollIntoView({
+        behavior: "smooth",
+      });
+    }
+  }, [sourced]);
 
   return (
-    <div className="App">
+    <div className="app">
       <StoryInput></StoryInput>
       {sourced && (
-        <div className="report--content">
+        <div ref={scrollDestination} className="report--content">
           <ReportSectionLabel text="Click Type" />
           <ClickOption></ClickOption>
 
@@ -38,6 +51,7 @@ function App() {
 
           <ReportSectionLabel text="Raw Data" />
           <RawData></RawData>
+          <ReportBackToTop></ReportBackToTop>
         </div>
       )}
     </div>

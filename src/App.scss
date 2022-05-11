@@ -1,5 +1,7 @@
-.App {
+.app {
   text-align: center;
+  overflow: overlay;
+  scroll-behavior: smooth;
 }
 
 .report--content {
