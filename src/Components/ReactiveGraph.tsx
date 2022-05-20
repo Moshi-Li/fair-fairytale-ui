@@ -35,6 +35,7 @@ const getLayoutGraph = (
       data: {
         label: (
           <span
+            style={{ backgroundColor: "transparent" }}
             onDoubleClick={() => dispatchAction(item.id)}
           >{`${item.occurrenceText}`}</span>
         ),
@@ -122,6 +123,10 @@ const ReactiveGraph = () => {
     (store: RootStoreI) => store.dataReducer.characters
   );
 
+  const { occurrenceHighlightColor } = useSelector(
+    (store: RootStoreI) => store.filterReducer
+  );
+
   const [nodes, setNodes, onNodesChange] = useNodesState(
     getLayoutGraph(occurrences, occurrenceMap, (id: string | number) =>
       appDispatchAction(updateAnimationOccurrences(id))
@@ -138,12 +143,14 @@ const ReactiveGraph = () => {
       nodes.map((node) => {
         node.style = {
           ...node.style,
-          backgroundColor: animatedOccurrence[node.id] ? "red" : "white",
+          backgroundColor: animatedOccurrence[node.id]
+            ? occurrenceHighlightColor[node.id]
+            : "white",
         };
         return node;
       })
     );
-  }, [animatedOccurrence, setNodes]);
+  }, [animatedOccurrence, setNodes, occurrenceHighlightColor]);
 
   const onConnect = useCallback(
     (params: any) =>

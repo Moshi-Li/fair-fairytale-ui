@@ -12,9 +12,8 @@ import "./Filter.scss";
 const Filter = () => {
   const appDispatchAction = useAppDispatch();
 
-  const { filterKey, filteredOccurrences } = useSelector(
-    (store: RootStoreI) => store.filterReducer
-  );
+  const { filterKey, filteredOccurrences, occurrenceHighlightColor } =
+    useSelector((store: RootStoreI) => store.filterReducer);
 
   return (
     <div className="report--filter">
@@ -59,7 +58,7 @@ const Filter = () => {
                     <p key={item.startIndex}>
                       <ReactiveSpan
                         id={item.id}
-                        type={item.type}
+                        color={occurrenceHighlightColor[item.id]}
                         occurrenceText={item.occurrenceText}
                       ></ReactiveSpan>
                     </p>

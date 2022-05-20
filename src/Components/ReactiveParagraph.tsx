@@ -8,11 +8,11 @@ import "./ReactiveParagraph.scss";
 
 export const ReactiveSpan = ({
   id,
-  type,
+  color,
   occurrenceText,
 }: {
   id: string | number;
-  type: string;
+  color: string;
   occurrenceText: string;
 }) => {
   const { animatedOccurrence } = useSelector(
@@ -26,7 +26,7 @@ export const ReactiveSpan = ({
       onDoubleClick={() => {
         appDispatchAction(updateAnimationOccurrences(id));
       }}
-      className={`${animatedOccurrence[id] ? "person" : ""}`}
+      style={{ backgroundColor: animatedOccurrence[id] ? color : "white" }}
     >
       {occurrenceText}
     </span>
@@ -36,6 +36,9 @@ export const ReactiveSpan = ({
 const ReactiveParagraph = () => {
   const { paragraph, occurrenceList } = useSelector(
     (store: RootStoreI) => store.dataReducer
+  );
+  const { occurrenceHighlightColor } = useSelector(
+    (store: RootStoreI) => store.filterReducer
   );
 
   const content = [];
@@ -50,7 +53,7 @@ const ReactiveParagraph = () => {
       <ReactiveSpan
         key={item.startIndex}
         id={item.id}
-        type={item.type}
+        color={occurrenceHighlightColor[item.id]}
         occurrenceText={item.occurrenceText}
       />
     );
