@@ -34,9 +34,6 @@ function App() {
       <StoryInput></StoryInput>
       {sourced && (
         <div ref={scrollDestination} className="report--content">
-          <ReportSectionLabel text="Click Type" />
-          <ClickOption></ClickOption>
-
           <ReportSectionLabel text="Filter" />
           <Filter></Filter>
           <ReportDivider />

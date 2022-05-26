@@ -21,7 +21,7 @@ const Data = {
     occurrences: [
       {
         id: 0,
-        type: "person",
+        type: "character",
         occurrenceText: "hunter",
         startIndex: 57,
         nextOccurrenceId: [],
@@ -30,7 +30,7 @@ const Data = {
       },
       {
         id: 1,
-        type: "person",
+        type: "character",
         occurrenceText: "He",
         startIndex: 65,
         nextOccurrenceId: [],
@@ -39,7 +39,7 @@ const Data = {
       },
       {
         id: 2,
-        type: "person",
+        type: "character",
         occurrenceText: "princess",
         startIndex: 114,
         nextOccurrenceId: [],
@@ -48,7 +48,7 @@ const Data = {
       },
       {
         id: 3,
-        type: "person",
+        type: "character",
         occurrenceText: "hunter",
         startIndex: 137,
         nextOccurrenceId: [],
@@ -57,7 +57,7 @@ const Data = {
       },
       {
         id: 6,
-        type: "person",
+        type: "character",
         occurrenceText: "princess",
         startIndex: 196,
         nextOccurrenceId: [],
@@ -66,7 +66,7 @@ const Data = {
       },
       {
         id: 8,
-        type: "person",
+        type: "character",
         occurrenceText: "princess",
         startIndex: 227,
         nextOccurrenceId: [],
@@ -75,7 +75,7 @@ const Data = {
       },
       {
         id: 9,
-        type: "person",
+        type: "character",
         occurrenceText: "princess",
         startIndex: 254,
         nextOccurrenceId: [],
@@ -84,7 +84,7 @@ const Data = {
       },
       {
         id: 12,
-        type: "person",
+        type: "character",
         occurrenceText: "princess",
         startIndex: 313,
         nextOccurrenceId: [],
@@ -93,7 +93,7 @@ const Data = {
       },
       {
         id: 15,
-        type: "person",
+        type: "character",
         occurrenceText: "she",
         startIndex: 419,
         nextOccurrenceId: [],
@@ -102,7 +102,7 @@ const Data = {
       },
       {
         id: 16,
-        type: "person",
+        type: "character",
         occurrenceText: "he",
         startIndex: 427,
         nextOccurrenceId: [],
@@ -116,7 +116,7 @@ const Data = {
     occurrences: [
       {
         id: 4,
-        type: "character",
+        type: "event",
         occurrenceText: "hunting",
         startIndex: 155,
         nextOccurrenceId: [17],
@@ -126,7 +126,7 @@ const Data = {
       },
       {
         id: 5,
-        type: "character",
+        type: "event",
         occurrenceText: "kill",
         startIndex: 187,
         nextOccurrenceId: [7],
@@ -136,7 +136,7 @@ const Data = {
       },
       {
         id: 7,
-        type: "character",
+        type: "event",
         occurrenceText: "save",
         startIndex: 218,
         nextOccurrenceId: [17],
@@ -146,7 +146,7 @@ const Data = {
       },
       {
         id: 10,
-        type: "character",
+        type: "event",
         occurrenceText: "kidnapped",
         startIndex: 273,
         nextOccurrenceId: [11],
@@ -156,7 +156,7 @@ const Data = {
       },
       {
         id: 11,
-        type: "character",
+        type: "event",
         occurrenceText: "saved",
         startIndex: 286,
         nextOccurrenceId: [13],
@@ -166,7 +166,7 @@ const Data = {
       },
       {
         id: 13,
-        type: "character",
+        type: "event",
         occurrenceText: "baked",
         startIndex: 322,
         nextOccurrenceId: [17],
@@ -176,7 +176,7 @@ const Data = {
       },
       {
         id: 14,
-        type: "character",
+        type: "event",
         occurrenceText: "crying",
         startIndex: 385,
         nextOccurrenceId: [18],
@@ -186,7 +186,7 @@ const Data = {
       },
       {
         id: 17,
-        type: "character",
+        type: "event",
         occurrenceText: "wearing",
         startIndex: 431,
         nextOccurrenceId: [18],
@@ -196,7 +196,7 @@ const Data = {
       },
       {
         id: 18,
-        type: "character",
+        type: "event",
         occurrenceText: "married",
         startIndex: 448,
         nextOccurrenceId: [],

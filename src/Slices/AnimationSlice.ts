@@ -43,10 +43,7 @@ export const animationSlice = createSlice({
       state.animatedOccurrence = {};
       state.animatedOccurrence[id] = true;
 
-      if (
-        state.animationType === "relative" &&
-        occurrenceMap[id] !== undefined
-      ) {
+      if (occurrenceMap[id] !== undefined) {
         occurrenceMap[id].correspondingOccurrenceIds.forEach((childId) => {
           state.animatedOccurrence[childId] = true;
         });

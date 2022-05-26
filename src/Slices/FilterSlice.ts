@@ -71,13 +71,11 @@ const blendHexColors = (color1: any, color2: any, percentage: number = 0.5) => {
     (1 - percentage) * color1[2] + percentage * color2[2],
   ];
 
-  console.log("c3 => [" + color3.join(", ") + "]");
+  //console.log("c3 => [" + color3.join(", ") + "]");
 
   // 5: convert to hex
   color3 =
     "#" + int_to_hex(color3[0]) + int_to_hex(color3[1]) + int_to_hex(color3[2]);
-
-  console.log(color3);
 
   // return hex
   return color3;
@@ -147,7 +145,6 @@ export const updateFilterKey = createAsyncThunk<
         nextFilteredOccurrences[key].forEach((occurrence) => {
           nextOccurrenceHighlightColor[occurrence.id] = colorTable[key];
           occurrence.correspondingOccurrenceIds.forEach((correspondingId) => {
-            console.log(occurrenceMap[correspondingId].type);
             nextOccurrenceHighlightColor[correspondingId] =
               colorTable[
                 personalInformation[
