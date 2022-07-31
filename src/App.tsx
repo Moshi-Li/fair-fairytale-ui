@@ -1,26 +1,21 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import "react-tabs/style/react-tabs.css";
 
 import "./App.scss";
 
-import ReactiveParagraph from "./Components/ReactiveParagraph";
-import ReactiveGraph from "./Components/ReactiveGraph";
-import RawData from "./Components/RawData";
-import Filter from "./Components/Filter";
+import Salient from "../src/Components/Salient";
 import StoryInput from "./Components/StoryInput";
-import ClickOption from "./Components/ClickOption";
-import {
-  ReportSectionLabel,
-  ReportDivider,
-  ReportBackToTop,
-} from "./Components/Utility";
+
+import { ReportBackToTop } from "./Components/Utility";
 
 import { RootStoreI } from "./Store";
 
 function App() {
   const { sourced } = useSelector((store: RootStoreI) => store.dataReducer);
   const scrollDestination = useRef<null | HTMLDivElement>(null);
-
+  const [tabIndex, setTabIndex] = useState(0);
   useEffect(() => {
     if (sourced) {
       scrollDestination.current?.scrollIntoView({
@@ -34,20 +29,23 @@ function App() {
       <StoryInput></StoryInput>
       {sourced && (
         <div ref={scrollDestination} className="report--content">
-          <ReportSectionLabel text="Filter" />
-          <Filter></Filter>
-          <ReportDivider />
+          <Tabs>
+            <TabList>
+              <Tab>Salient EVENTS</Tab>
+              <Tab>GENDER</Tab>
+              <Tab>CHARACTER</Tab>
+            </TabList>
+            <TabPanel>
+              <Salient />
+            </TabPanel>
+            <TabPanel>
+              <h1>TODO: GENDER</h1>
+            </TabPanel>
+            <TabPanel>
+              <h1>TODO: CHARACTER</h1>
+            </TabPanel>
+          </Tabs>
 
-          <ReportSectionLabel text="Story" />
-          <ReactiveParagraph></ReactiveParagraph>
-          <ReportDivider />
-
-          <ReportSectionLabel text="Graph" />
-          <ReactiveGraph></ReactiveGraph>
-          <ReportDivider />
-
-          <ReportSectionLabel text="Raw Data" />
-          <RawData></RawData>
           <ReportBackToTop></ReportBackToTop>
         </div>
       )}
