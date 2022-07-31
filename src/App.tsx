@@ -34,20 +34,7 @@ function App() {
       <StoryInput></StoryInput>
       {sourced && (
         <div ref={scrollDestination} className="report--content">
-          <ReportSectionLabel text="Filter" />
-          <Filter></Filter>
-          <ReportDivider />
-
-          <ReportSectionLabel text="Story" />
           <ReactiveParagraph></ReactiveParagraph>
-          <ReportDivider />
-
-          <ReportSectionLabel text="Graph" />
-          <ReactiveGraph></ReactiveGraph>
-          <ReportDivider />
-
-          <ReportSectionLabel text="Raw Data" />
-          <RawData></RawData>
           <ReportBackToTop></ReportBackToTop>
         </div>
       )}
