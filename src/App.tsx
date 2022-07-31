@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 import "./App.scss";
 
+import { ChartComp } from "./Components/ChartComp";
 import GenderCharacter from "./Components/GenderCharacter";
 import ReactiveParagraph from "./Components/ReactiveParagraph";
 import ReactiveGraph from "./Components/ReactiveGraph";
@@ -46,6 +47,8 @@ function App() {
         <div ref={scrollDestination} className="report--content">
           <ReportSectionLabel text="Filter" />
           <Filter></Filter>
+          <ReportDivider />
+          <ChartComp/>
           <ReportDivider />
           <GenderCharacter/>
           <ReportDivider/>
