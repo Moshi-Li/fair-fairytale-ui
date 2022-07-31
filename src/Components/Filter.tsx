@@ -5,8 +5,6 @@ import { RootStoreI, useAppDispatch } from "../Store";
 
 import { updateFilterKey } from "../Slices/FilterSlice";
 
-import { ReactiveSpan } from "./ReactiveParagraph";
-
 import "./Filter.scss";
 
 const Filter = () => {

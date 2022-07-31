@@ -14,7 +14,7 @@ export interface PersonalInformationI {
     occurrenceIds: number[];
   };
 }
-export interface OccurrenceI {
+export interface TextOccurrenceI {
   type: string;
   occurrenceText: string;
 
@@ -51,7 +51,7 @@ export interface CharacterMetaI {
 }
 
 export interface EventI {
-  eventId: number;
+  eventId: string;
   event: string;
   argument: string;
   argText: string;
@@ -65,16 +65,26 @@ export interface EventI {
 
   gender: string;
   genderCertainty: number;
+
+  temporalRank: number;
+  sentenceId: string;
+}
+
+export interface EventSalientInfoI {
+  sentenceId: string;
+  eventId: string;
+  temporalRank: number;
 }
 
 interface RawDataI {
   paragraph: string;
   characterMeta: Record<string | number, CharacterMetaI>;
   eventList: EventI[];
+  eventSalientInfo: EventSalientInfoI[];
 }
 
 interface DataI extends RawDataI {
-  textOccurrenceMap: Record<string | number, OccurrenceI>;
+  textOccurrenceMap: Record<string | number, TextOccurrenceI>;
   sourced: boolean;
   fetching: boolean;
 }
@@ -82,9 +92,9 @@ interface DataI extends RawDataI {
 const dataDefaultState: DataI = {
   paragraph: "",
   characterMeta: {},
-  textOccurrenceMap: {},
   eventList: [],
-
+  eventSalientInfo: [],
+  textOccurrenceMap: {},
   sourced: false,
   fetching: false,
 };
@@ -113,14 +123,21 @@ export const dataSlice = createSlice({
     builder.addCase(fetchData.pending, (state, action) => {
       state.paragraph = "";
       state.characterMeta = {};
-      state.textOccurrenceMap = {};
       state.eventList = [];
+      state.eventSalientInfo = [];
+      state.textOccurrenceMap = {};
+
       state.fetching = true;
       state.sourced = false;
     });
     builder.addCase(fetchData.fulfilled, (state, action) => {
-      const { characterMeta, eventList, paragraph } = action.payload;
+      const { characterMeta, eventList, paragraph, eventSalientInfo } =
+        action.payload;
 
+      state.paragraph = paragraph;
+      state.eventList = eventList;
+      state.characterMeta = characterMeta;
+      state.eventSalientInfo = eventSalientInfo;
       eventList.forEach(
         ({
           event,
@@ -154,9 +171,6 @@ export const dataSlice = createSlice({
           };
         }
       );
-      state.paragraph = paragraph;
-      state.eventList = eventList;
-      state.characterMeta = characterMeta;
 
       state.sourced = true;
       state.fetching = false;

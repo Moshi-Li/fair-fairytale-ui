@@ -1,8 +1,7 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
 
-import { RootStoreI, useAppDispatch } from "../Store";
-import { updateAnimationOccurrences } from "../Slices/AnimationSlice";
+import { RootStoreI, useAppDispatch } from "../../Store";
 
 import "./ReactiveParagraph.scss";
 
@@ -15,8 +14,10 @@ const ReactiveParagraph = () => {
   let leftBound = 0;
   let rightBound = 0;
   while (rightBound < paragraph.length) {
-    if (textOccurrenceMap[rightBound]) {
-      console.log(textOccurrenceMap[rightBound]);
+    if (
+      textOccurrenceMap[rightBound] &&
+      textOccurrenceMap[rightBound].type === "event"
+    ) {
       content.push(
         <React.Fragment key={leftBound}>
           {paragraph.substring(leftBound, rightBound)}
@@ -25,10 +26,11 @@ const ReactiveParagraph = () => {
       leftBound = rightBound;
       rightBound = textOccurrenceMap[rightBound].textEndIndex;
       content.push(
-        <span style={{ color: "red" }} key={leftBound}>
+        <span style={{ backgroundColor: "red" }} key={leftBound}>
           {paragraph.substring(leftBound, rightBound)}
         </span>
       );
+      leftBound = rightBound;
     } else {
       rightBound++;
     }
