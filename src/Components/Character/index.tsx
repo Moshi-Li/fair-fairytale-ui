@@ -4,7 +4,7 @@ import { RootStoreI } from "../../Store";
 import { EventI } from "../../Slices/DataSlice";
 import Graph from "./Graph";
 import Paragraph from "./ReactiveParagraph";
-
+import Stat from "./Stats";
 import "./index.scss";
 
 const Character = () => {
@@ -76,6 +76,13 @@ const Character = () => {
         <Paragraph eventList={selectedEvents} />
         <Graph eventList={selectedEvents}></Graph>
       </div>
+      <Stat
+        data={
+          selectedCharacterId === null
+            ? Object.keys(characterMeta).map((key) => characterMeta[key])
+            : characterMeta[selectedCharacterId]
+        }
+      />
     </div>
   );
 };
