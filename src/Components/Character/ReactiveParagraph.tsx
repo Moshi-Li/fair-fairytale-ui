@@ -1,13 +1,9 @@
 import React, { useMemo } from "react";
 import { useSelector } from "react-redux";
-import { EventI, EventSalientInfoI } from "../../Slices/DataSlice";
+import { EventI } from "../../Slices/DataSlice";
 import { RootStoreI } from "../../Store";
 
-const generateContent = (
-  eventListInput: EventI[],
-  paragraph: string,
-  gender: "male" | "female" | "mix"
-) => {
+const generateContent = (eventListInput: EventI[], paragraph: string) => {
   let eventList = JSON.parse(JSON.stringify(eventListInput));
   eventList.sort((a: EventI, b: EventI) => {
     return a.verbStartByteText - b.verbEndByteText;
@@ -51,17 +47,12 @@ const generateContent = (
   return result;
 };
 
-const ReactiveParagraph = ({
-  gender,
-  eventList,
-}: {
-  gender: "male" | "female" | "mix";
-  eventList: EventI[];
-}) => {
+const ReactiveParagraph = ({ eventList }: { eventList: EventI[] }) => {
   const { paragraph } = useSelector((store: RootStoreI) => store.dataReducer);
+
   const memoizedContent = useMemo(() => {
-    return generateContent(eventList, paragraph, gender);
-  }, [gender, eventList, paragraph]);
+    return generateContent(eventList, paragraph);
+  }, [eventList, paragraph]);
 
   return (
     <React.Fragment>

@@ -1,5 +1,5 @@
-import React, { useEffect, useCallback } from "react";
-import { useSelector } from "react-redux";
+import React, { useEffect, useCallback, useMemo } from "react";
+
 import dagre from "dagre";
 
 import ReactFlow, {
@@ -82,11 +82,11 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
         source: `${index}`,
         target: `${index + 1}`,
         animated: false,
+
         type: "straight",
         markerEnd: {
           type: MarkerType.Arrow,
         },
-        //label: `${occurrenceMap[parentId].occurrenceText}=>${occurrenceMap[childId].occurrenceText}`,
       };
       edges.push(edgeToBeAdded);
     }
@@ -112,15 +112,16 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { fitView } = useReactFlow();
+
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(eventList);
     setNodes(nextNodes);
     setEdges(nextEdges);
   }, [eventList, setNodes, setEdges]);
-
   useEffect(() => {
     fitView();
   }, [nodes, fitView]);
+
   const onConnect = useCallback(
     (params: any) =>
       setEdges((eds) =>
@@ -133,24 +134,22 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
   );
 
   return (
-    <React.Fragment>
-      <div className="directed--graph">
-        <ReactFlow
-          nodes={nodes}
-          edges={edges}
-          onNodesChange={onNodesChange}
-          onEdgesChange={onEdgesChange}
-          onInit={onInit}
-          onConnect={onConnect}
-          connectionLineType={ConnectionLineType.Straight}
-          fitView
-          attributionPosition="top-right"
-        >
-          <Background color="#aaa" gap={16} />
-          <Controls></Controls>
-        </ReactFlow>
-      </div>
-    </React.Fragment>
+    <div className="directed--graph">
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onInit={onInit}
+        onConnect={onConnect}
+        connectionLineType={ConnectionLineType.Straight}
+        fitView
+        attributionPosition="top-right"
+      >
+        <Background color="#aaa" gap={16} />
+        <Controls></Controls>
+      </ReactFlow>
+    </div>
   );
 };
 

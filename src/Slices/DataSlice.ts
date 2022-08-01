@@ -48,6 +48,7 @@ export interface CharacterMetaI {
   eventN: number;
   directObjectN: number;
   subjectN: number;
+  relatedEvents?: EventI[];
 }
 
 export interface EventI {
@@ -80,6 +81,7 @@ interface RawDataI {
   paragraph: string;
   characterMeta: Record<string | number, CharacterMetaI>;
   eventList: EventI[];
+  eventMajorList: EventI[];
   eventSalientInfo: EventSalientInfoI[];
 }
 
@@ -93,6 +95,7 @@ const dataDefaultState: DataI = {
   paragraph: "",
   characterMeta: {},
   eventList: [],
+  eventMajorList: [],
   eventSalientInfo: [],
   textOccurrenceMap: {},
   sourced: false,
@@ -131,46 +134,28 @@ export const dataSlice = createSlice({
       state.sourced = false;
     });
     builder.addCase(fetchData.fulfilled, (state, action) => {
-      const { characterMeta, eventList, paragraph, eventSalientInfo } =
-        action.payload;
+      const {
+        characterMeta,
+        eventList,
+        eventMajorList,
+        paragraph,
+        eventSalientInfo,
+      } = action.payload;
 
       state.paragraph = paragraph;
       state.eventList = eventList;
+      state.eventMajorList = eventMajorList;
+      Object.keys(characterMeta).forEach((key: string) => {
+        characterMeta[key].relatedEvents = [];
+      });
+      eventMajorList.forEach((item) => {
+        const { corefId } = item;
+        if (characterMeta[corefId]) {
+          characterMeta[corefId].relatedEvents?.push(item);
+        }
+      });
       state.characterMeta = characterMeta;
       state.eventSalientInfo = eventSalientInfo;
-      eventList.forEach(
-        ({
-          event,
-          verbStartByteText,
-          verbEndByteText,
-          argText,
-          argStartByteText,
-          argEndByteText,
-        }) => {
-          state.textOccurrenceMap[verbStartByteText] = {
-            type: "event",
-            occurrenceText: event,
-
-            textStartIndex: verbStartByteText,
-            textEndIndex: verbEndByteText,
-            textLength: verbEndByteText - verbStartByteText,
-
-            associatedStartIndex: argStartByteText,
-            associatedEndIndex: argEndByteText,
-          };
-          state.textOccurrenceMap[argStartByteText] = {
-            type: "character",
-            occurrenceText: argText,
-
-            textStartIndex: argStartByteText,
-            textEndIndex: argEndByteText,
-            textLength: argEndByteText - argStartByteText,
-
-            associatedStartIndex: verbStartByteText,
-            associatedEndIndex: verbEndByteText,
-          };
-        }
-      );
 
       state.sourced = true;
       state.fetching = false;
