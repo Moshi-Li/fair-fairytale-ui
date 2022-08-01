@@ -10,6 +10,7 @@ import ReactFlow, {
   Controls,
   ConnectionLineType,
   MarkerType,
+  useReactFlow,
   ReactFlowProvider,
 } from "react-flow-renderer";
 
@@ -110,13 +111,16 @@ const onInit = (reactFlowInstance: any) =>
 const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
+  const { fitView } = useReactFlow();
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(eventList);
     setNodes(nextNodes);
     setEdges(nextEdges);
   }, [eventList, setNodes, setEdges]);
 
+  useEffect(() => {
+    fitView();
+  }, [nodes, fitView]);
   const onConnect = useCallback(
     (params: any) =>
       setEdges((eds) =>

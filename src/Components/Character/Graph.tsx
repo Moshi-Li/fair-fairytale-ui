@@ -112,12 +112,15 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { fitView } = useReactFlow();
+
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(eventList);
     setNodes(nextNodes);
     setEdges(nextEdges);
+  }, [eventList, setNodes, setEdges]);
+  useEffect(() => {
     fitView();
-  }, [eventList, setNodes, setEdges, fitView]);
+  }, [nodes, fitView]);
 
   const onConnect = useCallback(
     (params: any) =>
