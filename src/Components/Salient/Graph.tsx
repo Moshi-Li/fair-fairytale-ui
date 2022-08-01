@@ -134,7 +134,7 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
 
   return (
     <React.Fragment>
-      <div className="directed--graph">
+      <div className="directed--graph--salient">
         <ReactFlow
           nodes={nodes}
           edges={edges}

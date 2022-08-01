@@ -20,6 +20,11 @@ const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 172;
 const nodeHeight = 36;
+const ROW_COUNT_LIMIT = 10;
+const X_INIT_POS = 10;
+const Y_INIT_POS = 10;
+const X_SPACE = 200;
+const Y_SPACE = 100;
 
 const getLayoutGraph = (eventListInput: EventI[]) => {
   let eventList = JSON.parse(JSON.stringify(eventListInput)) as EventI[];
@@ -34,12 +39,6 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
 
   const nodes: any[] = [];
   const edges: any[] = [];
-
-  const ROW_COUNT_LIMIT = 10;
-  const X_INIT_POS = 10;
-  const Y_INIT_POS = 10;
-  const X_SPACE = 200;
-  const Y_SPACE = 100;
 
   let currentX = X_INIT_POS;
   let currentY = Y_INIT_POS;
@@ -134,7 +133,7 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
   );
 
   return (
-    <div className="directed--graph">
+    <div className="directed--graph--character">
       <ReactFlow
         nodes={nodes}
         edges={edges}
