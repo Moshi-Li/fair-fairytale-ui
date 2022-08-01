@@ -5,7 +5,8 @@ import "react-tabs/style/react-tabs.css";
 
 import "./App.scss";
 
-import Salient from "../src/Components/Salient";
+import Salient from "./Components/Salient";
+import Character from "./Components/Character";
 import StoryInput from "./Components/StoryInput";
 
 import { ReportBackToTop } from "./Components/Utility";
@@ -15,7 +16,7 @@ import { RootStoreI } from "./Store";
 function App() {
   const { sourced } = useSelector((store: RootStoreI) => store.dataReducer);
   const scrollDestination = useRef<null | HTMLDivElement>(null);
-  const [tabIndex, setTabIndex] = useState(0);
+
   useEffect(() => {
     if (sourced) {
       scrollDestination.current?.scrollIntoView({
@@ -42,7 +43,7 @@ function App() {
               <h1>TODO: GENDER</h1>
             </TabPanel>
             <TabPanel>
-              <h1>TODO: CHARACTER</h1>
+              <Character />
             </TabPanel>
           </Tabs>
 
