@@ -29,10 +29,9 @@ export interface TextOccurrenceI {
   //original text of character for character occurrence
   //originalText: string;
 
-  //Ids of corresponding person for character occurrence
-  //Ids of corresponding character for person occurrence
-  associatedStartIndex: number;
-  associatedEndIndex: number;
+  //TextStartIndexes of corresponding TextOccurrenceI for character occurrence
+  //TextStartIndexes of corresponding TextOccurrenceI for person occurrence
+  associatedStartIndex: number[];
 }
 
 export interface CharacterMetaI {

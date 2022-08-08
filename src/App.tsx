@@ -5,9 +5,10 @@ import "react-tabs/style/react-tabs.css";
 
 import "./App.scss";
 
-import Salient from "./Components/Salient";
-import Character from "./Components/Character";
 import StoryInput from "./Components/StoryInput";
+import Salient from "./Components/Salient";
+import Gender from "./Components/Gender";
+import Character from "./Components/Character";
 
 import { ReportBackToTop } from "./Components/Utility";
 
@@ -40,7 +41,7 @@ function App() {
               <Salient />
             </TabPanel>
             <TabPanel>
-              <h1>TODO: GENDER</h1>
+              <Gender></Gender>
             </TabPanel>
             <TabPanel>
               <Character />

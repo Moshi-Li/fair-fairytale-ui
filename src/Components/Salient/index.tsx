@@ -11,6 +11,9 @@ import "./index.scss";
 const Salient = () => {
   const [gender, setGender] = useState<"male" | "female" | "mix">("male");
   const [selectedEvents, setSelectedEvents] = useState<EventI[]>([]);
+  const [selectedEventVerbStart, setSelectedEventVerbStart] = useState<
+    number | null
+  >(null);
   const { eventMajorList } = useSelector(
     (store: RootStoreI) => store.dataReducer
   );
@@ -34,8 +37,9 @@ const Salient = () => {
         return result[key][gender].length >= 1;
       })
       .map((key) => {
-        return result[key][gender][0];
-      });
+        return result[key][gender];
+      })
+      .flat();
 
     setSelectedEvents(eventList);
   }, [gender, eventMajorList]);
@@ -45,6 +49,7 @@ const Salient = () => {
       <button
         onClick={(e) => {
           setGender("male");
+          setSelectedEventVerbStart(null);
         }}
       >
         Male
@@ -52,6 +57,7 @@ const Salient = () => {
       <button
         onClick={(e) => {
           setGender("female");
+          setSelectedEventVerbStart(null);
         }}
       >
         Female
@@ -59,12 +65,18 @@ const Salient = () => {
       <button
         onClick={(e) => {
           setGender("mix");
+          setSelectedEventVerbStart(null);
         }}
       >
         Mix
       </button>
       <div className="salient-content">
-        <Paragraph gender={gender} eventList={selectedEvents} />
+        <Paragraph
+          gender={gender}
+          eventList={selectedEvents}
+          selectedEventVerbStart={selectedEventVerbStart}
+          setSelectedEventVerbStart={setSelectedEventVerbStart}
+        />
         <ReactiveGraph eventList={selectedEvents}></ReactiveGraph>
       </div>
     </div>
