@@ -59,7 +59,7 @@ const generateContent = (
 
   const result = [];
   let index = 0;
-  console.log(textTextOccurrenceList);
+
   textTextOccurrenceList.forEach((textOccurrence) => {
     result.push(
       <React.Fragment key={index}>
@@ -76,7 +76,6 @@ const generateContent = (
               : ""
           }`}
           onClick={(e) => {
-            console.log(`${textOccurrence.textStartIndex}`);
             setSelectedEventVerbStart(textOccurrence.textStartIndex);
           }}
         >

@@ -77,6 +77,7 @@ const Salient = () => {
           selectedEventVerbStart={selectedEventVerbStart}
           setSelectedEventVerbStart={setSelectedEventVerbStart}
         />
+        <ReactiveGraph eventList={selectedEvents}></ReactiveGraph>
       </div>
     </div>
   );

@@ -24,9 +24,25 @@ const nodeHeight = 36;
 const getLayoutGraph = (eventListInput: EventI[]) => {
   let eventList = JSON.parse(JSON.stringify(eventListInput)) as EventI[];
 
+  const eventsMap: Record<number, boolean> = {};
   eventList.sort((a, b) => {
     return a.temporalRank - b.temporalRank;
   });
+
+  eventList = eventList
+    .map((event) => {
+      if (event && eventsMap[event.temporalRank]) {
+        return undefined;
+      } else if (event) {
+        eventsMap[event.temporalRank] = true;
+        return event;
+      } else {
+        return undefined;
+      }
+    })
+    .filter((event) => {
+      return event !== undefined;
+    }) as EventI[];
 
   // Get Salient Event using salientInfoMap
 
@@ -121,6 +137,7 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
   useEffect(() => {
     fitView();
   }, [nodes, fitView]);
+
   const onConnect = useCallback(
     (params: any) =>
       setEdges((eds) =>
