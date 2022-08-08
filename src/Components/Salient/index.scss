@@ -15,6 +15,44 @@
   line-height: 55px;
   height: 50%;
   overflow: scroll;
+  .text--occurrence__male__primary {
+    background-color: blue;
+    cursor: pointer;
+  }
+  .text--occurrence__male__primary__selected {
+    background-color: blue;
+    border: 2px solid gold;
+    cursor: pointer;
+  }
+  .text--occurrence__male__secondary {
+    border: 2px solid blue;
+  }
+
+  .text--occurrence__female__primary {
+    background-color: red;
+    cursor: pointer;
+  }
+  .text--occurrence__female__primary__selected {
+    background-color: red;
+    border: 2px solid gold;
+    cursor: pointer;
+  }
+  .text--occurrence__female__secondary {
+    border: 2px solid red;
+  }
+
+  .text--occurrence__mix__primary {
+    background-color: silver;
+    cursor: pointer;
+  }
+  .text--occurrence__mix__primary__selected {
+    background-color: silver;
+    border: 2px solid gold;
+    cursor: pointer;
+  }
+  .text--occurrence__mix__secondary {
+    border: 2px solid silver;
+  }
 }
 
 .directed--graph--salient {
