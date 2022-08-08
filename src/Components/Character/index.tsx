@@ -12,6 +12,9 @@ const Character = () => {
     null
   );
   const [selectedEvents, setSelectedEvents] = useState<EventI[]>([]);
+  const [selectedEventVerbStart, setSelectedEventVerbStart] = useState<
+    number | null
+  >(null);
 
   const { eventMajorList, characterMeta, paragraph } = useSelector(
     (store: RootStoreI) => store.dataReducer
@@ -73,7 +76,16 @@ const Character = () => {
             })
             .flat()}
         </div>
-        <Paragraph eventList={selectedEvents} />
+        <Paragraph
+          eventList={selectedEvents}
+          gender={
+            selectedCharacterId === null
+              ? ""
+              : characterMeta[selectedCharacterId].gender
+          }
+          selectedEventVerbStart={selectedEventVerbStart}
+          setSelectedEventVerbStart={setSelectedEventVerbStart}
+        />
         <Graph eventList={selectedEvents}></Graph>
       </div>
       <Stat
