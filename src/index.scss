@@ -8,6 +8,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  color: #000000;
 }
 
 code {
@@ -15,22 +16,27 @@ code {
     monospace;
 }
 
+/*
 ::-webkit-scrollbar {
   width: 10px;
 }
 
-/* Track */
+// Track 
 ::-webkit-scrollbar-track {
   background: #282a36;
 }
 
-/* Handle */
+// Handle 
 ::-webkit-scrollbar-thumb {
   background: #44475a;
   border-radius: 8px;
 }
 
-/* Handle on hover */
+// Handle on hover 
 ::-webkit-scrollbar-thumb:hover {
   background: #50fa7b;
 }
+
+
+
+*/

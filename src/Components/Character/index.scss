@@ -16,44 +16,59 @@
   margin: 20px 0;
   line-height: 55px;
   height: 50%;
-  overflow: scroll;
+  overflow-y: auto;
+
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 32px;
+  color: #000000;
+
   .text--occurrence__male__primary {
-    background-color: blue;
+    padding: 0 5px;
+    background-color: #8ac7ff;
     cursor: pointer;
   }
   .text--occurrence__male__primary__selected {
-    background-color: blue;
+    padding: 0 5px;
+    background-color: #8ac7ff;
     border: 2px solid gold;
     cursor: pointer;
   }
   .text--occurrence__male__secondary {
-    border: 2px solid blue;
+    padding: 0 5px;
+    border: 2px solid #8ac7ff;
   }
 
   .text--occurrence__female__primary {
-    background-color: red;
+    padding: 0 5px;
+    background-color: #fc8e94;
     cursor: pointer;
   }
   .text--occurrence__female__primary__selected {
-    background-color: red;
+    padding: 0 5px;
+    background-color: #fc8e94;
     border: 2px solid gold;
     cursor: pointer;
   }
   .text--occurrence__female__secondary {
-    border: 2px solid red;
+    padding: 0 5px;
+    border: 2px solid #fc8e94;
   }
 
   .text--occurrence__mix__primary {
-    background-color: silver;
+    padding: 0 5px;
+    background-color: #a7a7a7;
     cursor: pointer;
   }
   .text--occurrence__mix__primary__selected {
-    background-color: silver;
+    padding: 0 5px;
+    background-color: #a7a7a7;
     border: 2px solid gold;
     cursor: pointer;
   }
   .text--occurrence__mix__secondary {
-    border: 2px solid silver;
+    padding: 0 5px;
+    border: 2px solid #a7a7a7;
   }
 }
 
