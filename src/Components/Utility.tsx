@@ -22,6 +22,8 @@ export const ReportBackToTop = () => {
   );
 };
 
+export const VerticalDivider = () => <div className="vertical--divider"></div>;
+
 export const COLOR_BLUE = "#8AC7FF";
 export const COLOR_RED = "#FC8E94";
 export const COLOR_GRAY = "#A7A7A7";

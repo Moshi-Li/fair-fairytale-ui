@@ -1,8 +1,14 @@
 .character-container {
-  height: 100vh;
   display: flex;
   flex-direction: row;
+  border: 5px solid #787878;
+  border-top: none;
+
+  padding: 35px;
+  height: 66vh;
+  overflow-y: auto;
 }
+
 .character-content {
   display: flex;
   width: 70%;

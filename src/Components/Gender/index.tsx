@@ -3,6 +3,8 @@ import { useSelector } from "react-redux";
 import { RootStoreI } from "../../Store";
 
 import { EventI } from "../../Slices/DataSlice";
+
+import { VerticalDivider } from "../Utility";
 import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
 
@@ -45,39 +47,58 @@ const Gender = () => {
   }, [gender, eventMajorList]);
 
   return (
-    <div className="salient-container">
-      <button
-        onClick={(e) => {
-          setGender("male");
-          setSelectedEventVerbStart(null);
-        }}
-      >
-        Male
-      </button>
-      <button
-        onClick={(e) => {
-          setGender("female");
-          setSelectedEventVerbStart(null);
-        }}
-      >
-        Female
-      </button>
-      <button
-        onClick={(e) => {
-          setGender("mix");
-          setSelectedEventVerbStart(null);
-        }}
-      >
-        Mix
-      </button>
-      <div className="salient-content">
+    <div className="gender-container">
+      <div className="gender-content">
+        <p className="section--label">Story</p>
         <Paragraph
           gender={gender}
           eventList={selectedEvents}
           selectedEventVerbStart={selectedEventVerbStart}
           setSelectedEventVerbStart={setSelectedEventVerbStart}
         />
+
+        <p className="section--label">Gender Select</p>
+        <div className="filter--container">
+          <button
+            className={`filter--btn ${
+              gender === "male" ? "filter-btn__selected " : ""
+            }`}
+            onClick={(e) => {
+              setGender("male");
+              setSelectedEventVerbStart(null);
+            }}
+          >
+            Male
+          </button>
+          <button
+            className={`filter--btn ${
+              gender === "female" ? "filter-btn__selected " : ""
+            }`}
+            onClick={(e) => {
+              setGender("female");
+              setSelectedEventVerbStart(null);
+            }}
+          >
+            Female
+          </button>
+          <button
+            className={`filter--btn ${
+              gender === "mix" ? "filter-btn__selected " : ""
+            }`}
+            onClick={(e) => {
+              setGender("mix");
+              setSelectedEventVerbStart(null);
+            }}
+          >
+            Mix
+          </button>
+        </div>
+
         <ReactiveGraph eventList={selectedEvents}></ReactiveGraph>
+      </div>
+      <VerticalDivider />
+      <div>
+        <p className="section--label">Overview</p>
       </div>
     </div>
   );

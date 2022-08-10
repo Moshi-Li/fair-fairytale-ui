@@ -14,9 +14,16 @@ import { ReportBackToTop } from "./Components/Utility";
 
 import { RootStoreI } from "./Store";
 
+const TabBackground: any = {
+  0: "salient-event",
+  1: "gender",
+  2: "character",
+};
+
 function App() {
   const { sourced } = useSelector((store: RootStoreI) => store.dataReducer);
   const scrollDestination = useRef<null | HTMLDivElement>(null);
+  const [tabIndex, setTabIndex] = useState<number>(0);
 
   useEffect(() => {
     if (sourced) {
@@ -30,10 +37,17 @@ function App() {
     <div className="app">
       <StoryInput></StoryInput>
       {sourced && (
-        <div ref={scrollDestination} className="report--content">
-          <Tabs>
-            <TabList>
-              <Tab>Salient EVENTS</Tab>
+        <div
+          ref={scrollDestination}
+          className={`report--content ${TabBackground[tabIndex.toString()]}`}
+        >
+          <h3>Fair Fairytale Toolkit</h3>
+          <Tabs
+            className={"tab--container"}
+            onSelect={(index) => setTabIndex(index)}
+          >
+            <TabList className={"tab--list"}>
+              <Tab>SALIENT EVENTS</Tab>
               <Tab>GENDER</Tab>
               <Tab>CHARACTER</Tab>
             </TabList>
