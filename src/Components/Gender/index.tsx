@@ -1,100 +1,104 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootStoreI } from "../../Store";
+
 import { EventI } from "../../Slices/DataSlice";
-import Graph from "./Graph";
+
+import { VerticalDivider } from "../Utility";
 import Paragraph from "./ReactiveParagraph";
+import ReactiveGraph from "./Graph";
+
+import "./index.scss";
 
 const Gender = () => {
+  const [gender, setGender] = useState<"male" | "female" | "mix">("male");
   const [selectedEvents, setSelectedEvents] = useState<EventI[]>([]);
-
-  const { eventMajorList, paragraph } = useSelector(
+  const [selectedEventVerbStart, setSelectedEventVerbStart] = useState<
+    number | null
+  >(null);
+  const { eventMajorList } = useSelector(
     (store: RootStoreI) => store.dataReducer
   );
-
   useEffect(() => {
-    let result: {
-      male: EventI[];
-      female: EventI[];
-      mix: EventI[];
-    } = { male: [], female: [], mix: [] };
-    let eventList = JSON.parse(JSON.stringify(eventMajorList)) as EventI[];
+    let result: any = {};
+    let eventList = JSON.parse(JSON.stringify(eventMajorList));
+    eventList.forEach((item: EventI) => {
+      if (!result[item.verbStartByteText]) {
+        result[item.verbStartByteText] = { male: [], female: [], mix: [] };
+      }
 
-    eventList.forEach((event) => {
-      if (event.gender === "male") {
-        result.male.push(event);
-      } else if (event.gender === "female") {
-        result.female.push(event);
+      if (item.gender === "male" || item.gender === "female") {
+        result[item.verbStartByteText][item.gender].push(item);
       } else {
-        result.mix.push(event);
+        result[item.verbStartByteText]["mix"].push(item);
       }
     });
 
-    let eventsMap: Record<number, boolean> = {};
-    result.male = result.male
-      .map((event: EventI) => {
-        if (event && eventsMap[event.temporalRank]) {
-          return undefined;
-        } else if (event) {
-          eventsMap[event.temporalRank] = true;
-          return event;
-        } else {
-          return undefined;
-        }
+    eventList = Object.keys(result)
+      .filter((key) => {
+        return result[key][gender].length >= 1;
       })
-      .filter((event) => {
-        return event !== undefined;
-      }) as EventI[];
-
-    eventsMap = {};
-    result.female = result.female
-      .map((event: EventI) => {
-        if (event && eventsMap[event.temporalRank]) {
-          return undefined;
-        } else if (event) {
-          eventsMap[event.temporalRank] = true;
-          return event;
-        } else {
-          return undefined;
-        }
+      .map((key) => {
+        return result[key][gender];
       })
-      .filter((event) => {
-        return event !== undefined;
-      }) as EventI[];
+      .flat();
 
-    eventsMap = {};
-    result.mix = result.mix
-      .map((event: EventI) => {
-        if (event && eventsMap[event.temporalRank]) {
-          return undefined;
-        } else if (event) {
-          eventsMap[event.temporalRank] = true;
-          return event;
-        } else {
-          return undefined;
-        }
-      })
-      .filter((event) => {
-        return event !== undefined;
-      }) as EventI[];
-
-    result.female.sort((a, b) => {
-      return a.temporalRank - b.temporalRank;
-    });
-    result.male.sort((a, b) => {
-      return a.temporalRank - b.temporalRank;
-    });
-    result.mix.sort((a, b) => {
-      return a.temporalRank - b.temporalRank;
-    });
-
-    setSelectedEvents(result.female.concat(result.male).concat(result.mix));
-  }, [eventMajorList]);
+    setSelectedEvents(eventList);
+  }, [gender, eventMajorList]);
 
   return (
-    <div className="salient-container">
-      <div className="salient-content">
-        <Graph eventList={selectedEvents}></Graph>
+    <div className="gender-container">
+      <div className="gender-content">
+        <p className="section--label">Story</p>
+        <Paragraph
+          gender={gender}
+          eventList={selectedEvents}
+          selectedEventVerbStart={selectedEventVerbStart}
+          setSelectedEventVerbStart={setSelectedEventVerbStart}
+        />
+
+        <p className="section--label">Gender Select</p>
+        <div className="filter--container">
+          <button
+            className={`filter--btn ${
+              gender === "male" ? "filter-btn__selected " : ""
+            }`}
+            onClick={(e) => {
+              setGender("male");
+              setSelectedEventVerbStart(null);
+            }}
+          >
+            Male
+          </button>
+          <button
+            className={`filter--btn ${
+              gender === "female" ? "filter-btn__selected " : ""
+            }`}
+            onClick={(e) => {
+              setGender("female");
+              setSelectedEventVerbStart(null);
+            }}
+          >
+            Female
+          </button>
+          <button
+            className={`filter--btn ${
+              gender === "mix" ? "filter-btn__selected " : ""
+            }`}
+            onClick={(e) => {
+              setGender("mix");
+              setSelectedEventVerbStart(null);
+            }}
+          >
+            Mix
+          </button>
+        </div>
+
+        <ReactiveGraph eventList={selectedEvents}></ReactiveGraph>
+      </div>
+      <VerticalDivider />
+      <div>
+        <p className="section--label">Overview</p>
       </div>
     </div>
   );
