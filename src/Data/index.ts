@@ -9,7 +9,10 @@ const processCharacterMeta = (characters: any) => {
   const result: any = {};
   characters.forEach((character: any) => {
     const { coref_idx } = character;
-    result[coref_idx] = character;
+    result[coref_idx] = {
+      ...character,
+      coref_id: coref_idx,
+    };
   });
 
   return result;

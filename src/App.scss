@@ -33,13 +33,17 @@
     font-size: 24px;
     line-height: 32px;
     color: #000000;
-    background: white;
+    background-color: transparent;
 
     border-radius: 10px;
 
     .tab--list {
       margin: 0 0 0px;
       padding: 0;
+      background-color: transparent;
+    }
+    .react-tabs__tab {
+      background: white;
     }
     .react-tabs__tab:focus::after {
       content: "";

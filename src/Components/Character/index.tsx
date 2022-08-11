@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootStoreI } from "../../Store";
-import { EventI } from "../../Slices/DataSlice";
+import { EventI, CharacterMetaI } from "../../Slices/DataSlice";
 import Graph from "./Graph";
 import Paragraph from "./ReactiveParagraph";
-import Stat from "./Stats";
+import { VerticalDivider } from "../Utility";
 import "./index.scss";
 
 const Character = () => {
@@ -15,10 +15,28 @@ const Character = () => {
   const [selectedEventVerbStart, setSelectedEventVerbStart] = useState<
     number | null
   >(null);
+  const [characterList, setCharacterList] = useState<null | CharacterMetaI[]>(
+    null
+  );
 
   const { eventMajorList, characterMeta, paragraph } = useSelector(
     (store: RootStoreI) => store.dataReducer
   );
+
+  useEffect(() => {
+    const result = Object.keys(characterMeta).map((key) => characterMeta[key]);
+    result.sort((a, b) => {
+      if (!a.relatedEvents) {
+        return -1;
+      } else if (!b.relatedEvents) {
+        return -1;
+      } else {
+        return b.relatedEvents?.length - a.relatedEvents?.length;
+      }
+    });
+    console.log(result.slice(0, 5));
+    setCharacterList(result.slice(0, 5));
+  }, [setCharacterList, characterMeta]);
 
   useEffect(() => {
     let result: any = {};
@@ -56,31 +74,41 @@ const Character = () => {
     <div className="character-container">
       <div className="character-content">
         <div className="character-list">
-          {Object.keys(characterMeta)
-            .map((key) => {
-              return characterMeta[key].relatedEvents?.length ? (
-                <React.Fragment>
-                  <button
-                    key={key}
-                    style={{
-                      borderColor: selectedCharacterId === key ? "green" : "",
-                    }}
-                    onClick={(e: React.MouseEvent<HTMLElement>) => {
-                      setSelectedCharacterId(key);
-                    }}
-                  >
-                    {characterMeta[key].easyName}
-                  </button>
-                </React.Fragment>
-              ) : null;
-            })
-            .flat()}
+          {characterList && characterList.length && (
+            <button
+              className={`filter--btn ${
+                selectedCharacterId === null ? "filter-btn__selected" : ""
+              }`}
+              onClick={(e: React.MouseEvent<HTMLElement>) => {
+                setSelectedCharacterId(null);
+              }}
+            >
+              Alł
+            </button>
+          )}
+          {characterList?.map((item) => {
+            return (
+              <button
+                key={item.corefId}
+                className={`filter--btn ${
+                  selectedCharacterId === item.corefId
+                    ? "filter-btn__selected"
+                    : ""
+                }`}
+                onClick={(e: React.MouseEvent<HTMLElement>) => {
+                  setSelectedCharacterId(item.corefId);
+                }}
+              >
+                {item.easyName}
+              </button>
+            );
+          })}
         </div>
         <Paragraph
           eventList={selectedEvents}
           gender={
             selectedCharacterId === null
-              ? ""
+              ? "mix"
               : characterMeta[selectedCharacterId].gender
           }
           selectedEventVerbStart={selectedEventVerbStart}
@@ -88,13 +116,7 @@ const Character = () => {
         />
         <Graph eventList={selectedEvents}></Graph>
       </div>
-      <Stat
-        data={
-          selectedCharacterId === null
-            ? Object.keys(characterMeta).map((key) => characterMeta[key])
-            : characterMeta[selectedCharacterId]
-        }
-      />
+      <VerticalDivider />
     </div>
   );
 };
