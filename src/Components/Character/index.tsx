@@ -4,6 +4,7 @@ import { RootStoreI } from "../../Store";
 import { EventI, CharacterMetaI } from "../../Slices/DataSlice";
 import Graph from "./Graph";
 import Paragraph from "./ReactiveParagraph";
+import Stat from "./Stat";
 import { VerticalDivider } from "../Utility";
 import "./index.scss";
 
@@ -19,7 +20,7 @@ const Character = () => {
     null
   );
 
-  const { eventMajorList, characterMeta, paragraph } = useSelector(
+  const { eventMajorList, characterMeta } = useSelector(
     (store: RootStoreI) => store.dataReducer
   );
 
@@ -68,7 +69,7 @@ const Character = () => {
     }
 
     setSelectedEvents(eventList);
-  }, [selectedCharacterId, eventMajorList]);
+  }, [selectedCharacterId, eventMajorList, characterMeta]);
 
   return (
     <div className="character-container">
@@ -117,6 +118,10 @@ const Character = () => {
         <Graph eventList={selectedEvents}></Graph>
       </div>
       <VerticalDivider />
+      <div className="character--stat">
+        <p className="section--label">Story level character Statistics</p>
+        <Stat></Stat>
+      </div>
     </div>
   );
 };

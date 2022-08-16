@@ -7,7 +7,7 @@ import { EventI } from "../../Slices/DataSlice";
 import { VerticalDivider } from "../Utility";
 import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
-
+import genderImage from "./genderStat.png";
 import "./index.scss";
 
 const Gender = () => {
@@ -19,6 +19,7 @@ const Gender = () => {
   const { eventMajorList } = useSelector(
     (store: RootStoreI) => store.dataReducer
   );
+
   useEffect(() => {
     let result: any = {};
     let eventList = JSON.parse(JSON.stringify(eventMajorList));
@@ -97,8 +98,9 @@ const Gender = () => {
         <ReactiveGraph eventList={selectedEvents}></ReactiveGraph>
       </div>
       <VerticalDivider />
-      <div>
-        <p className="section--label">Overview</p>
+      <div className="gender--stat">
+        <p className="section--label">Story level gender Statistic</p>
+        <img src={genderImage} alt="statImage"></img>
       </div>
     </div>
   );
