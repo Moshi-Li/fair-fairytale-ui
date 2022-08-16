@@ -41,7 +41,7 @@ function App() {
           ref={scrollDestination}
           className={`report--content ${TabBackground[tabIndex.toString()]}`}
         >
-          <h3>Fair Fairytale Toolkit</h3>
+          <h3>NECE: Narrative Event Chain Extraction Toolkit</h3>
           <Tabs
             className={"tab--container"}
             onSelect={(index) => setTabIndex(index)}
