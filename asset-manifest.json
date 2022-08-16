@@ -1,14 +1,14 @@
 {
   "files": {
-    "main.css": "/demo/static/css/main.a5354aa0.css",
-    "main.js": "/demo/static/js/main.a3cd737b.js",
+    "main.css": "/demo/static/css/main.2ba6f1d0.css",
+    "main.js": "/demo/static/js/main.0dadaf4a.js",
     "static/media/genderStat.png": "/demo/static/media/genderStat.90ed2a3f9d4567d9731a.png",
     "index.html": "/demo/index.html",
-    "main.a5354aa0.css.map": "/demo/static/css/main.a5354aa0.css.map",
-    "main.a3cd737b.js.map": "/demo/static/js/main.a3cd737b.js.map"
+    "main.2ba6f1d0.css.map": "/demo/static/css/main.2ba6f1d0.css.map",
+    "main.0dadaf4a.js.map": "/demo/static/js/main.0dadaf4a.js.map"
   },
   "entrypoints": [
-    "static/css/main.a5354aa0.css",
-    "static/js/main.a3cd737b.js"
+    "static/css/main.2ba6f1d0.css",
+    "static/js/main.0dadaf4a.js"
   ]
 }
