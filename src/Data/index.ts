@@ -8,9 +8,10 @@ const paragraph = `The story takes place in Baghdad during the Abbasid era. Ali 
 const processCharacterMeta = (characters: any) => {
   const result: any = {};
   characters.forEach((character: any) => {
-    const { coref_idx } = character;
+    const { coref_idx, total } = character;
     result[coref_idx] = {
       ...character,
+      total: parseInt(total),
       coref_id: coref_idx,
     };
   });
@@ -19,7 +20,16 @@ const processCharacterMeta = (characters: any) => {
 };
 
 //Todo
-const processEventMeta = (events: any) => {};
+const processEventMeta = (events: any) => {
+  const result = Object.keys(events).forEach((key) => {
+    return {
+      key,
+      ...events[key],
+    };
+  });
+
+  return result;
+};
 
 const processEventList = (events: any, major = false) => {
   const result = events.map(

@@ -5,6 +5,7 @@
   "homepage": "https://moshili95.github.io/demo/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
+    "@tanstack/react-table": "^8.5.11",
     "@types/dagre": "^0.7.47",
     "@types/jest": "^27.0.1",
     "@types/node": "^16.7.13",

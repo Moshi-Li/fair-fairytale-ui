@@ -116,6 +116,12 @@
   background-color: white;
 }
 
+.gender--stat {
+  width: 50%;
+  img {
+    width: 100%;
+  }
+}
 path.react-flow__edge-path {
   stroke-width: 3;
   color: black;
