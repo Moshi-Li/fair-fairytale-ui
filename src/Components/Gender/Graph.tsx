@@ -79,7 +79,6 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
             }}
           >
             <span>{`${item.event}`}</span>
-            <AiFillCloud />
           </div>
         ),
       },

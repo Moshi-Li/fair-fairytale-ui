@@ -13,9 +13,7 @@
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
-    margin: 0;
-    width: 100%;
-    padding: 6px 0;
+    line-height: 32px;
   }
 
   .gender-content {
@@ -118,8 +116,24 @@
 
 .gender--stat {
   width: 50%;
-  img {
-    width: 100%;
+
+  .gender--table {
+    margin-top: 6px;
+    margin-bottom: 16px;
+    font-size: small;
+    .gender--table--row {
+      display: flex;
+      width: 100%;
+      flex-direction: row;
+      justify-content: space-between;
+      &.head {
+        font-weight: 600;
+      }
+      div {
+        width: 20%;
+        text-align: center;
+      }
+    }
   }
 }
 path.react-flow__edge-path {

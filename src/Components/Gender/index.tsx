@@ -7,6 +7,7 @@ import { EventI } from "../../Slices/DataSlice";
 import { VerticalDivider } from "../Utility";
 import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
+import Stat from "./Stat";
 import genderImage from "./genderStat.png";
 import "./index.scss";
 
@@ -99,8 +100,7 @@ const Gender = () => {
       </div>
       <VerticalDivider />
       <div className="gender--stat">
-        <p className="section--label">Story level gender Statistic</p>
-        <img src={genderImage} alt="statImage"></img>
+        <Stat></Stat>
       </div>
     </div>
   );
