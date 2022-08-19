@@ -138,9 +138,7 @@ const Stat = () => {
             <span>Log Odds</span>
           </div>
         </div>
-        <div
-          style={{ width: "100%", height: "2px", backgroundColor: "grey" }}
-        ></div>
+
         {topEvents.female.map((item) => {
           return (
             <div className="gender--table--row">
@@ -170,9 +168,7 @@ const Stat = () => {
             <span>Log Odds</span>
           </div>
         </div>
-        <div
-          style={{ width: "100%", height: "2px", backgroundColor: "grey" }}
-        ></div>
+
         {topEvents.male.map((item) => {
           return (
             <div className="gender--table--row">
@@ -209,9 +205,7 @@ const Stat = () => {
             <span>Total</span>
           </div>
         </div>
-        <div
-          style={{ width: "100%", height: "2px", backgroundColor: "grey" }}
-        ></div>
+
         {Data.map((item) => {
           return (
             <div className="gender--table--row">
@@ -223,12 +217,6 @@ const Stat = () => {
               </div>
               <div>
                 <span>{item.subject}</span>
-              </div>
-              <div>
-                <span>{item.direct_object}</span>
-              </div>
-              <div>
-                <span>{item.total}</span>
               </div>
             </div>
           );

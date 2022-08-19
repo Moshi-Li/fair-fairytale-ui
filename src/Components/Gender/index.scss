@@ -14,15 +14,16 @@
     font-weight: 700;
     font-size: 24px;
     line-height: 32px;
+    margin: 0;
   }
 
   .gender-content {
     display: flex;
     width: 50%;
     flex-direction: column;
-    align-items: center;
-
+    align-items: flex-start;
     height: 100%;
+    text-align: left;
   }
 
   .filter--container {
@@ -108,7 +109,7 @@
 
 .directed--graph--gender {
   width: 100%;
-  height: 100%;
+  height: 550px;
   border: 5px solid gold;
 
   background-color: white;
@@ -116,6 +117,8 @@
 
 .gender--stat {
   width: 50%;
+  height: 100%;
+  overflow: auto;
 
   .gender--table {
     margin-top: 6px;
@@ -128,6 +131,10 @@
       justify-content: space-between;
       &.head {
         font-weight: 600;
+        border-bottom: 1px solid white;
+        border-right: 1px solid white;
+        padding: 2px 4px;
+        background: #d9d9d9;
       }
       div {
         width: 20%;
@@ -136,6 +143,7 @@
     }
   }
 }
+
 path.react-flow__edge-path {
   stroke-width: 3;
   color: black;
