@@ -218,6 +218,12 @@ const Stat = () => {
               <div>
                 <span>{item.subject}</span>
               </div>
+              <div>
+                <span>{item.direct_object}</span>
+              </div>
+              <div>
+                <span>{item.total}</span>
+              </div>
             </div>
           );
         })}
