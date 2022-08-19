@@ -1,6 +1,5 @@
 import React, { useEffect, useCallback } from "react";
 import dagre from "dagre";
-import { AiFillCloud } from "react-icons/ai";
 
 import ReactFlow, {
   useNodesState,
@@ -51,7 +50,7 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
   const nodes: any[] = [];
   const edges: any[] = [];
 
-  const ROW_COUNT_LIMIT = 8;
+  const ROW_COUNT_LIMIT = 6;
   const X_INIT_POS = 10;
   const Y_INIT_POS = 10;
   const X_SPACE = 200;
@@ -79,7 +78,6 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
             }}
           >
             <span>{`${item.event}`}</span>
-            <AiFillCloud />
           </div>
         ),
       },

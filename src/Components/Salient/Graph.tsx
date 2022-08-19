@@ -75,12 +75,7 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
         ),
       },
       style: {
-        backgroundColor:
-          item.gender === "male"
-            ? "blue"
-            : item.gender === "female"
-            ? "red"
-            : "silver",
+        backgroundColor: "silver",
       },
       position: { x: currentX, y: currentY },
     };

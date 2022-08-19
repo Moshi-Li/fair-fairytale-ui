@@ -6,7 +6,6 @@ import { RootStoreI } from "../../Store";
 const generateContent = (
   eventListInput: EventI[],
   paragraph: string,
-  gender: string,
   selectedEventVerbStart: number | null,
   setSelectedEventVerbStart: React.Dispatch<React.SetStateAction<number | null>>
 ) => {
@@ -22,7 +21,6 @@ const generateContent = (
       argText,
       argStartByteText,
       argEndByteText,
-      gender,
     } = eventItem;
     if (!textOccurrenceMap[verbStartByteText]) {
       textOccurrenceMap[verbStartByteText] = {
@@ -70,7 +68,7 @@ const generateContent = (
       result.push(
         <span
           key={textOccurrence.textStartIndex}
-          className={`text--occurrence__${gender}__primary${
+          className={`text--occurrence__mix__primary${
             selectedEventVerbStart === textOccurrence.textStartIndex
               ? "__selected"
               : ""
@@ -92,7 +90,7 @@ const generateContent = (
           className={`${
             selectedEventVerbStart !== null &&
             textOccurrence.associatedStartIndex.includes(selectedEventVerbStart)
-              ? `text--occurrence__${gender}__secondary`
+              ? `text--occurrence__mix__secondary`
               : ""
           }`}
         >
@@ -115,12 +113,10 @@ const generateContent = (
 };
 
 const ReactiveParagraph = ({
-  gender,
   eventList,
   selectedEventVerbStart,
   setSelectedEventVerbStart,
 }: {
-  gender: "male" | "female" | "mix";
   eventList: EventI[];
   selectedEventVerbStart: number | null;
   setSelectedEventVerbStart: React.Dispatch<
@@ -132,17 +128,10 @@ const ReactiveParagraph = ({
     return generateContent(
       eventList,
       paragraph,
-      gender,
       selectedEventVerbStart,
       setSelectedEventVerbStart
     );
-  }, [
-    eventList,
-    paragraph,
-    selectedEventVerbStart,
-    setSelectedEventVerbStart,
-    gender,
-  ]);
+  }, [eventList, paragraph, selectedEventVerbStart, setSelectedEventVerbStart]);
 
   return (
     <React.Fragment>
