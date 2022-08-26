@@ -82,6 +82,8 @@ interface RawDataI {
   eventList: EventI[];
   eventMajorList: EventI[];
   eventSalientInfo: EventSalientInfoI[];
+  storyMeta: any;
+  eventMeta: any;
 }
 
 interface DataI extends RawDataI {
@@ -96,6 +98,8 @@ const dataDefaultState: DataI = {
   eventList: [],
   eventMajorList: [],
   eventSalientInfo: [],
+  storyMeta: [],
+  eventMeta: [],
   textOccurrenceMap: {},
   sourced: false,
   fetching: false,
@@ -125,7 +129,6 @@ export const dataSlice = createSlice({
     builder.addCase(fetchData.pending, (state, action) => {
       state.paragraph = "";
       state.characterMeta = {};
-      state.eventList = [];
       state.eventSalientInfo = [];
       state.textOccurrenceMap = {};
 
@@ -135,14 +138,14 @@ export const dataSlice = createSlice({
     builder.addCase(fetchData.fulfilled, (state, action) => {
       const {
         characterMeta,
-        eventList,
+        storyMeta,
         eventMajorList,
         paragraph,
         eventSalientInfo,
+        eventMeta,
       } = action.payload;
 
       state.paragraph = paragraph;
-      state.eventList = eventList;
       state.eventMajorList = eventMajorList;
       Object.keys(characterMeta).forEach((key: string) => {
         characterMeta[key].relatedEvents = [];

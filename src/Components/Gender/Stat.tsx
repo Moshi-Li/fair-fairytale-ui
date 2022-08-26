@@ -165,7 +165,7 @@ const Stat = () => {
             <span>Argument</span>
           </div>
           <div>
-            <span>Log Odds</span>
+            <span>Log Ratio</span>
           </div>
         </div>
 
