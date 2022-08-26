@@ -20,7 +20,10 @@ dagreGraph.setDefaultEdgeLabel(() => ({}));
 const nodeWidth = 172;
 const nodeHeight = 36;
 
-const getLayoutGraph = (eventListInput: EventI[]) => {
+const getLayoutGraph = (
+  eventListInput: EventI[],
+  duplicatedEvent: number[]
+) => {
   let eventList = JSON.parse(JSON.stringify(eventListInput)) as EventI[];
 
   const eventsMap: Record<number, boolean> = {};
@@ -75,6 +78,11 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
         ),
       },
       style: {
+        borderRadius: duplicatedEvent.includes(item.verbStartByteText)
+          ? "25%"
+          : item.argument === "subject"
+          ? "0%"
+          : "50%",
         backgroundColor: "silver",
       },
       position: { x: currentX, y: currentY },
@@ -118,15 +126,22 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
 const onInit = (reactFlowInstance: any) =>
   console.log("flow loaded:", reactFlowInstance);
 
-const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
+const ReactiveGraph = ({
+  eventList,
+  duplicatedEvent,
+}: {
+  eventList: EventI[];
+  duplicatedEvent: number[];
+}) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { fitView } = useReactFlow();
+
   useEffect(() => {
-    const { nextNodes, nextEdges } = getLayoutGraph(eventList);
+    const { nextNodes, nextEdges } = getLayoutGraph(eventList, duplicatedEvent);
     setNodes(nextNodes);
     setEdges(nextEdges);
-  }, [eventList, setNodes, setEdges]);
+  }, [eventList, setNodes, setEdges, duplicatedEvent]);
 
   useEffect(() => {
     fitView();
@@ -165,10 +180,19 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
   );
 };
 
-const Graph = ({ eventList }: { eventList: EventI[] }) => {
+const Graph = ({
+  eventList,
+  duplicatedEvent,
+}: {
+  eventList: EventI[];
+  duplicatedEvent: number[];
+}) => {
   return (
     <ReactFlowProvider>
-      <ReactiveGraph eventList={eventList}></ReactiveGraph>
+      <ReactiveGraph
+        eventList={eventList}
+        duplicatedEvent={duplicatedEvent}
+      ></ReactiveGraph>
     </ReactFlowProvider>
   );
 };

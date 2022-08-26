@@ -17,18 +17,22 @@ const Salient = () => {
     (store: RootStoreI) => store.dataReducer
   );
 
+  console.log(duplicatedEvent);
   useEffect(() => {
     const visitedMap: Record<number | string, any> = {};
-    const result = [];
+    const result: number[] = [];
 
     eventMajorList.forEach((item) => {
-      if (visitedMap[item.verbStartByteText]) {
+      if (visitedMap[item.verbStartByteText] === true) {
         result.push(item.verbStartByteText);
       } else {
         visitedMap[item.verbStartByteText] = true;
       }
     });
+
+    setDuplicatedEvent(result);
   }, [eventMajorList, setDuplicatedEvent]);
+
   return (
     <div className="salient-container">
       <div className="salient-content">
@@ -37,7 +41,10 @@ const Salient = () => {
           selectedEventVerbStart={selectedEventVerbStart}
           setSelectedEventVerbStart={setSelectedEventVerbStart}
         />
-        <ReactiveGraph eventList={eventMajorList}></ReactiveGraph>
+        <ReactiveGraph
+          eventList={eventMajorList}
+          duplicatedEvent={duplicatedEvent}
+        ></ReactiveGraph>
       </div>
     </div>
   );
