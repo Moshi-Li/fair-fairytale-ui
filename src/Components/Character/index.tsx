@@ -35,7 +35,7 @@ const Character = () => {
         return b.relatedEvents?.length - a.relatedEvents?.length;
       }
     });
-    console.log(result.slice(0, 5));
+
     setCharacterList(result.slice(0, 5));
   }, [setCharacterList, characterMeta]);
 

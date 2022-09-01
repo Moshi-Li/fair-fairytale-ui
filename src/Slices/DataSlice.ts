@@ -3,17 +3,6 @@ import camelcaseKeys from "camelcase-keys";
 import { RootStoreI } from "../Store";
 import rawData from "../Data";
 
-export interface PersonalInformationI {
-  [key: string | number]: {
-    name: string;
-    gender: "male" | "female";
-    race: "foo" | "non-foo";
-    age: number;
-
-    // occurrenceId could be traced and generated from occurrences.
-    occurrenceIds: number[];
-  };
-}
 export interface TextOccurrenceI {
   type: string;
   occurrenceText: string;
@@ -34,6 +23,20 @@ export interface TextOccurrenceI {
   associatedStartIndex: number[];
 }
 
+export interface StoryMetaCountI {
+  directObject: number;
+  gender: string;
+  importance: string;
+  subject: number;
+  total: number;
+}
+
+export interface StoryMetaTopEventI {
+  argument: string;
+  eventLemma: string;
+  odds: number;
+}
+
 export interface CharacterMetaI {
   corefId: string;
   clusteredNames: string;
@@ -48,6 +51,10 @@ export interface CharacterMetaI {
   directObjectN: number;
   subjectN: number;
   relatedEvents?: EventI[];
+}
+
+export interface EventMetaI {
+  //TODO
 }
 
 export interface EventI {
@@ -70,37 +77,29 @@ export interface EventI {
   sentenceId: string;
 }
 
-export interface EventSalientInfoI {
-  sentenceId: string;
-  eventId: string;
-  temporalRank: number;
-}
-
 interface RawDataI {
-  paragraph: string;
   characterMeta: Record<string | number, CharacterMetaI>;
-  eventList: EventI[];
-  eventMajorList: EventI[];
-  eventSalientInfo: EventSalientInfoI[];
-  storyMeta: any;
   eventMeta: any;
+  storyMeta: {
+    counts: StoryMetaCountI[];
+    topEvents: Record<string, StoryMetaTopEventI[]>;
+  };
+  eventMajorList: EventI[];
+  paragraph: string;
 }
 
 interface DataI extends RawDataI {
-  textOccurrenceMap: Record<string | number, TextOccurrenceI>;
   sourced: boolean;
   fetching: boolean;
 }
 
 const dataDefaultState: DataI = {
-  paragraph: "",
+  storyMeta: { counts: [], topEvents: {} },
   characterMeta: {},
-  eventList: [],
+  eventMeta: {},
   eventMajorList: [],
-  eventSalientInfo: [],
-  storyMeta: [],
-  eventMeta: [],
-  textOccurrenceMap: {},
+  paragraph: "",
+
   sourced: false,
   fetching: false,
 };
@@ -127,26 +126,19 @@ export const dataSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchData.pending, (state, action) => {
-      state.paragraph = "";
+      state.storyMeta = { counts: [], topEvents: {} };
       state.characterMeta = {};
-      state.eventSalientInfo = [];
-      state.textOccurrenceMap = {};
+      state.eventMeta = {};
+      state.eventMajorList = [];
+      state.paragraph = "";
 
       state.fetching = true;
       state.sourced = false;
     });
     builder.addCase(fetchData.fulfilled, (state, action) => {
-      const {
-        characterMeta,
-        storyMeta,
-        eventMajorList,
-        paragraph,
-        eventSalientInfo,
-        eventMeta,
-      } = action.payload;
+      const { storyMeta, characterMeta, eventMeta, eventMajorList, paragraph } =
+        action.payload;
 
-      state.paragraph = paragraph;
-      state.eventMajorList = eventMajorList;
       Object.keys(characterMeta).forEach((key: string) => {
         characterMeta[key].relatedEvents = [];
       });
@@ -156,9 +148,15 @@ export const dataSlice = createSlice({
           characterMeta[corefId].relatedEvents?.push(item);
         }
       });
-      state.characterMeta = characterMeta;
-      state.eventSalientInfo = eventSalientInfo;
 
+      console.log({ storyMeta, characterMeta, eventMeta, eventMajorList });
+
+      state.storyMeta = storyMeta;
+      state.characterMeta = characterMeta;
+      state.eventMeta = eventMeta;
+      state.eventMajorList = eventMajorList;
+
+      state.paragraph = paragraph;
       state.sourced = true;
       state.fetching = false;
     });
