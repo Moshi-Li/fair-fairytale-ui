@@ -17,7 +17,7 @@ const Salient = () => {
     (store: RootStoreI) => store.dataReducer
   );
 
-  console.log(duplicatedEvent);
+
   useEffect(() => {
     const visitedMap: Record<number | string, any> = {};
     const result: number[] = [];

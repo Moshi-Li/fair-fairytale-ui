@@ -1,190 +1,48 @@
-import React, { useMemo } from "react";
-
-const Data = [
-  {
-    gender: "female",
-    importance: "tertiary",
-    direct_object: 6,
-    subject: 2,
-    total: 8,
-  },
-  {
-    gender: "female",
-    importance: "total",
-    direct_object: 6,
-    subject: 2,
-    total: 8,
-  },
-  {
-    gender: "group/nonbinary",
-    importance: "tertiary",
-    direct_object: 4,
-    subject: 3,
-    total: 7,
-  },
-  {
-    gender: "group/nonbinary",
-    importance: "total",
-    direct_object: 4,
-    subject: 3,
-    total: 7,
-  },
-  {
-    gender: "male",
-    importance: "primary",
-    direct_object: 6,
-    subject: 8,
-    total: 14,
-  },
-  {
-    gender: "male",
-    importance: "secondary",
-    direct_object: 6,
-    subject: 6,
-    total: 12,
-  },
-  {
-    gender: "male",
-    importance: "tertiary",
-    direct_object: 7,
-    subject: 9,
-    total: 16,
-  },
-  {
-    gender: "male",
-    importance: "total",
-    direct_object: 19,
-    subject: 23,
-    total: 42,
-  },
-  {
-    gender: "unknown",
-    importance: "tertiary",
-    direct_object: 8,
-    subject: 7,
-    total: 15,
-  },
-  {
-    gender: "unknown",
-    importance: "total",
-    direct_object: 8,
-    subject: 7,
-    total: 15,
-  },
-];
-
-const topEvents = {
-  female: [
-    {
-      event_lemma: "know",
-      argument: "direct_object",
-      female_male_odds: 25.0,
-    },
-    {
-      event_lemma: "tell",
-      argument: "direct_object",
-      female_male_odds: 3.12,
-    },
-    {
-      event_lemma: "go",
-      argument: "subject",
-      female_male_odds: 2.7,
-    },
-  ],
-  male: [
-    {
-      event_lemma: "kill",
-      male_female_odds: 2.48,
-      argument: "direct_object",
-    },
-    {
-      event_lemma: "realize",
-      male_female_odds: 2.48,
-      argument: "direct_object",
-    },
-  ],
-  unbiased: [
-    {
-      event_lemma: "befriend",
-      male_female_odds: 1.67,
-      argument: "direct_object",
-    },
-    {
-      event_lemma: "memorize",
-      male_female_odds: 1.67,
-      argument: "direct_object",
-    },
-    {
-      event_lemma: "kill",
-      male_female_odds: 0.54,
-      argument: "subject",
-    },
-  ],
-};
+import React from "react";
+import { useSelector } from "react-redux";
+import { RootStoreI } from "../../Store";
 
 const Stat = () => {
+  const { storyMeta } = useSelector((store: RootStoreI) => store.dataReducer);
+  const { topEvents, counts } = storyMeta;
   return (
     <React.Fragment>
-      <p className="section--label">Top Female Character Events</p>
-      <div className="gender--table">
-        <div className="gender--table--row head">
-          <div>
-            <span>Event</span>
-          </div>
-          <div>
-            <span>Argument</span>
-          </div>
-          <div>
-            <span>Log Odds</span>
-          </div>
-        </div>
+      {Object.keys(topEvents).map((key) => {
+        return (
+          <React.Fragment>
+            <p className="section--label">Top Female Character Events</p>
+            <div className="gender--table">
+              <div className="gender--table--row head">
+                <div>
+                  <span>Event</span>
+                </div>
+                <div>
+                  <span>Argument</span>
+                </div>
+                <div>
+                  <span>Odds Ratio</span>
+                </div>
+              </div>
 
-        {topEvents.female.map((item) => {
-          return (
-            <div className="gender--table--row">
-              <div>
-                <span>{item.event_lemma}</span>
-              </div>
-              <div>
-                <span>{item.argument}</span>
-              </div>
-              <div>
-                <span>{item.female_male_odds}</span>
-              </div>
+              {topEvents[key].map((item) => {
+                return (
+                  <div className="gender--table--row">
+                    <div>
+                      <span>{item.eventLemma}</span>
+                    </div>
+                    <div>
+                      <span>{item.argument}</span>
+                    </div>
+                    <div>
+                      <span>{item.odds}</span>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
-          );
-        })}
-      </div>
-      <p className="section--label">Top Male Character Events</p>
-      <div className="gender--table">
-        <div className="gender--table--row head">
-          <div>
-            <span>Event</span>
-          </div>
-          <div>
-            <span>Argument</span>
-          </div>
-          <div>
-            <span>Log Ratio</span>
-          </div>
-        </div>
-
-        {topEvents.male.map((item) => {
-          return (
-            <div className="gender--table--row">
-              <div>
-                <span>{item.event_lemma}</span>
-              </div>
-              <div>
-                <span>{item.argument}</span>
-              </div>
-              <div>
-                <span>{item.male_female_odds}</span>
-              </div>
-            </div>
-          );
-        })}
-      </div>
+          </React.Fragment>
+        );
+      })}
 
       <p className="section--label">Story Level Character Statistics</p>
       <div className="gender--table">
@@ -206,7 +64,7 @@ const Stat = () => {
           </div>
         </div>
 
-        {Data.map((item) => {
+        {counts.map((item) => {
           return (
             <div className="gender--table--row">
               <div>
@@ -219,7 +77,7 @@ const Stat = () => {
                 <span>{item.subject}</span>
               </div>
               <div>
-                <span>{item.direct_object}</span>
+                <span>{item.directObject}</span>
               </div>
               <div>
                 <span>{item.total}</span>
