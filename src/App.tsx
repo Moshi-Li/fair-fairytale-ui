@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+
 import "react-tabs/style/react-tabs.css";
 
 import "./App.scss";
@@ -9,6 +10,7 @@ import StoryInput from "./Components/StoryInput";
 import Salient from "./Components/Salient";
 import Gender from "./Components/Gender";
 import Character from "./Components/Character";
+import EventModal from "./Components/Modal";
 
 import { ReportBackToTop } from "./Components/Utility";
 
@@ -22,6 +24,7 @@ const TabBackground: any = {
 
 function App() {
   const { sourced } = useSelector((store: RootStoreI) => store.dataReducer);
+
   const scrollDestination = useRef<null | HTMLDivElement>(null);
   const [tabIndex, setTabIndex] = useState<number>(0);
 
@@ -65,6 +68,7 @@ function App() {
           <ReportBackToTop></ReportBackToTop>
         </div>
       )}
+      <EventModal></EventModal>
     </div>
   );
 }

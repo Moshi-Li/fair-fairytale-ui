@@ -8,7 +8,6 @@ import { VerticalDivider } from "../Utility";
 import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
 import Stat from "./Stat";
-import genderImage from "./genderStat.png";
 import "./index.scss";
 
 const Gender = () => {
