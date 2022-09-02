@@ -46,9 +46,9 @@ const processCharacterMeta = (characters: any) => {
 
 const processEventMeta = (events: any) => {
   const result: any = {};
-  Object.keys(events).map((key) => {
+  Object.keys(events).forEach((key) => {
     Object.keys(events[key][`event_occurances`]).forEach((location) => {
-      result[`${location.split(":")[0]}-${location.split(":")[1]}`] = {
+      result[`${location.split(":")[0]}+${location.split(":")[1]}`] = {
         key,
         ...events[key],
       };

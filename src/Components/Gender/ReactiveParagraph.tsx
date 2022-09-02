@@ -15,6 +15,8 @@ const generateContent = (
   const textOccurrenceMap: Record<string | number, TextOccurrenceI> = {};
   eventList.forEach((eventItem) => {
     const {
+      eventId,
+      sentenceId,
       event,
       verbStartByteText,
       verbEndByteText,
@@ -22,8 +24,8 @@ const generateContent = (
       argText,
       argStartByteText,
       argEndByteText,
-      gender,
     } = eventItem;
+
     if (!textOccurrenceMap[verbStartByteText]) {
       textOccurrenceMap[verbStartByteText] = {
         type: "verb",
@@ -32,6 +34,7 @@ const generateContent = (
         textEndIndex: verbEndByteText,
         textLength: event.length,
         associatedStartIndex: [],
+        targetEventKey: `${sentenceId}:${eventId}`,
       };
     }
     textOccurrenceMap[argStartByteText] = {
@@ -41,6 +44,7 @@ const generateContent = (
       textEndIndex: argEndByteText,
       textLength: argText.length,
       associatedStartIndex: [verbStartByteText],
+      targetEventKey: undefined,
     };
 
     textOccurrenceMap[verbStartByteText].associatedStartIndex.push(
@@ -52,7 +56,7 @@ const generateContent = (
   });
 
   const textTextOccurrenceList: TextOccurrenceI[] = [];
-  Object.keys(textOccurrenceMap).map((key) => {
+  Object.keys(textOccurrenceMap).forEach((key) => {
     textTextOccurrenceList.push(textOccurrenceMap[key]);
   });
   textTextOccurrenceList.sort((a, b) => a.textStartIndex - b.textStartIndex);

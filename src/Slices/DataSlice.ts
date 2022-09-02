@@ -10,6 +10,7 @@ export interface TextOccurrenceI {
   textStartIndex: number;
   textEndIndex: number;
   textLength: number;
+  targetEventKey: string | undefined;
 
   // nextOccurrenceId is used to generate graph
   //nextOccurrenceId: number[];
@@ -54,7 +55,10 @@ export interface CharacterMetaI {
 }
 
 export interface EventMetaI {
-  //TODO
+  eventN: string;
+  femaleEventN: string;
+  maleEventN: string;
+  [`group/nonbinaryEventN`]: string;
 }
 
 export interface EventI {
@@ -79,7 +83,7 @@ export interface EventI {
 
 interface RawDataI {
   characterMeta: Record<string | number, CharacterMetaI>;
-  eventMeta: any;
+  eventMeta: Record<string, EventMetaI>;
   storyMeta: {
     counts: StoryMetaCountI[];
     topEvents: Record<string, StoryMetaTopEventI[]>;
@@ -148,8 +152,6 @@ export const dataSlice = createSlice({
           characterMeta[corefId].relatedEvents?.push(item);
         }
       });
-
-      console.log({ storyMeta, characterMeta, eventMeta, eventMajorList });
 
       state.storyMeta = storyMeta;
       state.characterMeta = characterMeta;
