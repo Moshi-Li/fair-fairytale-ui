@@ -1,25 +1,35 @@
-import React, { useMemo } from "react";
-import { useSelector } from "react-redux";
+import React, { useMemo, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { EventI, TextOccurrenceI } from "../../Slices/DataSlice";
+import { openModal } from "../../Slices/ModalSlice";
 import { RootStoreI } from "../../Store";
-
+//targetEventKey
 const generateContent = (
   eventListInput: EventI[],
   paragraph: string,
-  gender: string,
   selectedEventVerbStart: number | null,
-  setSelectedEventVerbStart: React.Dispatch<React.SetStateAction<number | null>>
+  setSelectedEventVerbStart: React.Dispatch<
+    React.SetStateAction<number | null>
+  >,
+  openModal: (targetEventKey: string) => {
+    payload: {
+      targetEventKey: string;
+    };
+    type: string;
+  },
+  gender: string,
+  ref: React.RefObject<HTMLElement>
 ) => {
   const eventList: EventI[] = JSON.parse(JSON.stringify(eventListInput));
 
   const textOccurrenceMap: Record<string | number, TextOccurrenceI> = {};
   eventList.forEach((eventItem) => {
     const {
-      sentenceId,
       eventId,
       event,
       verbStartByteText,
       verbEndByteText,
+      sentenceId,
       argument,
       argText,
       argStartByteText,
@@ -33,7 +43,7 @@ const generateContent = (
         textEndIndex: verbEndByteText,
         textLength: event.length,
         associatedStartIndex: [],
-        targetEventKey: `${sentenceId}:${eventId}`,
+        targetEventKey: `${sentenceId}+${eventId}`,
       };
     }
     textOccurrenceMap[argStartByteText] = {
@@ -69,7 +79,30 @@ const generateContent = (
         {paragraph.substring(index, textOccurrence.textStartIndex)}
       </React.Fragment>
     );
-    if (textOccurrence.type === "verb") {
+    if (textOccurrence.textStartIndex === selectedEventVerbStart) {
+      result.push(
+        <span
+          ref={ref}
+          key={textOccurrence.textStartIndex}
+          className={`text--occurrence__${gender}__primary${
+            selectedEventVerbStart === textOccurrence.textStartIndex
+              ? "__selected"
+              : ""
+          }`}
+          onClick={(e) => {
+            setSelectedEventVerbStart(textOccurrence.textStartIndex);
+          }}
+          onDoubleClick={(e) => {
+            openModal(`${textOccurrence.targetEventKey}`);
+          }}
+        >
+          {paragraph.substring(
+            textOccurrence.textStartIndex,
+            textOccurrence.textEndIndex
+          )}
+        </span>
+      );
+    } else if (textOccurrence.type === "verb") {
       result.push(
         <span
           key={textOccurrence.textStartIndex}
@@ -80,6 +113,9 @@ const generateContent = (
           }`}
           onClick={(e) => {
             setSelectedEventVerbStart(textOccurrence.textStartIndex);
+          }}
+          onDoubleClick={(e) => {
+            openModal(`${textOccurrence.targetEventKey}`);
           }}
         >
           {paragraph.substring(
@@ -95,7 +131,7 @@ const generateContent = (
           className={`${
             selectedEventVerbStart !== null &&
             textOccurrence.associatedStartIndex.includes(selectedEventVerbStart)
-              ? `text--occurrence__${gender}__secondary`
+              ? `text--occurrence__mix__secondary`
               : ""
           }`}
         >
@@ -114,40 +150,48 @@ const generateContent = (
       {paragraph.substring(index, paragraph.length)}
     </React.Fragment>
   );
-
   return result;
 };
 
 const ReactiveParagraph = ({
   eventList,
-  gender,
   selectedEventVerbStart,
   setSelectedEventVerbStart,
+  gender,
 }: {
   eventList: EventI[];
-  gender: string;
   selectedEventVerbStart: number | null;
   setSelectedEventVerbStart: React.Dispatch<
     React.SetStateAction<number | null>
   >;
+  gender: string;
 }) => {
   const { paragraph } = useSelector((store: RootStoreI) => store.dataReducer);
+  const selectedHTMLElement = useRef<HTMLElement>(null);
+  const dispatch = useDispatch();
 
   const memoizedContent = useMemo(() => {
     return generateContent(
       eventList,
       paragraph,
-      gender,
       selectedEventVerbStart,
-      setSelectedEventVerbStart
+      setSelectedEventVerbStart,
+      (targetEventKey: string) => dispatch(openModal({ targetEventKey })),
+      gender,
+      selectedHTMLElement
     );
   }, [
     eventList,
     paragraph,
-    gender,
     selectedEventVerbStart,
     setSelectedEventVerbStart,
+    dispatch,
   ]);
+
+  useEffect(
+    () => selectedHTMLElement.current?.scrollIntoView(),
+    [memoizedContent]
+  );
 
   return (
     <React.Fragment>

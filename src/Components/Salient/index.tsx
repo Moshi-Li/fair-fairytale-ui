@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootStoreI } from "../../Store";
 
-import { EventI } from "../../Slices/DataSlice";
 import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
 
@@ -16,7 +15,6 @@ const Salient = () => {
   const { eventMajorList } = useSelector(
     (store: RootStoreI) => store.dataReducer
   );
-
 
   useEffect(() => {
     const visitedMap: Record<number | string, any> = {};
@@ -37,6 +35,7 @@ const Salient = () => {
     <div className="salient-container">
       <div className="salient-content">
         <Paragraph
+          gender="mix"
           eventList={eventMajorList}
           selectedEventVerbStart={selectedEventVerbStart}
           setSelectedEventVerbStart={setSelectedEventVerbStart}
@@ -44,6 +43,7 @@ const Salient = () => {
         <ReactiveGraph
           eventList={eventMajorList}
           duplicatedEvent={duplicatedEvent}
+          setSelectedEventVerbStart={setSelectedEventVerbStart}
         ></ReactiveGraph>
       </div>
     </div>

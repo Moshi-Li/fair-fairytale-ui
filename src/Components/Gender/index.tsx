@@ -12,13 +12,15 @@ import "./index.scss";
 
 const Gender = () => {
   const [gender, setGender] = useState<"male" | "female" | "mix">("male");
+  const { eventMajorList } = useSelector(
+    (store: RootStoreI) => store.dataReducer
+  );
   const [selectedEvents, setSelectedEvents] = useState<EventI[]>([]);
   const [selectedEventVerbStart, setSelectedEventVerbStart] = useState<
     number | null
   >(null);
-  const { eventMajorList } = useSelector(
-    (store: RootStoreI) => store.dataReducer
-  );
+
+  //const [duplicatedEvent, setDuplicatedEvent] = useState<number[]>([]);
 
   useEffect(() => {
     let result: any = {};
@@ -95,7 +97,10 @@ const Gender = () => {
           </button>
         </div>
 
-        <ReactiveGraph eventList={selectedEvents}></ReactiveGraph>
+        <ReactiveGraph
+          eventList={selectedEvents}
+          setSelectedEventVerbStart={setSelectedEventVerbStart}
+        ></ReactiveGraph>
       </div>
       <VerticalDivider />
       <div className="gender--stat">
