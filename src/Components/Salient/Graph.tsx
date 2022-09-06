@@ -22,7 +22,8 @@ const nodeHeight = 36;
 
 const getLayoutGraph = (
   eventListInput: EventI[],
-  duplicatedEvent: number[]
+  duplicatedEvent: number[],
+  setSelectedEventVerbStart: React.Dispatch<React.SetStateAction<number | null>>
 ) => {
   let eventList = JSON.parse(JSON.stringify(eventListInput)) as EventI[];
 
@@ -69,6 +70,7 @@ const getLayoutGraph = (
       data: {
         label: (
           <span
+            onClick={() => setSelectedEventVerbStart(item.verbStartByteText)}
             style={{
               backgroundColor: "transparent",
               fontSize: "32px",
@@ -129,16 +131,24 @@ const onInit = (reactFlowInstance: any) =>
 const ReactiveGraph = ({
   eventList,
   duplicatedEvent,
+  setSelectedEventVerbStart,
 }: {
   eventList: EventI[];
   duplicatedEvent: number[];
+  setSelectedEventVerbStart: React.Dispatch<
+    React.SetStateAction<number | null>
+  >;
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
   const { fitView } = useReactFlow();
 
   useEffect(() => {
-    const { nextNodes, nextEdges } = getLayoutGraph(eventList, duplicatedEvent);
+    const { nextNodes, nextEdges } = getLayoutGraph(
+      eventList,
+      duplicatedEvent,
+      setSelectedEventVerbStart
+    );
     setNodes(nextNodes);
     setEdges(nextEdges);
   }, [eventList, setNodes, setEdges, duplicatedEvent]);
@@ -183,15 +193,20 @@ const ReactiveGraph = ({
 const Graph = ({
   eventList,
   duplicatedEvent,
+  setSelectedEventVerbStart,
 }: {
   eventList: EventI[];
   duplicatedEvent: number[];
+  setSelectedEventVerbStart: React.Dispatch<
+    React.SetStateAction<number | null>
+  >;
 }) => {
   return (
     <ReactFlowProvider>
       <ReactiveGraph
         eventList={eventList}
         duplicatedEvent={duplicatedEvent}
+        setSelectedEventVerbStart={setSelectedEventVerbStart}
       ></ReactiveGraph>
     </ReactFlowProvider>
   );

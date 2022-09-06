@@ -9,7 +9,7 @@ import "./Modal.scss";
 
 const customStyles = {
   overlay: {
-    zIndex: "10",
+    zIndex: "1000",
   },
   content: {
     top: "50%",
@@ -31,7 +31,7 @@ const EventModal = () => {
   const dispatch = useDispatch();
   return (
     <div>
-      <Modal isOpen={open} style={customStyles}>
+      <Modal isOpen={open} style={customStyles} ariaHideApp={false}>
         <div className="modal--container">
           <ReactJson
             src={eventMeta[selectedEventKey] ? eventMeta[selectedEventKey] : {}}

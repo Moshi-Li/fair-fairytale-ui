@@ -110,7 +110,10 @@ const Character = () => {
           gender={
             selectedCharacterId === null
               ? "mix"
-              : characterMeta[selectedCharacterId].gender
+              : characterMeta[selectedCharacterId].gender === "male" ||
+                characterMeta[selectedCharacterId].gender === "female"
+              ? characterMeta[selectedCharacterId].gender
+              : "mix"
           }
           selectedEventVerbStart={selectedEventVerbStart}
           setSelectedEventVerbStart={setSelectedEventVerbStart}

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { EventI, TextOccurrenceI } from "../../Slices/DataSlice";
 import { openModal } from "../../Slices/ModalSlice";
@@ -16,7 +16,9 @@ const generateContent = (
       targetEventKey: string;
     };
     type: string;
-  }
+  },
+  gender: string,
+  ref: React.RefObject<HTMLElement>
 ) => {
   const eventList: EventI[] = JSON.parse(JSON.stringify(eventListInput));
 
@@ -77,11 +79,34 @@ const generateContent = (
         {paragraph.substring(index, textOccurrence.textStartIndex)}
       </React.Fragment>
     );
-    if (textOccurrence.type === "verb") {
+    if (textOccurrence.textStartIndex === selectedEventVerbStart) {
+      result.push(
+        <span
+          ref={ref}
+          key={textOccurrence.textStartIndex}
+          className={`text--occurrence__${gender}__primary${
+            selectedEventVerbStart === textOccurrence.textStartIndex
+              ? "__selected"
+              : ""
+          }`}
+          onClick={(e) => {
+            setSelectedEventVerbStart(textOccurrence.textStartIndex);
+          }}
+          onDoubleClick={(e) => {
+            openModal(`${textOccurrence.targetEventKey}`);
+          }}
+        >
+          {paragraph.substring(
+            textOccurrence.textStartIndex,
+            textOccurrence.textEndIndex
+          )}
+        </span>
+      );
+    } else if (textOccurrence.type === "verb") {
       result.push(
         <span
           key={textOccurrence.textStartIndex}
-          className={`text--occurrence__mix__primary${
+          className={`text--occurrence__${gender}__primary${
             selectedEventVerbStart === textOccurrence.textStartIndex
               ? "__selected"
               : ""
@@ -132,14 +157,17 @@ const ReactiveParagraph = ({
   eventList,
   selectedEventVerbStart,
   setSelectedEventVerbStart,
+  gender,
 }: {
   eventList: EventI[];
   selectedEventVerbStart: number | null;
   setSelectedEventVerbStart: React.Dispatch<
     React.SetStateAction<number | null>
   >;
+  gender: string;
 }) => {
   const { paragraph } = useSelector((store: RootStoreI) => store.dataReducer);
+  const selectedHTMLElement = useRef<HTMLElement>(null);
   const dispatch = useDispatch();
 
   const memoizedContent = useMemo(() => {
@@ -148,7 +176,9 @@ const ReactiveParagraph = ({
       paragraph,
       selectedEventVerbStart,
       setSelectedEventVerbStart,
-      (targetEventKey: string) => dispatch(openModal({ targetEventKey }))
+      (targetEventKey: string) => dispatch(openModal({ targetEventKey })),
+      gender,
+      selectedHTMLElement
     );
   }, [
     eventList,
@@ -156,7 +186,13 @@ const ReactiveParagraph = ({
     selectedEventVerbStart,
     setSelectedEventVerbStart,
     dispatch,
+    gender,
   ]);
+
+  useEffect(
+    () => selectedHTMLElement.current?.scrollIntoView(),
+    [memoizedContent]
+  );
 
   return (
     <React.Fragment>
