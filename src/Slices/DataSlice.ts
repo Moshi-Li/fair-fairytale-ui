@@ -113,11 +113,24 @@ export const fetchData = createAsyncThunk<
   string,
   { state: RootStoreI }
 >("dataSlice/fetchData", async (text, thunkAPI) => {
-  const res: any = await new Promise((resolve) =>
-    setTimeout(() => resolve(JSON.parse(JSON.stringify(rawData))), 1000)
-  );
+  let result;
+  const defaultStory = "ali-baba-and-forty-thieves";
+  if (rawData[text]) {
+    const res: any = await new Promise((resolve) =>
+      setTimeout(() => resolve(JSON.parse(JSON.stringify(rawData[text]))), 1000)
+    );
+    result = camelcaseKeys(res, { deep: true });
+  } else {
+    const res: any = await new Promise((resolve) =>
+      setTimeout(
+        () => resolve(JSON.parse(JSON.stringify(rawData[defaultStory]))),
+        1000
+      )
+    );
+    result = camelcaseKeys(res, { deep: true });
+  }
 
-  return camelcaseKeys(res, { deep: true }) as RawDataI;
+  return result as RawDataI;
 });
 
 export const dataSlice = createSlice({

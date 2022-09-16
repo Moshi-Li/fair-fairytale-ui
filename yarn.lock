@@ -8294,6 +8294,11 @@ react-scripts@5.0.1:
   optionalDependencies:
     fsevents "^2.3.2"
 
+react-status-indicator@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/react-status-indicator/-/react-status-indicator-1.0.2.tgz#6b36c74c123745e062bcc8099cc8fb657989401d"
+  integrity sha512-uEdVishWmqWOuFUm7i4Es5rAlhwHV7az726sHs+mtRa2PD39Ih9N0KeSQLoMC7FkNMuvAwAQsR2sNaB+ADzDuQ==
+
 react-tabs@^5.1.0:
   version "5.1.0"
   resolved "https://registry.yarnpkg.com/react-tabs/-/react-tabs-5.1.0.tgz#5ef8fad015c71c23b0fff65bd9b3bd419219c27b"

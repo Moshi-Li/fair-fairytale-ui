@@ -6,6 +6,27 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+
+  .example--container {
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 25px;
+    .example--container--status {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      div {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background-color: red;
+      }
+    }
+    .example--container--list {
+    }
+  }
+
   .story--input--textarea {
     width: 40%;
     height: 200px;
