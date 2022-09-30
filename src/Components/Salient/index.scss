@@ -82,3 +82,32 @@
 
   background-color: white;
 }
+
+.salient-container-alt {
+  border: 5px solid #00b68a;
+  border-top: none;
+  padding: 35px;
+
+  height: 80vh;
+  overflow-y: auto;
+  background: white;
+
+  .salient-content {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: center;
+
+    p {
+      width: 50%;
+      height: 80vh;
+      overflow-y: auto;
+    }
+  }
+
+  .directed--graph--salient {
+    width: 50%;
+    height: 80vh;
+    background-color: white;
+  }
+}

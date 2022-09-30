@@ -148,3 +148,127 @@ path.react-flow__edge-path {
   stroke-width: 3;
   color: black;
 }
+
+.gender-container--alt {
+  border: 5px solid #ffce6d;
+  border-top: none;
+  padding: 35px;
+
+  overflow-x: hidden;
+
+  display: flex;
+  flex-direction: column;
+  background: white;
+  .section--label {
+    font-family: "Source Sans Pro";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    margin: 0;
+  }
+
+  .gender-content {
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    align-items: flex-start;
+    height: 100%;
+    text-align: left;
+
+    p {
+      width: 50%;
+      height: 80vh;
+      overflow-y: auto;
+    }
+    .directed--graph--gender {
+      width: 50%;
+      height: 80vh;
+      background-color: white;
+    }
+  }
+  .gender--stat {
+    width: 100%;
+    color: #000000;
+  }
+  .filter--container {
+    width: 100%;
+    padding: 6px;
+
+    .filter--btn {
+      background: #ffffff;
+      border: 3px solid #999999;
+      border-radius: 4px;
+      width: 144px;
+      height: 32px;
+      cursor: pointer;
+      margin-right: 6px;
+    }
+    .filter-btn__selected {
+      border: 3px solid #000000;
+    }
+  }
+
+  .report--reactive--paragraph {
+    padding: 0 13px;
+    text-align: left;
+    margin: 5px 0 10px 0;
+    line-height: 55px;
+    height: 100%;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    color: #000000;
+
+    .text--occurrence__male__primary {
+      padding: 0 5px;
+      background-color: #8ac7ff;
+      cursor: pointer;
+    }
+    .text--occurrence__male__primary__selected {
+      padding: 0 5px;
+      background-color: #8ac7ff;
+      border: 2px solid gold;
+      cursor: pointer;
+    }
+    .text--occurrence__male__secondary {
+      padding: 0 5px;
+      border: 2px solid #8ac7ff;
+    }
+
+    .text--occurrence__female__primary {
+      padding: 0 5px;
+      background-color: #fc8e94;
+      cursor: pointer;
+    }
+    .text--occurrence__female__primary__selected {
+      padding: 0 5px;
+      background-color: #fc8e94;
+      border: 2px solid gold;
+      cursor: pointer;
+    }
+    .text--occurrence__female__secondary {
+      padding: 0 5px;
+      border: 2px solid #fc8e94;
+    }
+
+    .text--occurrence__mix__primary {
+      padding: 0 5px;
+      background-color: #a7a7a7;
+      cursor: pointer;
+    }
+    .text--occurrence__mix__primary__selected {
+      padding: 0 5px;
+      background-color: #a7a7a7;
+      border: 2px solid gold;
+      cursor: pointer;
+    }
+    .text--occurrence__mix__secondary {
+      padding: 0 5px;
+      border: 2px solid #a7a7a7;
+    }
+  }
+}

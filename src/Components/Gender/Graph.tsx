@@ -145,7 +145,7 @@ const ReactiveGraph = ({
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { fitView } = useReactFlow();
+  const { setViewport, getViewport } = useReactFlow();
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(
       eventList,
@@ -154,10 +154,6 @@ const ReactiveGraph = ({
     setNodes(nextNodes);
     setEdges(nextEdges);
   }, [eventList, setNodes, setEdges]);
-
-  useEffect(() => {
-    fitView();
-  }, [nodes, fitView]);
 
   const onConnect = useCallback(
     (params: any) =>
@@ -181,11 +177,14 @@ const ReactiveGraph = ({
           onInit={onInit}
           onConnect={onConnect}
           connectionLineType={ConnectionLineType.Straight}
-          fitView
           attributionPosition="top-right"
         >
           <Background color="#aaa" gap={16} />
-          <Controls></Controls>
+          <Controls
+            onFitView={() => {
+              setViewport({ ...getViewport(), x: 0, y: 0 });
+            }}
+          ></Controls>
         </ReactFlow>
       </div>
     </React.Fragment>
