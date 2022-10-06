@@ -21,7 +21,7 @@
     background: #ffffff;
     border: 3px solid #999999;
     border-radius: 4px;
-    width: 144px;
+    min-width: 144px;
     height: 32px;
     cursor: pointer;
     margin-right: 6px;
@@ -35,7 +35,7 @@
   text-align: left;
   margin: 20px 0;
   line-height: 55px;
-  height: 50%;
+  height: 100%;
   overflow-y: auto;
   scroll-behavior: smooth;
 

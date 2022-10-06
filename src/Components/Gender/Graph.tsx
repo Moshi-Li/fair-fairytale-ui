@@ -178,6 +178,7 @@ const ReactiveGraph = ({
           onConnect={onConnect}
           connectionLineType={ConnectionLineType.Straight}
           attributionPosition="top-right"
+          fitView
         >
           <Background color="#aaa" gap={16} />
           <Controls

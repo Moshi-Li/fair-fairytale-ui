@@ -9,9 +9,7 @@ import "./App.scss";
 
 import StoryInput from "./Components/StoryInput";
 import Salient from "./Components/Salient";
-import SalientAlt from "./Components/Salient/AlternativeSalient";
 import Gender from "./Components/Gender";
-import GenderAlt from "./Components/Gender/AlternativeGender";
 import Character from "./Components/Character";
 import EventModal from "./Components/Modal";
 
@@ -67,14 +65,6 @@ function App() {
               <Character />
             </TabPanel>
           </Tabs>
-
-          <Collapsible trigger="Start here">
-            <GenderAlt></GenderAlt>
-          </Collapsible>
-          <Collapsible trigger="Start here">
-            <SalientAlt></SalientAlt>
-          </Collapsible>
-
           <ReportBackToTop></ReportBackToTop>
         </div>
       )}

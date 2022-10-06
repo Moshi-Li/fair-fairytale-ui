@@ -54,7 +54,7 @@ const getLayoutGraph = (
   const nodes: any[] = [];
   const edges: any[] = [];
 
-  const ROW_COUNT_LIMIT = 10;
+  const ROW_COUNT_LIMIT = 6;
   const X_INIT_POS = 10;
   const Y_INIT_POS = 10;
   const X_SPACE = 200;
