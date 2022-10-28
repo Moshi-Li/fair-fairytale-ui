@@ -26,7 +26,10 @@ const Y_INIT_POS = 10;
 const X_SPACE = 200;
 const Y_SPACE = 100;
 
-const getLayoutGraph = (eventListInput: EventI[]) => {
+const getLayoutGraph = (
+  eventListInput: EventI[],
+  setSelectedEventVerbStart: React.Dispatch<React.SetStateAction<number | null>>
+) => {
   let eventList = JSON.parse(JSON.stringify(eventListInput)) as EventI[];
 
   eventList.sort((a, b) => {
@@ -50,6 +53,7 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
       data: {
         label: (
           <span
+            onClick={() => setSelectedEventVerbStart(item.verbStartByteText)}
             style={{
               backgroundColor: "transparent",
               fontSize: "32px",
@@ -107,12 +111,23 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
 const onInit = (reactFlowInstance: any) =>
   console.log("flow loaded:", reactFlowInstance);
 
-const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
+const ReactiveGraph = ({
+  eventList,
+  setSelectedEventVerbStart,
+}: {
+  eventList: EventI[];
+  setSelectedEventVerbStart: React.Dispatch<
+    React.SetStateAction<number | null>
+  >;
+}) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
 
   useEffect(() => {
-    const { nextNodes, nextEdges } = getLayoutGraph(eventList);
+    const { nextNodes, nextEdges } = getLayoutGraph(
+      eventList,
+      setSelectedEventVerbStart
+    );
     setNodes(nextNodes);
     setEdges(nextEdges);
   }, [eventList, setNodes, setEdges]);
@@ -148,10 +163,21 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
   );
 };
 
-const Graph = ({ eventList }: { eventList: EventI[] }) => {
+const Graph = ({
+  eventList,
+  setSelectedEventVerbStart,
+}: {
+  eventList: EventI[];
+  setSelectedEventVerbStart: React.Dispatch<
+    React.SetStateAction<number | null>
+  >;
+}) => {
   return (
     <ReactFlowProvider>
-      <ReactiveGraph eventList={eventList}></ReactiveGraph>
+      <ReactiveGraph
+        eventList={eventList}
+        setSelectedEventVerbStart={setSelectedEventVerbStart}
+      ></ReactiveGraph>
     </ReactFlowProvider>
   );
 };

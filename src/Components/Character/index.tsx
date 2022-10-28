@@ -122,7 +122,10 @@ const Character = () => {
           />
         </div>
 
-        <Graph eventList={selectedEvents}></Graph>
+        <Graph
+          eventList={selectedEvents}
+          setSelectedEventVerbStart={setSelectedEventVerbStart}
+        ></Graph>
       </div>
 
       <div className="character--stat">
