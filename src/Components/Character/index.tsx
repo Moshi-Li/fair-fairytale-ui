@@ -5,7 +5,6 @@ import { EventI, CharacterMetaI } from "../../Slices/DataSlice";
 import Graph from "./Graph";
 import Paragraph from "./ReactiveParagraph";
 import Stat from "./Stat";
-import { VerticalDivider } from "../Utility";
 import "./index.scss";
 
 const Character = () => {
@@ -72,57 +71,61 @@ const Character = () => {
   }, [selectedCharacterId, eventMajorList, characterMeta]);
 
   return (
-    <div className="character-container">
-      <div className="character-content">
-        <div className="character-list">
-          {characterList && characterList.length && (
-            <button
-              className={`filter--btn ${
-                selectedCharacterId === null ? "filter-btn__selected" : ""
-              }`}
-              onClick={(e: React.MouseEvent<HTMLElement>) => {
-                setSelectedCharacterId(null);
-              }}
-            >
-              Alł
-            </button>
-          )}
-          {characterList?.map((item) => {
-            return (
+    <div className="character--container">
+      <div className="character--content">
+        <div className="character--content--left">
+          <p className="section--label">Gender Select</p>
+          <div className="character--list">
+            {characterList && characterList.length && (
               <button
-                key={item.corefId}
                 className={`filter--btn ${
-                  selectedCharacterId === item.corefId
-                    ? "filter-btn__selected"
-                    : ""
+                  selectedCharacterId === null ? "filter-btn__selected" : ""
                 }`}
                 onClick={(e: React.MouseEvent<HTMLElement>) => {
-                  setSelectedCharacterId(item.corefId);
+                  setSelectedCharacterId(null);
                 }}
               >
-                {item.easyName}
+                Alł
               </button>
-            );
-          })}
+            )}
+            {characterList?.map((item) => {
+              return (
+                <button
+                  key={item.corefId}
+                  className={`filter--btn ${
+                    selectedCharacterId === item.corefId
+                      ? "filter-btn__selected"
+                      : ""
+                  }`}
+                  onClick={(e: React.MouseEvent<HTMLElement>) => {
+                    setSelectedCharacterId(item.corefId);
+                  }}
+                >
+                  {item.easyName}
+                </button>
+              );
+            })}
+          </div>
+          <p className="section--label">Story</p>
+          <Paragraph
+            eventList={selectedEvents}
+            gender={
+              selectedCharacterId === null
+                ? "mix"
+                : characterMeta[selectedCharacterId].gender === "male" ||
+                  characterMeta[selectedCharacterId].gender === "female"
+                ? characterMeta[selectedCharacterId].gender
+                : "mix"
+            }
+            selectedEventVerbStart={selectedEventVerbStart}
+            setSelectedEventVerbStart={setSelectedEventVerbStart}
+          />
         </div>
-        <Paragraph
-          eventList={selectedEvents}
-          gender={
-            selectedCharacterId === null
-              ? "mix"
-              : characterMeta[selectedCharacterId].gender === "male" ||
-                characterMeta[selectedCharacterId].gender === "female"
-              ? characterMeta[selectedCharacterId].gender
-              : "mix"
-          }
-          selectedEventVerbStart={selectedEventVerbStart}
-          setSelectedEventVerbStart={setSelectedEventVerbStart}
-        />
+
         <Graph eventList={selectedEvents}></Graph>
       </div>
-      <VerticalDivider />
+
       <div className="character--stat">
-        <p className="section--label">Story level character Statistics</p>
         <Stat></Stat>
       </div>
     </div>

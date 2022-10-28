@@ -15,46 +15,23 @@ interface CharacterStatI {
   appearance: number;
 }
 
-const characterColumnHelper = createColumnHelper<CharacterStatI>();
+const Statistics = ({
+  headerInfo,
+  data,
+  label,
+}: {
+  headerInfo: { accessor: string; header: string }[];
+  data: any[];
+  label: string;
+}) => {
+  const characterColumnHelper = createColumnHelper<any>();
 
-const columns = [
-  characterColumnHelper.accessor("name", {
-    header: () => "Name",
-    cell: (info) => info.getValue(),
-  }),
-  characterColumnHelper.accessor("gender", {
-    header: () => "Gender",
-    cell: (info) => info.getValue(),
-  }),
-  characterColumnHelper.accessor("importance", {
-    header: () => "Importance",
-    cell: (info) => info.getValue(),
-  }),
-  characterColumnHelper.accessor("appearance", {
-    header: () => "Appearance",
-    cell: (info) => info.getValue(),
-  }),
-];
-
-const Stat = () => {
-  const [data, setData] = useState<CharacterStatI[]>([]);
-  const { characterMeta } = useSelector(
-    (store: RootStoreI) => store.dataReducer
-  );
-
-  useEffect(() => {
-    const result: CharacterStatI[] = Object.keys(characterMeta).map((key) => {
-      const { easyName, gender, importance, total } = characterMeta[key];
-      return {
-        name: easyName,
-        gender,
-        importance,
-        appearance: total,
-      };
+  const columns = headerInfo.map(({ accessor, header }) => {
+    return characterColumnHelper.accessor(accessor, {
+      header: () => header,
+      cell: (info) => info.getValue(),
     });
-    result.sort((a, b) => b.appearance - a.appearance);
-    setData(result.slice(0, 5));
-  }, [characterMeta]);
+  });
 
   const table = useReactTable({
     data,
@@ -64,6 +41,7 @@ const Stat = () => {
 
   return (
     <div className="character--table">
+      <p className="section--label">{label}</p>
       <table>
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -110,6 +88,44 @@ const Stat = () => {
         </tfoot>
       </table>
     </div>
+  );
+};
+
+const Stat = () => {
+  const [data, setData] = useState<CharacterStatI[]>([]);
+  const { characterMeta } = useSelector(
+    (store: RootStoreI) => store.dataReducer
+  );
+
+  const headerInfo = [
+    { accessor: "name", header: "Name" },
+    { accessor: "gender", header: "Gender" },
+    { accessor: "importance", header: "Importance" },
+    { accessor: "appearance", header: "Appearance" },
+  ];
+
+  useEffect(() => {
+    const result: CharacterStatI[] = Object.keys(characterMeta).map((key) => {
+      const { easyName, gender, importance, total } = characterMeta[key];
+      return {
+        name: easyName,
+        gender,
+        importance,
+        appearance: total,
+      };
+    });
+    result.sort((a, b) => b.appearance - a.appearance);
+    setData(result.slice(0, 5));
+  }, [characterMeta]);
+
+  return (
+    <React.Fragment>
+      <Statistics
+        headerInfo={headerInfo}
+        data={data}
+        label="Story level character Statistics"
+      ></Statistics>
+    </React.Fragment>
   );
 };
 
