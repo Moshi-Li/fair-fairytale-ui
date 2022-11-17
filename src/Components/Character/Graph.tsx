@@ -69,6 +69,7 @@ const getLayoutGraph = (
             : item.gender === "female"
             ? "red"
             : "silver",
+        borderRadius: item.argument === "subject" ? "0%" : "50%",
       },
       position: { x: currentX, y: currentY },
     };
