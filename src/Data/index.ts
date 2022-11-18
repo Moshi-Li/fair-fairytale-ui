@@ -3,25 +3,33 @@ import storyTwo from "./bamboo-cutter-moon-child";
 
 const processStoryMeta = (meta: any) => {
   const data = meta[`events`];
-  data[`top_events`][`female`] = data[`top_events`][`female`].map(
-    (item: any) => ({
-      event_lemma: item[`event_lemma`],
-      argument: item[`argument`],
-      odds: item[`female_male_odds`],
-    })
-  );
-  data[`top_events`][`male`] = data[`top_events`][`male`].map((item: any) => ({
-    event_lemma: item[`event_lemma`],
-    argument: item[`argument`],
-    odds: item[`male_female_odds`],
-  }));
-  data[`top_events`][`unbiased`] = data[`top_events`][`unbiased`].map(
-    (item: any) => ({
-      event_lemma: item[`event_lemma`],
-      argument: item[`argument`],
-      odds: item[`male_female_odds`],
-    })
-  );
+  if (data[`top_events`][`female`]) {
+    data[`top_events`][`female`] = data[`top_events`][`female`].map(
+      (item: any) => ({
+        event_lemma: item[`event_lemma`],
+        argument: item[`argument`],
+        odds: item[`female_male_odds`],
+      })
+    );
+  }
+  if (data[`top_events`][`male`]) {
+    data[`top_events`][`male`] = data[`top_events`][`male`].map(
+      (item: any) => ({
+        event_lemma: item[`event_lemma`],
+        argument: item[`argument`],
+        odds: item[`male_female_odds`],
+      })
+    );
+  }
+  if (data[`top_events`][`unbiased`]) {
+    data[`top_events`][`unbiased`] = data[`top_events`][`unbiased`].map(
+      (item: any) => ({
+        event_lemma: item[`event_lemma`],
+        argument: item[`argument`],
+        odds: item[`male_female_odds`],
+      })
+    );
+  }
 
   return data;
 };
@@ -41,6 +49,7 @@ const processCharacterMeta = (characters: any) => {
 };
 
 const processEventMeta = (events: any) => {
+  console.log(typeof events);
   const result: any = {};
   Object.keys(events).forEach((key) => {
     Object.keys(events[key][`event_occurances`]).forEach((location) => {
@@ -121,5 +130,17 @@ result.forEach((item: any) => {
   };
 });
 
-console.log(Data);
+export const processStory = (story: any) => {
+  const { storyMeta, characterMeta, eventMeta, eventMajorList, paragraph } =
+    story;
+
+  return {
+    ...story,
+    storyMeta: processStoryMeta(storyMeta),
+    characterMeta: processCharacterMeta(characterMeta),
+    eventMeta: processEventMeta(eventMeta),
+    eventMajorList: processEventList(eventMajorList, paragraph),
+  };
+};
+
 export default Data;

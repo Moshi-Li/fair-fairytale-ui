@@ -7,7 +7,14 @@ import { fetchData } from "../Slices/DataSlice";
 
 import "./StoryInput.scss";
 
-const storyNames = ["ali-baba-and-forty-thieves", "bamboo-cutter-moon-child"];
+const storyNames = [
+  "a-fish-story",
+  "a-french-puck",
+  "a-legend-of-confucius",
+  "a-legend-of-knockmany",
+  "ali-baba-and-forty-thieves",
+  "alleleiraugh-or-the-many-furred-creature",
+];
 
 const StoryInput = () => {
   const { fetching } = useSelector((store: RootStoreI) => store.dataReducer);
@@ -31,12 +38,7 @@ const StoryInput = () => {
 
       <textarea className="story--input--textarea"></textarea>
       {!fetching && (
-        <button
-          className="story--input--btn"
-          onClick={() => appDispatchAction(fetchData(""))}
-          disabled
-          title="Server is down"
-        >
+        <button className="story--input--btn" disabled title="Server is down">
           Test
         </button>
       )}
