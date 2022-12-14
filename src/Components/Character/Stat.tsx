@@ -19,10 +19,12 @@ const Statistics = ({
   headerInfo,
   data,
   label,
+  setSelectedCharacterId,
 }: {
   headerInfo: { accessor: string; header: string }[];
   data: any[];
   label: string;
+  setSelectedCharacterId: React.Dispatch<React.SetStateAction<string | null>>;
 }) => {
   const characterColumnHelper = createColumnHelper<any>();
 
@@ -60,15 +62,35 @@ const Statistics = ({
           ))}
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
-            </tr>
-          ))}
+          {table.getRowModel().rows.map((row) => {
+            return (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell, index) =>
+                  index === 0 ? (
+                    <td
+                      key={cell.id}
+                      onClick={() => {
+                        setSelectedCharacterId(row.original.corefId);
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  ) : (
+                    <td key={cell.id}>
+                      {flexRender(
+                        cell.column.columnDef.cell,
+                        cell.getContext()
+                      )}
+                    </td>
+                  )
+                )}
+              </tr>
+            );
+          })}
         </tbody>
         <tfoot>
           {table.getFooterGroups().map((footerGroup) => (
@@ -91,7 +113,11 @@ const Statistics = ({
   );
 };
 
-const Stat = () => {
+const Stat = ({
+  setSelectedCharacterId,
+}: {
+  setSelectedCharacterId: React.Dispatch<React.SetStateAction<string | null>>;
+}) => {
   const [data, setData] = useState<CharacterStatI[]>([]);
   const { characterMeta } = useSelector(
     (store: RootStoreI) => store.dataReducer
@@ -106,12 +132,15 @@ const Stat = () => {
 
   useEffect(() => {
     const result: CharacterStatI[] = Object.keys(characterMeta).map((key) => {
-      const { easyName, gender, importance, total } = characterMeta[key];
+      const { easyName, gender, importance, total, corefId } =
+        characterMeta[key];
+
       return {
         name: easyName,
         gender,
         importance,
         appearance: total,
+        corefId,
       };
     });
     result.sort((a, b) => b.appearance - a.appearance);
@@ -121,6 +150,7 @@ const Stat = () => {
   return (
     <React.Fragment>
       <Statistics
+        setSelectedCharacterId={setSelectedCharacterId}
         headerInfo={headerInfo}
         data={data}
         label="Story level character Statistics"

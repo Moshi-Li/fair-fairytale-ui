@@ -129,7 +129,7 @@ const Character = () => {
       </div>
 
       <div className="character--stat">
-        <Stat></Stat>
+        <Stat setSelectedCharacterId={setSelectedCharacterId}></Stat>
       </div>
     </div>
   );
