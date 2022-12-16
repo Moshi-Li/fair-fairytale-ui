@@ -54,7 +54,7 @@ const getLayoutGraph = (
   const nodes: any[] = [];
   const edges: any[] = [];
 
-  const ROW_COUNT_LIMIT = 10;
+  const ROW_COUNT_LIMIT = 6;
   const X_INIT_POS = 10;
   const Y_INIT_POS = 10;
   const X_SPACE = 200;
@@ -125,9 +125,6 @@ const getLayoutGraph = (
   return { nextNodes: nodes, nextEdges: edges };
 };
 
-const onInit = (reactFlowInstance: any) =>
-  console.log("flow loaded:", reactFlowInstance);
-
 const ReactiveGraph = ({
   eventList,
   duplicatedEvent,
@@ -141,7 +138,7 @@ const ReactiveGraph = ({
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { fitView } = useReactFlow();
+  const { fitView, setViewport, getViewport } = useReactFlow();
 
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(
@@ -152,10 +149,6 @@ const ReactiveGraph = ({
     setNodes(nextNodes);
     setEdges(nextEdges);
   }, [eventList, setNodes, setEdges, duplicatedEvent]);
-
-  useEffect(() => {
-    fitView();
-  }, [nodes, fitView]);
 
   const onConnect = useCallback(
     (params: any) =>
@@ -176,14 +169,17 @@ const ReactiveGraph = ({
           edges={edges}
           onNodesChange={onNodesChange}
           onEdgesChange={onEdgesChange}
-          onInit={onInit}
           onConnect={onConnect}
           connectionLineType={ConnectionLineType.Straight}
-          fitView
           attributionPosition="top-right"
+          fitView
         >
           <Background color="#aaa" gap={16} />
-          <Controls></Controls>
+          <Controls
+            onFitView={() => {
+              setViewport({ ...getViewport(), x: 0, y: 0 });
+            }}
+          ></Controls>
         </ReactFlow>
       </div>
     </React.Fragment>

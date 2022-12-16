@@ -26,7 +26,13 @@ const Y_INIT_POS = 10;
 const X_SPACE = 200;
 const Y_SPACE = 100;
 
-const getLayoutGraph = (eventListInput: EventI[]) => {
+const getLayoutGraph = (
+  eventListInput: EventI[],
+  setSelectedEventVerbStart: React.Dispatch<
+    React.SetStateAction<number | null>
+  >,
+  color: string
+) => {
   let eventList = JSON.parse(JSON.stringify(eventListInput)) as EventI[];
 
   eventList.sort((a, b) => {
@@ -46,25 +52,21 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
   eventList.forEach((item, index) => {
     const nodeToBeAdded = {
       id: `${index}`,
-
       data: {
         label: (
           <span
+            onClick={() => setSelectedEventVerbStart(item.verbStartByteText)}
             style={{
               backgroundColor: "transparent",
               fontSize: "32px",
-              color: "white",
+              color: "black",
             }}
           >{`${item.event}`}</span>
         ),
       },
       style: {
-        backgroundColor:
-          item.gender === "male"
-            ? "blue"
-            : item.gender === "female"
-            ? "red"
-            : "silver",
+        backgroundColor: color,
+        borderRadius: item.argument === "subject" ? "0%" : "50%",
       },
       position: { x: currentX, y: currentY },
     };
@@ -107,19 +109,29 @@ const getLayoutGraph = (eventListInput: EventI[]) => {
 const onInit = (reactFlowInstance: any) =>
   console.log("flow loaded:", reactFlowInstance);
 
-const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
+const ReactiveGraph = ({
+  eventList,
+  setSelectedEventVerbStart,
+  color,
+}: {
+  eventList: EventI[];
+  setSelectedEventVerbStart: React.Dispatch<
+    React.SetStateAction<number | null>
+  >;
+  color: string;
+}) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { fitView } = useReactFlow();
 
   useEffect(() => {
-    const { nextNodes, nextEdges } = getLayoutGraph(eventList);
+    const { nextNodes, nextEdges } = getLayoutGraph(
+      eventList,
+      setSelectedEventVerbStart,
+      color
+    );
     setNodes(nextNodes);
     setEdges(nextEdges);
   }, [eventList, setNodes, setEdges]);
-  useEffect(() => {
-    fitView();
-  }, [nodes, fitView]);
 
   const onConnect = useCallback(
     (params: any) =>
@@ -152,10 +164,24 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
   );
 };
 
-const Graph = ({ eventList }: { eventList: EventI[] }) => {
+const Graph = ({
+  eventList,
+  setSelectedEventVerbStart,
+  color,
+}: {
+  eventList: EventI[];
+  setSelectedEventVerbStart: React.Dispatch<
+    React.SetStateAction<number | null>
+  >;
+  color: string;
+}) => {
   return (
     <ReactFlowProvider>
-      <ReactiveGraph eventList={eventList}></ReactiveGraph>
+      <ReactiveGraph
+        color={color}
+        eventList={eventList}
+        setSelectedEventVerbStart={setSelectedEventVerbStart}
+      ></ReactiveGraph>
     </ReactFlowProvider>
   );
 };

@@ -190,7 +190,12 @@ const ReactiveParagraph = ({
   ]);
 
   useEffect(
-    () => selectedHTMLElement.current?.scrollIntoView(),
+    () =>
+      selectedHTMLElement.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      }),
     [memoizedContent]
   );
 

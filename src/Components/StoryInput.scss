@@ -12,9 +12,10 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 25px;
+    align-items: flex-start;
+
     .example--container--status {
       display: flex;
-      flex-direction: row;
       align-items: center;
       div {
         width: 20px;
@@ -24,6 +25,27 @@
       }
     }
     .example--container--list {
+      display: flex;
+      flex-direction: row;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+    .search--bar--container {
+      .search--bar--input {
+        width: 450px;
+        border-radius: 5px;
+        height: 30px;
+        border: 1px solid gray;
+      }
+      .search--bar--input:focus {
+        outline: none;
+      }
+      .search--bar--result {
+        margin: 2px 0px;
+        color: grey;
+        font-size: 12px;
+        text-align: left;
+      }
     }
   }
 

@@ -17,12 +17,12 @@ const generateContent = (
     };
     type: string;
   },
-  gender: string,
+  color: string,
   ref: React.RefObject<HTMLElement>
 ) => {
   const eventList: EventI[] = JSON.parse(JSON.stringify(eventListInput));
 
-  const textOccurrenceMap: Record<string | number, TextOccurrenceI> = {};
+  const textOccurrenceMap: Record<string | number, TextOccurrenceI[]> = {};
   eventList.forEach((eventItem) => {
     const {
       eventId,
@@ -34,19 +34,26 @@ const generateContent = (
       argText,
       argStartByteText,
       argEndByteText,
+      corefId,
     } = eventItem;
+
     if (!textOccurrenceMap[verbStartByteText]) {
-      textOccurrenceMap[verbStartByteText] = {
-        type: "verb",
-        occurrenceText: event,
-        textStartIndex: verbStartByteText,
-        textEndIndex: verbEndByteText,
-        textLength: event.length,
-        associatedStartIndex: [],
-        targetEventKey: `${sentenceId}+${eventId}`,
-      };
+      textOccurrenceMap[verbStartByteText] = [
+        {
+          type: "verb",
+          occurrenceText: event,
+          textStartIndex: verbStartByteText,
+          textEndIndex: verbEndByteText,
+          textLength: event.length,
+          associatedStartIndex: [],
+          targetEventKey: `${sentenceId}+${eventId}`,
+        },
+      ];
     }
-    textOccurrenceMap[argStartByteText] = {
+    if (!textOccurrenceMap[argStartByteText]) {
+      textOccurrenceMap[argStartByteText] = [];
+    }
+    textOccurrenceMap[argStartByteText].push({
       type: argument,
       occurrenceText: argText,
       textStartIndex: argStartByteText,
@@ -54,19 +61,12 @@ const generateContent = (
       textLength: argText.length,
       associatedStartIndex: [verbStartByteText],
       targetEventKey: undefined,
-    };
-
-    textOccurrenceMap[verbStartByteText].associatedStartIndex.push(
-      argStartByteText
-    );
-    textOccurrenceMap[verbStartByteText].associatedStartIndex.sort(
-      (a, b) => a - b
-    );
+    });
   });
 
   const textTextOccurrenceList: TextOccurrenceI[] = [];
   Object.keys(textOccurrenceMap).forEach((key) => {
-    textTextOccurrenceList.push(textOccurrenceMap[key]);
+    textTextOccurrenceList.push(textOccurrenceMap[key][0]);
   });
   textTextOccurrenceList.sort((a, b) => a.textStartIndex - b.textStartIndex);
 
@@ -79,38 +79,21 @@ const generateContent = (
         {paragraph.substring(index, textOccurrence.textStartIndex)}
       </React.Fragment>
     );
-    if (textOccurrence.textStartIndex === selectedEventVerbStart) {
+    if (textOccurrence.type === "verb") {
       result.push(
         <span
-          ref={ref}
+          ref={
+            textOccurrence.textStartIndex === selectedEventVerbStart
+              ? ref
+              : null
+          }
           key={textOccurrence.textStartIndex}
-          className={`text--occurrence__${gender}__primary${
+          className={`text--occurrence__primary${
             selectedEventVerbStart === textOccurrence.textStartIndex
               ? "__selected"
               : ""
           }`}
-          onClick={(e) => {
-            setSelectedEventVerbStart(textOccurrence.textStartIndex);
-          }}
-          onDoubleClick={(e) => {
-            openModal(`${textOccurrence.targetEventKey}`);
-          }}
-        >
-          {paragraph.substring(
-            textOccurrence.textStartIndex,
-            textOccurrence.textEndIndex
-          )}
-        </span>
-      );
-    } else if (textOccurrence.type === "verb") {
-      result.push(
-        <span
-          key={textOccurrence.textStartIndex}
-          className={`text--occurrence__${gender}__primary${
-            selectedEventVerbStart === textOccurrence.textStartIndex
-              ? "__selected"
-              : ""
-          }`}
+          style={{ backgroundColor: color }}
           onClick={(e) => {
             setSelectedEventVerbStart(textOccurrence.textStartIndex);
           }}
@@ -131,7 +114,7 @@ const generateContent = (
           className={`${
             selectedEventVerbStart !== null &&
             textOccurrence.associatedStartIndex.includes(selectedEventVerbStart)
-              ? `text--occurrence__mix__secondary`
+              ? `text--occurrence__secondary`
               : ""
           }`}
         >
@@ -157,14 +140,14 @@ const ReactiveParagraph = ({
   eventList,
   selectedEventVerbStart,
   setSelectedEventVerbStart,
-  gender,
+  color,
 }: {
   eventList: EventI[];
   selectedEventVerbStart: number | null;
   setSelectedEventVerbStart: React.Dispatch<
     React.SetStateAction<number | null>
   >;
-  gender: string;
+  color: string;
 }) => {
   const { paragraph } = useSelector((store: RootStoreI) => store.dataReducer);
   const selectedHTMLElement = useRef<HTMLElement>(null);
@@ -177,7 +160,7 @@ const ReactiveParagraph = ({
       selectedEventVerbStart,
       setSelectedEventVerbStart,
       (targetEventKey: string) => dispatch(openModal({ targetEventKey })),
-      gender,
+      color,
       selectedHTMLElement
     );
   }, [
@@ -189,7 +172,12 @@ const ReactiveParagraph = ({
   ]);
 
   useEffect(
-    () => selectedHTMLElement.current?.scrollIntoView(),
+    () =>
+      selectedHTMLElement.current?.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+        inline: "center",
+      }),
     [memoizedContent]
   );
 

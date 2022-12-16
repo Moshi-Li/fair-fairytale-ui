@@ -1,42 +1,60 @@
-.character-container {
-  display: flex;
-  flex-direction: row;
+.character--container {
   border: 5px solid #787878;
   border-top: none;
-
   padding: 35px;
   height: 66vh;
   overflow-y: auto;
+
   background: white;
-}
-
-.character-content {
-  display: flex;
-  height: 100%;
-  width: 50%;
-  flex-direction: column;
-  align-items: center;
-
-  .filter--btn {
-    background: #ffffff;
-    border: 3px solid #999999;
-    border-radius: 4px;
-    width: 144px;
-    height: 32px;
-    cursor: pointer;
-    margin-right: 6px;
+  .section--label {
+    font-family: "Source Sans Pro";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 32px;
+    margin: 0;
   }
-  .filter-btn__selected {
-    border: 3px solid #000000;
+  .character--content {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: flex-start;
+    height: 100%;
+    text-align: left;
+
+    .character--content--left {
+      width: 100%;
+    }
+
+    .character--list {
+      width: 100%;
+      padding: 6px;
+
+      .filter--btn {
+        background: #ffffff;
+        border: 3px solid #999999;
+        border-radius: 4px;
+        min-width: 144px;
+        height: 32px;
+        cursor: pointer;
+        margin-right: 6px;
+      }
+      .filter-btn__selected {
+        border: 3px solid #000000;
+      }
+    }
   }
 }
 
 .report--reactive--paragraph {
+  padding: 0 13px;
+  width: 100%;
+  box-sizing: border-box;
   text-align: left;
-  margin: 20px 0;
+  margin: 5px 0 10px 0;
   line-height: 55px;
-  height: 50%;
-  overflow-y: auto;
+  max-height: 50vh;
+  overflow-y: overlay;
   scroll-behavior: smooth;
 
   font-weight: 700;
@@ -44,59 +62,27 @@
   line-height: 32px;
   color: #000000;
 
-  .text--occurrence__male__primary {
+  .text--occurrence__primary {
     padding: 0 5px;
-    background-color: #8ac7ff;
     cursor: pointer;
-  }
-  .text--occurrence__male__primary__selected {
-    padding: 0 5px;
-    background-color: #8ac7ff;
-    border: 2px solid gold;
-    cursor: pointer;
-  }
-  .text--occurrence__male__secondary {
-    padding: 0 5px;
-    border: 2px solid #8ac7ff;
   }
 
-  .text--occurrence__female__primary {
+  .text--occurrence__primary__selected {
     padding: 0 5px;
-    background-color: #fc8e94;
+    border: 3px solid black;
     cursor: pointer;
-  }
-  .text--occurrence__female__primary__selected {
-    padding: 0 5px;
-    background-color: #fc8e94;
-    border: 2px solid gold;
-    cursor: pointer;
-  }
-  .text--occurrence__female__secondary {
-    padding: 0 5px;
-    border: 2px solid #fc8e94;
   }
 
-  .text--occurrence__mix__primary {
-    padding: 0 5px;
-    background-color: #a7a7a7;
-    cursor: pointer;
-  }
-  .text--occurrence__mix__primary__selected {
-    padding: 0 5px;
-    background-color: #a7a7a7;
-    border: 2px solid gold;
-    cursor: pointer;
-  }
-  .text--occurrence__mix__secondary {
-    padding: 0 5px;
-    border: 2px solid #a7a7a7;
+  .text--occurrence__secondary {
+    border: 1px solid #000000;
   }
 }
 
 .directed--graph--character {
   width: 100%;
-  height: 500px;
+  height: 100%;
   border: 5px solid gold;
+
   background-color: white;
 }
 

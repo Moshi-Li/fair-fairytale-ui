@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootStoreI } from "../../Store";
-import { EventI, CharacterMetaI } from "../../Slices/DataSlice";
+import { EventI, CharacterStatI } from "../../Slices/DataSlice";
 import Graph from "./Graph";
 import Paragraph from "./ReactiveParagraph";
 import Stat from "./Stat";
-import { VerticalDivider } from "../Utility";
 import "./index.scss";
+
+const RandomColor = () =>
+  "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
 
 const Character = () => {
   const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(
@@ -16,114 +18,114 @@ const Character = () => {
   const [selectedEventVerbStart, setSelectedEventVerbStart] = useState<
     number | null
   >(null);
-  const [characterList, setCharacterList] = useState<null | CharacterMetaI[]>(
+  const [characterList, setCharacterList] = useState<null | CharacterStatI[]>(
     null
   );
 
-  const { eventMajorList, characterMeta } = useSelector(
+  const [colorScheme, setColorScheme] = useState<Record<string, string>>({});
+
+  const { characterMeta } = useSelector(
     (store: RootStoreI) => store.dataReducer
   );
 
   useEffect(() => {
-    const result = Object.keys(characterMeta).map((key) => characterMeta[key]);
-    result.sort((a, b) => {
-      if (!a.relatedEvents) {
-        return -1;
-      } else if (!b.relatedEvents) {
-        return -1;
-      } else {
-        return b.relatedEvents?.length - a.relatedEvents?.length;
-      }
+    const result: CharacterStatI[] = Object.keys(characterMeta).map((key) => {
+      const { easyName, gender, importance, total, corefId } =
+        characterMeta[key];
+
+      return {
+        name: easyName,
+        gender,
+        importance,
+        appearance: total,
+        corefId,
+      };
     });
+    result.sort((a, b) => b.appearance - a.appearance);
 
     setCharacterList(result.slice(0, 5));
+    setColorScheme({
+      [result[0].corefId]: RandomColor(),
+      [result[1].corefId]: RandomColor(),
+      [result[2].corefId]: RandomColor(),
+      [result[3].corefId]: RandomColor(),
+      [result[4].corefId]: RandomColor(),
+    });
   }, [setCharacterList, characterMeta]);
 
   useEffect(() => {
-    let result: any = {};
     let eventList = JSON.parse(
       JSON.stringify(
         selectedCharacterId === null
-          ? eventMajorList
+          ? Object.entries(characterMeta)
+              .map(([key, { relatedEvents }]) => relatedEvents)
+              .flat()
           : characterMeta[selectedCharacterId].relatedEvents
       )
     ) as EventI[];
-
-    eventList.forEach((event) => {
-      result[event.verbStartByteText] = event;
-    });
-
-    if (selectedCharacterId === null) {
-      eventList = Object.keys(result).map((key) => {
-        return {
-          ...result[key],
-          gender: "mix",
-        };
-      });
-    } else {
-      eventList = Object.keys(result).map((key) => {
-        return {
-          ...result[key],
-        };
-      });
-    }
-
     setSelectedEvents(eventList);
-  }, [selectedCharacterId, eventMajorList, characterMeta]);
+  }, [selectedCharacterId, characterMeta]);
 
   return (
-    <div className="character-container">
-      <div className="character-content">
-        <div className="character-list">
-          {characterList && characterList.length && (
-            <button
-              className={`filter--btn ${
-                selectedCharacterId === null ? "filter-btn__selected" : ""
-              }`}
-              onClick={(e: React.MouseEvent<HTMLElement>) => {
-                setSelectedCharacterId(null);
-              }}
-            >
-              Alł
-            </button>
-          )}
-          {characterList?.map((item) => {
-            return (
+    <div className="character--container">
+      <div className="character--content">
+        <div className="character--content--left">
+          <p className="section--label">Gender Select</p>
+          <div className="character--list">
+            {characterList && characterList.length && (
               <button
-                key={item.corefId}
                 className={`filter--btn ${
-                  selectedCharacterId === item.corefId
-                    ? "filter-btn__selected"
-                    : ""
+                  selectedCharacterId === null ? "filter-btn__selected" : ""
                 }`}
                 onClick={(e: React.MouseEvent<HTMLElement>) => {
-                  setSelectedCharacterId(item.corefId);
+                  setSelectedCharacterId(null);
                 }}
               >
-                {item.easyName}
+                Alł
               </button>
-            );
-          })}
+            )}
+            {characterList?.map((item) => {
+              return (
+                <button
+                  key={item.corefId}
+                  className={`filter--btn ${
+                    selectedCharacterId === item.corefId
+                      ? "filter-btn__selected"
+                      : ""
+                  }`}
+                  onClick={(e: React.MouseEvent<HTMLElement>) => {
+                    setSelectedCharacterId(item.corefId);
+                  }}
+                  style={{
+                    borderColor: colorScheme[item.corefId],
+                  }}
+                >
+                  {item.name}
+                </button>
+              );
+            })}
+          </div>
+          <p className="section--label">Story</p>
+          <Paragraph
+            eventList={selectedEvents}
+            color={
+              selectedCharacterId ? colorScheme[selectedCharacterId] : "grey"
+            }
+            selectedEventVerbStart={selectedEventVerbStart}
+            setSelectedEventVerbStart={setSelectedEventVerbStart}
+          />
         </div>
-        <Paragraph
-          eventList={selectedEvents}
-          gender={
-            selectedCharacterId === null
-              ? "mix"
-              : characterMeta[selectedCharacterId].gender === "male" ||
-                characterMeta[selectedCharacterId].gender === "female"
-              ? characterMeta[selectedCharacterId].gender
-              : "mix"
+        <Graph
+          color={
+            selectedCharacterId ? colorScheme[selectedCharacterId] : "grey"
           }
-          selectedEventVerbStart={selectedEventVerbStart}
+          eventList={selectedEvents}
           setSelectedEventVerbStart={setSelectedEventVerbStart}
-        />
-        <Graph eventList={selectedEvents}></Graph>
+        ></Graph>
       </div>
-      <VerticalDivider />
+
       <div className="character--stat">
-        <p className="section--label">Story level character Statistics</p>
-        <Stat></Stat>
+        <Stat setSelectedCharacterId={setSelectedCharacterId}></Stat>
       </div>
     </div>
   );

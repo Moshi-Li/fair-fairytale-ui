@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import camelcaseKeys from "camelcase-keys";
 import { RootStoreI } from "../Store";
-import rawData from "../Data";
+import { processStory } from "../Data";
+import Axios from "axios";
 
 export interface TextOccurrenceI {
   type: string;
@@ -97,6 +98,14 @@ interface DataI extends RawDataI {
   fetching: boolean;
 }
 
+export interface CharacterStatI {
+  name: string;
+  gender: string;
+  importance: string;
+  appearance: number;
+  corefId: string;
+}
+
 const dataDefaultState: DataI = {
   storyMeta: { counts: [], topEvents: {} },
   characterMeta: {},
@@ -112,24 +121,44 @@ export const fetchData = createAsyncThunk<
   RawDataI,
   string,
   { state: RootStoreI }
->("dataSlice/fetchData", async (text, thunkAPI) => {
-  let result;
-  const defaultStory = "ali-baba-and-forty-thieves";
-  if (rawData[text]) {
-    const res: any = await new Promise((resolve) =>
-      setTimeout(() => resolve(JSON.parse(JSON.stringify(rawData[text]))), 1000)
-    );
-    result = camelcaseKeys(res, { deep: true });
-  } else {
-    const res: any = await new Promise((resolve) =>
-      setTimeout(
-        () => resolve(JSON.parse(JSON.stringify(rawData[defaultStory]))),
-        1000
-      )
-    );
-    result = camelcaseKeys(res, { deep: true });
-  }
+>("dataSlice/fetchData", async (storyName, thunkAPI) => {
+  const urlGenerator = (storyName: string, fileName: string) =>
+    `https://fairytale-examples.s3.amazonaws.com/${storyName}/${storyName}.${fileName}`;
+  const storyMeta = (
+    await Axios.get(urlGenerator(storyName, "story_major_statistics.json"))
+  ).data;
 
+  const characterMeta = (
+    await Axios.get(urlGenerator(storyName, "character_attributes.json"))
+  ).data;
+
+  const eventMeta = (
+    await Axios.get(urlGenerator(storyName, "events_major_statistics.json"))
+  ).data;
+
+  const eventMajorList = (
+    await Axios.get(
+      urlGenerator(storyName, "major_characters_temporal_events.json")
+    )
+  ).data;
+
+  const paragraph = (await Axios.get(urlGenerator(storyName, "txt"))).data;
+
+  let result = {};
+
+  try {
+    let rawData = processStory({
+      name: storyName,
+      storyMeta,
+      characterMeta,
+      eventMeta,
+      eventMajorList,
+      paragraph,
+    });
+    result = camelcaseKeys(rawData, { deep: true });
+  } catch (e) {
+    console.log(e);
+  }
   return result as RawDataI;
 });
 
@@ -159,6 +188,7 @@ export const dataSlice = createSlice({
       Object.keys(characterMeta).forEach((key: string) => {
         characterMeta[key].relatedEvents = [];
       });
+
       eventMajorList.forEach((item) => {
         const { corefId } = item;
         if (characterMeta[corefId]) {
