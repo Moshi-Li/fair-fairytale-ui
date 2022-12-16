@@ -14,6 +14,11 @@ const storyNames = [
   "a-legend-of-knockmany",
   "ali-baba-and-forty-thieves",
   "alleleiraugh-or-the-many-furred-creature",
+  "bamboo-cutter-moon-child",
+  "black-arts",
+  "black-sheep",
+  "bokwewa-the-humpback",
+  "buckwheat",
 ];
 
 const StoryInput = () => {
