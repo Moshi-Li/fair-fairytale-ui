@@ -28,7 +28,10 @@ const Y_SPACE = 100;
 
 const getLayoutGraph = (
   eventListInput: EventI[],
-  setSelectedEventVerbStart: React.Dispatch<React.SetStateAction<number | null>>
+  setSelectedEventVerbStart: React.Dispatch<
+    React.SetStateAction<number | null>
+  >,
+  color: string
 ) => {
   let eventList = JSON.parse(JSON.stringify(eventListInput)) as EventI[];
 
@@ -49,7 +52,6 @@ const getLayoutGraph = (
   eventList.forEach((item, index) => {
     const nodeToBeAdded = {
       id: `${index}`,
-
       data: {
         label: (
           <span
@@ -57,18 +59,13 @@ const getLayoutGraph = (
             style={{
               backgroundColor: "transparent",
               fontSize: "32px",
-              color: "white",
+              color: "black",
             }}
           >{`${item.event}`}</span>
         ),
       },
       style: {
-        backgroundColor:
-          item.gender === "male"
-            ? "blue"
-            : item.gender === "female"
-            ? "red"
-            : "silver",
+        backgroundColor: color,
         borderRadius: item.argument === "subject" ? "0%" : "50%",
       },
       position: { x: currentX, y: currentY },
@@ -115,11 +112,13 @@ const onInit = (reactFlowInstance: any) =>
 const ReactiveGraph = ({
   eventList,
   setSelectedEventVerbStart,
+  color,
 }: {
   eventList: EventI[];
   setSelectedEventVerbStart: React.Dispatch<
     React.SetStateAction<number | null>
   >;
+  color: string;
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -127,7 +126,8 @@ const ReactiveGraph = ({
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(
       eventList,
-      setSelectedEventVerbStart
+      setSelectedEventVerbStart,
+      color
     );
     setNodes(nextNodes);
     setEdges(nextEdges);
@@ -167,15 +167,18 @@ const ReactiveGraph = ({
 const Graph = ({
   eventList,
   setSelectedEventVerbStart,
+  color,
 }: {
   eventList: EventI[];
   setSelectedEventVerbStart: React.Dispatch<
     React.SetStateAction<number | null>
   >;
+  color: string;
 }) => {
   return (
     <ReactFlowProvider>
       <ReactiveGraph
+        color={color}
         eventList={eventList}
         setSelectedEventVerbStart={setSelectedEventVerbStart}
       ></ReactiveGraph>

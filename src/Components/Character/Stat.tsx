@@ -1,19 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootStoreI } from "../../Store";
+import { CharacterStatI } from "../../Slices/DataSlice";
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-
-interface CharacterStatI {
-  name: string;
-  gender: string;
-  importance: string;
-  appearance: number;
-}
 
 const Statistics = ({
   headerInfo,

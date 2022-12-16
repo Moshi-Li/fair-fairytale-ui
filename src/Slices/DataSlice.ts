@@ -98,6 +98,14 @@ interface DataI extends RawDataI {
   fetching: boolean;
 }
 
+export interface CharacterStatI {
+  name: string;
+  gender: string;
+  importance: string;
+  appearance: number;
+  corefId: string;
+}
+
 const dataDefaultState: DataI = {
   storyMeta: { counts: [], topEvents: {} },
   characterMeta: {},
@@ -137,7 +145,6 @@ export const fetchData = createAsyncThunk<
   const paragraph = (await Axios.get(urlGenerator(storyName, "txt"))).data;
 
   let result = {};
-  console.log(typeof eventMeta);
 
   try {
     let rawData = processStory({
@@ -181,6 +188,7 @@ export const dataSlice = createSlice({
       Object.keys(characterMeta).forEach((key: string) => {
         characterMeta[key].relatedEvents = [];
       });
+
       eventMajorList.forEach((item) => {
         const { corefId } = item;
         if (characterMeta[corefId]) {
