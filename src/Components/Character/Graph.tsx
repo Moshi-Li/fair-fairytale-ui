@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from "react";
+import React, { useEffect, useCallback } from "react";
 
 import dagre from "dagre";
 
@@ -12,7 +12,7 @@ import ReactFlow, {
   MarkerType,
   useReactFlow,
   ReactFlowProvider,
-} from "react-flow-renderer";
+} from "reactflow";
 
 import { EventI } from "../../Slices/DataSlice";
 
@@ -122,6 +122,10 @@ const ReactiveGraph = ({
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const reactFlowInstance = useReactFlow();
+  useEffect(() => {
+    if (nodes.length) reactFlowInstance.fitView();
+  }, [nodes.length, reactFlowInstance]);
 
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(
@@ -131,7 +135,7 @@ const ReactiveGraph = ({
     );
     setNodes(nextNodes);
     setEdges(nextEdges);
-  }, [eventList, setNodes, setEdges]);
+  }, [eventList, setNodes, setEdges, color, setSelectedEventVerbStart]);
 
   const onConnect = useCallback(
     (params: any) =>
