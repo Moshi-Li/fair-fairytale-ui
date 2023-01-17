@@ -143,8 +143,8 @@ const GraphLegend = () => {
         <div></div>
       </div>
       <div className="graph--legend--row">
-        <span style={{ borderRadius: "50%" }}>Object:</span>
-        <div></div>
+        <span>Object:</span>
+        <div style={{ borderRadius: "50%" }}></div>
       </div>
       <div className="graph--legend--row">
         <span style={{ fontSize: "14px" }}>Subject & Object:</span>
