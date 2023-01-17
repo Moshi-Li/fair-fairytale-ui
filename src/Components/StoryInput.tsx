@@ -21,16 +21,31 @@ const storyNames = [
   "buckwheat",
 ];
 
+const randomSelectFromArray = (arr: Array<any>, count: number) => {
+  if (count > arr.length) return [];
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    result.push(arr[Math.floor(Math.random() * arr.length)]);
+  }
+  return result;
+};
+
 const StoryInput = () => {
   const { fetching } = useSelector((store: RootStoreI) => store.dataReducer);
   const [searchString, setSearchString] = useState("");
   const appDispatchAction = useAppDispatch();
 
-  const displayingResults = storyNames
-    .filter((name) => {
-      return name.split("-").join(" ").includes(searchString);
-    })
-    .map((name) => name.split("-").join(" "));
+  const displayingResults =
+    searchString === ""
+      ? randomSelectFromArray(storyNames, 5).map((name) =>
+          name.split("-").join(" ")
+        )
+      : storyNames
+          .filter((name) => {
+            return name.split("-").join(" ").includes(searchString);
+          })
+          .map((name) => name.split("-").join(" "));
+
   return (
     <div className="story--input--container">
       <div className="example--container">
@@ -42,25 +57,22 @@ const StoryInput = () => {
           ></input>
           <p className="search--bar--result">
             {searchString === ""
-              ? "displaying first 5 results"
+              ? "displaying randomly selected 5 example results"
               : `displaying ${displayingResults.length} results for query "${searchString}"`}
           </p>
         </div>
 
         <div className="example--container--list">
-          {displayingResults
-            .slice(0, searchString === "" ? 5 : displayingResults.length)
-            .map((name) => (
-              <button
-                onClick={() =>
-                  appDispatchAction(fetchData(name.split(" ").join("-")))
-                }
-              >
-                {name}
-              </button>
-            ))}
+          {displayingResults.map((name) => (
+            <button
+              onClick={() =>
+                appDispatchAction(fetchData(name.split(" ").join("-")))
+              }
+            >
+              {name}
+            </button>
+          ))}
         </div>
-
         <div className="example--container--status">
           <p>Server Status:</p>
           <StatusIndicator Negative Pulse />
