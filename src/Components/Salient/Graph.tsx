@@ -11,7 +11,8 @@ import ReactFlow, {
   MarkerType,
   useReactFlow,
   ReactFlowProvider,
-} from "react-flow-renderer";
+} from "reactflow";
+import "reactflow/dist/style.css";
 
 import { EventI } from "../../Slices/DataSlice";
 
@@ -138,7 +139,11 @@ const ReactiveGraph = ({
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { fitView, setViewport, getViewport } = useReactFlow();
+  const reactFlowInstance = useReactFlow();
+
+  useEffect(() => {
+    if (nodes.length) reactFlowInstance.fitView();
+  }, [nodes.length, reactFlowInstance]);
 
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(
@@ -175,11 +180,7 @@ const ReactiveGraph = ({
           fitView
         >
           <Background color="#aaa" gap={16} />
-          <Controls
-            onFitView={() => {
-              setViewport({ ...getViewport(), x: 0, y: 0 });
-            }}
-          ></Controls>
+          <Controls></Controls>
         </ReactFlow>
       </div>
     </React.Fragment>

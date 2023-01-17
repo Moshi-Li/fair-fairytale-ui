@@ -12,6 +12,7 @@ import ReactFlow, {
   useReactFlow,
   ReactFlowProvider,
 } from "reactflow";
+import "reactflow/dist/style.css";
 
 import { EventI } from "../../Slices/DataSlice";
 
