@@ -85,11 +85,12 @@
 }
 
 .graph-legend {
-  width: 250px;
+  width: 160px;
   .graph--legend--container {
     border: 1px solid black;
     padding: 6px;
     .graph--legend--row {
+      line-height: normal;
       display: flex;
       flex-direction: row;
       justify-content: space-between;

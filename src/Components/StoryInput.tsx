@@ -42,7 +42,10 @@ const StoryInput = () => {
         )
       : storyNames
           .filter((name) => {
-            return name.split("-").join(" ").includes(searchString);
+            return name
+              .split("-")
+              .join(" ")
+              .includes(searchString.toLocaleLowerCase());
           })
           .map((name) => name.split("-").join(" "));
 
