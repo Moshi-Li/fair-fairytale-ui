@@ -49,7 +49,6 @@ const processCharacterMeta = (characters: any) => {
 };
 
 const processEventMeta = (events: any) => {
-  console.log(typeof events);
   const result: any = {};
   Object.keys(events).forEach((key) => {
     Object.keys(events[key][`event_occurances`]).forEach((location) => {
