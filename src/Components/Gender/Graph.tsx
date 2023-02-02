@@ -71,20 +71,14 @@ const getLayoutGraph = (
       sourcePosition: "right",
       data: {
         label: (
-          <div
+          <span
             onClick={() => setSelectedEventVerbStart(item.verbStartByteText)}
             style={{
               backgroundColor: "transparent",
               fontSize: "24px",
               color: "white",
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              overflow: "hidden",
             }}
-          >
-            <span>{`${item.event}`}</span>
-          </div>
+          >{`${item.event}-${item.temporalRank}`}</span>
         ),
       },
 
@@ -145,10 +139,6 @@ const GraphLegend = () => {
       <div className="graph--legend--row">
         <span>Object:</span>
         <div style={{ borderRadius: "50%" }}></div>
-      </div>
-      <div className="graph--legend--row">
-        <span style={{ fontSize: "14px" }}>Subject & Object:</span>
-        <div style={{ borderRadius: "25%" }}></div>
       </div>
     </div>
   );
