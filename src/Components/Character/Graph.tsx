@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useMemo } from "react";
+import React, { useEffect, useCallback } from "react";
 
 import dagre from "dagre";
 
@@ -12,7 +12,9 @@ import ReactFlow, {
   MarkerType,
   useReactFlow,
   ReactFlowProvider,
-} from "react-flow-renderer";
+  Panel,
+} from "reactflow";
+import "reactflow/dist/style.css";
 
 import { EventI } from "../../Slices/DataSlice";
 
@@ -58,7 +60,7 @@ const getLayoutGraph = (
             onClick={() => setSelectedEventVerbStart(item.verbStartByteText)}
             style={{
               backgroundColor: "transparent",
-              fontSize: "32px",
+              fontSize: "24px",
               color: "black",
             }}
           >{`${item.event}`}</span>
@@ -106,6 +108,24 @@ const getLayoutGraph = (
   return { nextNodes: nodes, nextEdges: edges };
 };
 
+const GraphLegend = () => {
+  return (
+    <div className="graph--legend--container">
+      <div className="graph--legend--row">
+        <span>Subject:</span>
+        <div></div>
+      </div>
+      <div className="graph--legend--row">
+        <span>Object:</span>
+        <div style={{ borderRadius: "50%" }}></div>
+      </div>
+      <div className="graph--legend--row">
+        <span style={{ fontSize: "14px" }}>Subject & Object:</span>
+        <div style={{ borderRadius: "25%" }}></div>
+      </div>
+    </div>
+  );
+};
 const onInit = (reactFlowInstance: any) =>
   console.log("flow loaded:", reactFlowInstance);
 
@@ -122,6 +142,10 @@ const ReactiveGraph = ({
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const reactFlowInstance = useReactFlow();
+  useEffect(() => {
+    if (nodes.length) reactFlowInstance.fitView();
+  }, [nodes.length, reactFlowInstance]);
 
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(
@@ -131,7 +155,7 @@ const ReactiveGraph = ({
     );
     setNodes(nextNodes);
     setEdges(nextEdges);
-  }, [eventList, setNodes, setEdges]);
+  }, [eventList, setNodes, setEdges, color, setSelectedEventVerbStart]);
 
   const onConnect = useCallback(
     (params: any) =>
@@ -159,6 +183,9 @@ const ReactiveGraph = ({
       >
         <Background color="#aaa" gap={16} />
         <Controls></Controls>
+        <Panel position="bottom-right" className="graph-legend">
+          <GraphLegend></GraphLegend>
+        </Panel>
       </ReactFlow>
     </div>
   );

@@ -11,13 +11,15 @@ import ReactFlow, {
   MarkerType,
   useReactFlow,
   ReactFlowProvider,
-} from "react-flow-renderer";
+  Panel,
+} from "reactflow";
+import "reactflow/dist/style.css";
 
 import { EventI } from "../../Slices/DataSlice";
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
-const nodeWidth = 172;
+const nodeWidth = 272;
 const nodeHeight = 36;
 
 const getLayoutGraph = (
@@ -73,18 +75,13 @@ const getLayoutGraph = (
             onClick={() => setSelectedEventVerbStart(item.verbStartByteText)}
             style={{
               backgroundColor: "transparent",
-              fontSize: "32px",
+              fontSize: "24px",
               color: "white",
             }}
-          >{`${item.event}`}</span>
+          >{`${item.event}-${item.temporalRank}`}</span>
         ),
       },
       style: {
-        borderRadius: duplicatedEvent.includes(item.verbStartByteText)
-          ? "25%"
-          : item.argument === "subject"
-          ? "0%"
-          : "50%",
         backgroundColor: "silver",
       },
       position: { x: currentX, y: currentY },
@@ -138,7 +135,11 @@ const ReactiveGraph = ({
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { fitView, setViewport, getViewport } = useReactFlow();
+  const reactFlowInstance = useReactFlow();
+
+  useEffect(() => {
+    if (nodes.length) reactFlowInstance.fitView();
+  }, [nodes.length, reactFlowInstance]);
 
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(
@@ -148,7 +149,13 @@ const ReactiveGraph = ({
     );
     setNodes(nextNodes);
     setEdges(nextEdges);
-  }, [eventList, setNodes, setEdges, duplicatedEvent]);
+  }, [
+    eventList,
+    setNodes,
+    setEdges,
+    duplicatedEvent,
+    setSelectedEventVerbStart,
+  ]);
 
   const onConnect = useCallback(
     (params: any) =>
@@ -175,11 +182,7 @@ const ReactiveGraph = ({
           fitView
         >
           <Background color="#aaa" gap={16} />
-          <Controls
-            onFitView={() => {
-              setViewport({ ...getViewport(), x: 0, y: 0 });
-            }}
-          ></Controls>
+          <Controls></Controls>
         </ReactFlow>
       </div>
     </React.Fragment>

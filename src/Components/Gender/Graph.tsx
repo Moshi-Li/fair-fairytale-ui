@@ -11,7 +11,9 @@ import ReactFlow, {
   MarkerType,
   useReactFlow,
   ReactFlowProvider,
-} from "react-flow-renderer";
+  Panel,
+} from "reactflow";
+import "reactflow/dist/style.css";
 
 import { EventI } from "../../Slices/DataSlice";
 
@@ -69,20 +71,14 @@ const getLayoutGraph = (
       sourcePosition: "right",
       data: {
         label: (
-          <div
+          <span
             onClick={() => setSelectedEventVerbStart(item.verbStartByteText)}
             style={{
               backgroundColor: "transparent",
-              fontSize: "32px",
+              fontSize: "24px",
               color: "white",
-              display: "flex",
-              flexDirection: "row",
-              alignItems: "center",
-              overflow: "hidden",
             }}
-          >
-            <span>{`${item.event}`}</span>
-          </div>
+          >{`${item.event}-${item.temporalRank}`}</span>
         ),
       },
 
@@ -133,6 +129,21 @@ const getLayoutGraph = (
   return { nextNodes: nodes, nextEdges: edges };
 };
 
+const GraphLegend = () => {
+  return (
+    <div className="graph--legend--container">
+      <div className="graph--legend--row">
+        <span>Subject:</span>
+        <div></div>
+      </div>
+      <div className="graph--legend--row">
+        <span>Object:</span>
+        <div style={{ borderRadius: "50%" }}></div>
+      </div>
+    </div>
+  );
+};
+
 const onInit = (reactFlowInstance: any) =>
   console.log("flow loaded:", reactFlowInstance);
 
@@ -147,7 +158,12 @@ const ReactiveGraph = ({
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-  const { setViewport, getViewport } = useReactFlow();
+  const reactFlowInstance = useReactFlow();
+
+  useEffect(() => {
+    if (nodes.length) reactFlowInstance.fitView();
+  }, [nodes.length, reactFlowInstance]);
+
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(
       eventList,
@@ -155,7 +171,7 @@ const ReactiveGraph = ({
     );
     setNodes(nextNodes);
     setEdges(nextEdges);
-  }, [eventList, setNodes, setEdges]);
+  }, [eventList, setNodes, setEdges, setSelectedEventVerbStart]);
 
   const onConnect = useCallback(
     (params: any) =>
@@ -183,11 +199,10 @@ const ReactiveGraph = ({
           fitView
         >
           <Background color="#aaa" gap={16} />
-          <Controls
-            onFitView={() => {
-              setViewport({ ...getViewport(), x: 0, y: 0 });
-            }}
-          ></Controls>
+          <Controls></Controls>
+          <Panel position="bottom-right" className="graph-legend">
+            <GraphLegend></GraphLegend>
+          </Panel>
         </ReactFlow>
       </div>
     </React.Fragment>
