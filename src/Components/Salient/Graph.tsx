@@ -78,15 +78,10 @@ const getLayoutGraph = (
               fontSize: "24px",
               color: "white",
             }}
-          >{`${item.event}`}</span>
+          >{`${item.event}-${item.temporalRank}`}</span>
         ),
       },
       style: {
-        borderRadius: duplicatedEvent.includes(item.verbStartByteText)
-          ? "25%"
-          : item.argument === "subject"
-          ? "0%"
-          : "50%",
         backgroundColor: "silver",
       },
       position: { x: currentX, y: currentY },
@@ -125,25 +120,6 @@ const getLayoutGraph = (
   //dagre.layout(dagreGraph);
 
   return { nextNodes: nodes, nextEdges: edges };
-};
-
-const GraphLegend = () => {
-  return (
-    <div className="graph--legend--container">
-      <div className="graph--legend--row">
-        <span>Subject:</span>
-        <div></div>
-      </div>
-      <div className="graph--legend--row">
-        <span>Object:</span>
-        <div style={{ borderRadius: "50%" }}></div>
-      </div>
-      <div className="graph--legend--row">
-        <span style={{ fontSize: "14px" }}>Subject & Object:</span>
-        <div style={{ borderRadius: "25%" }}></div>
-      </div>
-    </div>
-  );
 };
 
 const ReactiveGraph = ({
@@ -207,9 +183,6 @@ const ReactiveGraph = ({
         >
           <Background color="#aaa" gap={16} />
           <Controls></Controls>
-          <Panel position="bottom-right" className="graph-legend">
-            <GraphLegend></GraphLegend>
-          </Panel>
         </ReactFlow>
       </div>
     </React.Fragment>
