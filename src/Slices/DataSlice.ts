@@ -96,6 +96,7 @@ interface RawDataI {
 interface DataI extends RawDataI {
   sourced: boolean;
   fetching: boolean;
+  serverStatus: boolean;
 }
 
 export interface CharacterStatI {
@@ -115,7 +116,10 @@ const dataDefaultState: DataI = {
 
   sourced: false,
   fetching: false,
+  serverStatus: false,
 };
+
+const API_URL = "http://3.95.148.2";
 
 export const fetchData = createAsyncThunk<
   RawDataI,
@@ -124,6 +128,7 @@ export const fetchData = createAsyncThunk<
 >("dataSlice/fetchData", async (storyName, thunkAPI) => {
   const urlGenerator = (storyName: string, fileName: string) =>
     `https://fairytale-examples.s3.amazonaws.com/${storyName}/${storyName}.${fileName}`;
+
   const storyMeta = (
     await Axios.get(urlGenerator(storyName, "story_major_statistics.json"))
   ).data;
@@ -160,6 +165,58 @@ export const fetchData = createAsyncThunk<
     console.log(e);
   }
   return result as RawDataI;
+});
+
+export const runPipeline = createAsyncThunk<
+  RawDataI,
+  string,
+  { state: RootStoreI }
+>("dataSlice/runPipeline", async (storyInput, thunkAPI) => {
+  const response = await Axios.post(`${API_URL}/result`, {
+    story_content: storyInput,
+  });
+
+  const storyMeta = response.data.story_major_statistics;
+
+  const characterMeta = response.data.character_attributes;
+
+  const eventMeta = response.data.events_major_statistics;
+
+  const eventMajorList = response.data.major_characters_temporal_events;
+
+  const paragraph = response.data.paragraph;
+
+  let result = {};
+  try {
+    let rawData = processStory({
+      name: "User input story",
+      storyMeta,
+      characterMeta,
+      eventMeta,
+      eventMajorList,
+      paragraph,
+    });
+    result = camelcaseKeys(rawData, { deep: true });
+  } catch (e) {
+    console.log(e);
+  }
+  return result as RawDataI;
+});
+
+export const checkServerStatus = createAsyncThunk<
+  boolean,
+  void,
+  { state: RootStoreI }
+>("dataSlice/checkServerStatus", async (args, thunkAPI) => {
+  let result = true;
+  try {
+    await Axios.get(`${API_URL}/status`);
+  } catch (e) {
+    result = false;
+    thunkAPI.rejectWithValue(false);
+  }
+
+  return result;
 });
 
 export const dataSlice = createSlice({
@@ -206,6 +263,63 @@ export const dataSlice = createSlice({
       state.fetching = false;
     });
     builder.addCase(fetchData.rejected, (state, action) => {});
+
+    //Run pipeline
+    builder.addCase(runPipeline.pending, (state, action) => {
+      state.storyMeta = { counts: [], topEvents: {} };
+      state.characterMeta = {};
+      state.eventMeta = {};
+      state.eventMajorList = [];
+      state.paragraph = "";
+
+      state.fetching = true;
+      state.sourced = false;
+    });
+
+    builder.addCase(runPipeline.fulfilled, (state, action) => {
+      const { storyMeta, characterMeta, eventMeta, eventMajorList, paragraph } =
+        action.payload;
+
+      Object.keys(characterMeta).forEach((key: string) => {
+        characterMeta[key].relatedEvents = [];
+      });
+
+      eventMajorList.forEach((item) => {
+        const { corefId } = item;
+        if (characterMeta[corefId]) {
+          characterMeta[corefId].relatedEvents?.push(item);
+        }
+      });
+
+      state.storyMeta = storyMeta;
+      state.characterMeta = characterMeta;
+      state.eventMeta = eventMeta;
+      state.eventMajorList = eventMajorList;
+
+      state.paragraph = paragraph;
+      state.sourced = true;
+      state.fetching = false;
+    });
+
+    builder.addCase(runPipeline.rejected, (state, action) => {
+      state.storyMeta = { counts: [], topEvents: {} };
+      state.characterMeta = {};
+      state.eventMeta = {};
+      state.eventMajorList = [];
+      state.paragraph = "";
+
+      state.fetching = false;
+      state.sourced = false;
+
+      window.alert("Req Failed, check console for more info");
+    });
+
+    builder.addCase(checkServerStatus.fulfilled, (state, action) => {
+      state.serverStatus = action.payload;
+    });
+    builder.addCase(checkServerStatus.rejected, (state, action) => {
+      state.serverStatus = false;
+    });
   },
 });
 

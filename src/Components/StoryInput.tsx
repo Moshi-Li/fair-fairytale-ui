@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import StatusIndicator from "react-status-indicator";
 import { RootStoreI, useAppDispatch } from "../Store";
-import { fetchData } from "../Slices/DataSlice";
+import { fetchData, runPipeline, checkServerStatus } from "../Slices/DataSlice";
 
 import "./StoryInput.scss";
 
@@ -62,23 +62,40 @@ const randomSelectFromArray = (arr: Array<any>, count: number) => {
 };
 
 const StoryInput = () => {
-  const { fetching } = useSelector((store: RootStoreI) => store.dataReducer);
+  const { fetching, serverStatus } = useSelector(
+    (store: RootStoreI) => store.dataReducer
+  );
+
   const [searchString, setSearchString] = useState("");
+  const [storyInput, setStoryInput] = useState("");
+  const [displayingResults, setDisplayingResults] = useState<Array<string>>([]);
   const appDispatchAction = useAppDispatch();
 
-  const displayingResults =
-    searchString === ""
-      ? randomSelectFromArray(storyNames, 5).map((name) =>
-          name.split("-").join(" ")
-        )
-      : storyNames
-          .filter((name) => {
-            return name
-              .split("-")
-              .join(" ")
-              .includes(searchString.toLocaleLowerCase());
-          })
-          .map((name) => name.split("-").join(" "));
+  useEffect(() => {
+    const nextDisplayingResults =
+      searchString === ""
+        ? randomSelectFromArray(storyNames, 5).map((name) =>
+            name.split("-").join(" ")
+          )
+        : storyNames
+            .filter((name) => {
+              return name
+                .split("-")
+                .join(" ")
+                .includes(searchString.toLocaleLowerCase());
+            })
+            .map((name) => name.split("-").join(" "));
+
+    setDisplayingResults(nextDisplayingResults);
+  }, [searchString]);
+
+  useEffect(() => {
+    const serverStatusChecker = setInterval(() => {
+      appDispatchAction(checkServerStatus());
+    }, 10 * 1000);
+
+    return () => clearInterval(serverStatusChecker);
+  }, [appDispatchAction]);
 
   return (
     <div className="story--input--container">
@@ -109,13 +126,27 @@ const StoryInput = () => {
         </div>
         <div className="example--container--status">
           <p>Server Status:</p>
-          <StatusIndicator Negative Pulse />
+          {serverStatus && <StatusIndicator Positive Pulse />}
+          {!serverStatus && <StatusIndicator Negative Pulse />}
         </div>
       </div>
 
-      <textarea className="story--input--textarea"></textarea>
+      <textarea
+        className="story--input--textarea"
+        value={storyInput}
+        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+          setStoryInput(e.target.value)
+        }
+      ></textarea>
       {!fetching && (
-        <button className="story--input--btn" disabled title="Server is down">
+        <button
+          className="story--input--btn"
+          title="Server is down"
+          onClick={(e) => {
+            appDispatchAction(runPipeline(storyInput));
+          }}
+          disabled={!serverStatus}
+        >
           Test
         </button>
       )}
