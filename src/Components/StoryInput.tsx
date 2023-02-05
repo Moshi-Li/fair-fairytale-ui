@@ -90,9 +90,10 @@ const StoryInput = () => {
   }, [searchString]);
 
   useEffect(() => {
+    appDispatchAction(checkServerStatus());
     const serverStatusChecker = setInterval(() => {
       appDispatchAction(checkServerStatus());
-    }, 10 * 1000);
+    }, 30 * 1000);
 
     return () => clearInterval(serverStatusChecker);
   }, [appDispatchAction]);
