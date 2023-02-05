@@ -119,7 +119,7 @@ const dataDefaultState: DataI = {
   serverStatus: false,
 };
 
-const API_URL = "http://3.95.148.2";
+const API_URL = "http://52.202.240.216";
 
 export const fetchData = createAsyncThunk<
   RawDataI,
