@@ -34,7 +34,6 @@ const generateContent = (
       argText,
       argStartByteText,
       argEndByteText,
-      corefId,
     } = eventItem;
 
     if (!textOccurrenceMap[verbStartByteText]) {
@@ -169,6 +168,7 @@ const ReactiveParagraph = ({
     selectedEventVerbStart,
     setSelectedEventVerbStart,
     dispatch,
+    color,
   ]);
 
   useEffect(

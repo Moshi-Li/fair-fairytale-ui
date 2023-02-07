@@ -138,6 +138,17 @@ const StoryInput = () => {
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
           setStoryInput(e.target.value)
         }
+        onBlur={(e: React.FocusEvent<HTMLTextAreaElement>) => {
+          setStoryInput(
+            e.target.value
+              .replaceAll("\n\n", " ")
+              .replaceAll("\n", " ")
+              .replaceAll("\r\r", " ")
+              .replaceAll("\n", " ")
+              .trim()
+              .replace(/ +(?= )/g, "")
+          );
+        }}
       ></textarea>
       {!fetching && (
         <button
