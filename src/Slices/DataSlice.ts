@@ -119,8 +119,8 @@ const dataDefaultState: DataI = {
   serverStatus: false,
 };
 
-//const API_URL = "http://52.202.240.216";
-const API_URL = "http://localhost:8000";
+const API_URL = "http://52.202.240.216";
+//const API_URL = "http://localhost:8000";
 
 export const fetchData = createAsyncThunk<
   RawDataI,
