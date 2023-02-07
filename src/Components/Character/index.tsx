@@ -43,14 +43,13 @@ const Character = () => {
     });
     result.sort((a, b) => b.appearance - a.appearance);
 
-    setCharacterList(result.slice(0, 5));
-    setColorScheme({
-      [result[0].corefId]: RandomColor(),
-      [result[1].corefId]: RandomColor(),
-      [result[2].corefId]: RandomColor(),
-      [result[3].corefId]: RandomColor(),
-      [result[4].corefId]: RandomColor(),
+    const nextResult = result.slice(0, result.length >= 5 ? 5 : result.length);
+    setCharacterList(nextResult);
+    const nextColorScheme: Record<string, string> = {};
+    nextResult.forEach((item) => {
+      nextColorScheme[item.corefId] = RandomColor();
     });
+    setColorScheme(nextColorScheme);
   }, [setCharacterList, characterMeta]);
 
   useEffect(() => {

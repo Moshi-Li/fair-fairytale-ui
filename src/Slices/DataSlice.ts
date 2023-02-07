@@ -119,7 +119,8 @@ const dataDefaultState: DataI = {
   serverStatus: false,
 };
 
-const API_URL = "http://52.202.240.216";
+//const API_URL = "http://52.202.240.216";
+const API_URL = "http://localhost:8000";
 
 export const fetchData = createAsyncThunk<
   RawDataI,
@@ -172,22 +173,20 @@ export const runPipeline = createAsyncThunk<
   string,
   { state: RootStoreI }
 >("dataSlice/runPipeline", async (storyInput, thunkAPI) => {
-  const response = await Axios.post(`${API_URL}/result`, {
-    story_content: storyInput,
-  });
-
-  const storyMeta = response.data.story_major_statistics;
-
-  const characterMeta = response.data.character_attributes;
-
-  const eventMeta = response.data.events_major_statistics;
-
-  const eventMajorList = response.data.major_characters_temporal_events;
-
-  const paragraph = response.data.paragraph;
-
-  let result = {};
   try {
+    const response = await Axios.post(`${API_URL}/result`, {
+      story_content: storyInput,
+    });
+    const storyMeta = response.data.story_major_statistics;
+
+    const characterMeta = response.data.character_attributes;
+
+    const eventMeta = response.data.events_major_statistics;
+
+    const eventMajorList = response.data.major_characters_temporal_events;
+
+    const paragraph = response.data.paragraph;
+
     let rawData = processStory({
       name: "User input story",
       storyMeta,
@@ -196,11 +195,11 @@ export const runPipeline = createAsyncThunk<
       eventMajorList,
       paragraph,
     });
-    result = camelcaseKeys(rawData, { deep: true });
+    let result = camelcaseKeys(rawData, { deep: true });
+    return result as RawDataI;
   } catch (e) {
-    console.log(e);
+    throw e;
   }
-  return result as RawDataI;
 });
 
 export const checkServerStatus = createAsyncThunk<
@@ -262,7 +261,10 @@ export const dataSlice = createSlice({
       state.sourced = true;
       state.fetching = false;
     });
-    builder.addCase(fetchData.rejected, (state, action) => {});
+    builder.addCase(fetchData.rejected, (state, action) => {
+      state.fetching = false;
+      state.sourced = false;
+    });
 
     //Run pipeline
     builder.addCase(runPipeline.pending, (state, action) => {
