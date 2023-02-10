@@ -2,7 +2,7 @@
   "name": "demo",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://moshili95.github.io/demo/",
+  "homepage": "https://moshi-li.github.io/fair-fairytale-ui/",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.1",
     "@tanstack/react-table": "^8.5.11",
