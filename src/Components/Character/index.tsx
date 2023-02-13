@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
 import { RootStoreI } from "../../Store";
 import { EventI, CharacterStatI } from "../../Slices/DataSlice";
 
-import Graph from "./Graph";
 import Paragraph from "./ReactiveParagraph";
+import Graph from "./Graph";
 import Stat from "./Stat";
 import "./index.scss";
 

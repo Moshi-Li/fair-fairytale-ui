@@ -115,7 +115,7 @@ const StoryInput = () => {
         </div>
 
         <div className="example--container--list">
-          {displayingResults.map((name) => (
+          {displayingResults.map((name, index) => (
             <button
               key={name}
               onClick={() =>

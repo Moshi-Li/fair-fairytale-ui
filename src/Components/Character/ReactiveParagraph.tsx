@@ -1,9 +1,10 @@
 import React, { useMemo, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
+import { RootStoreI } from "../../Store";
 import { EventI, TextOccurrenceI } from "../../Slices/DataSlice";
 import { openModal } from "../../Slices/ModalSlice";
 import { setSelectedEventVerbStart } from "../../Slices/TabSlice";
-import { RootStoreI } from "../../Store";
 
 //targetEventKey
 const generateContent = (
@@ -148,6 +149,7 @@ const ReactiveParagraph = ({
   color: string;
 }) => {
   const { paragraph } = useSelector((store: RootStoreI) => store.dataReducer);
+
   const selectedHTMLElement = useRef<HTMLElement>(null);
 
   const { selectedEventVerbStart } = useSelector(
@@ -164,7 +166,6 @@ const ReactiveParagraph = ({
       (targetSelectedEventVerbStart: number | null) =>
         dispatch(setSelectedEventVerbStart(targetSelectedEventVerbStart)),
       (targetEventKey: string) => dispatch(openModal({ targetEventKey })),
-
       color,
       selectedHTMLElement
     );

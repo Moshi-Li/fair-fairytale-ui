@@ -118,6 +118,11 @@
   border: 5px solid gold;
 
   background-color: white;
+
+  .selected {
+    border-width: 5px;
+    border-color: gold;
+  }
 }
 
 .gender--stat {

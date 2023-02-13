@@ -89,7 +89,7 @@ const generateContent = (
               ? ref
               : null
           }
-          key={textOccurrence.textStartIndex}
+          key={`span-${textOccurrence.textStartIndex}`}
           className={`text--occurrence__primary${
             selectedEventVerbStart === textOccurrence.textStartIndex
               ? "__selected"
@@ -114,7 +114,7 @@ const generateContent = (
     } else {
       result.push(
         <span
-          key={textOccurrence.textStartIndex}
+          key={`span-${textOccurrence.textStartIndex}`}
           className={`${
             selectedEventVerbStart !== null &&
             textOccurrence.associatedStartIndex.includes(selectedEventVerbStart)

@@ -1,9 +1,6 @@
 import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-
 import dagre from "dagre";
-import { setSelectedEventVerbStart } from "../../Slices/TabSlice";
-
 import ReactFlow, {
   useNodesState,
   useEdgesState,
@@ -16,10 +13,12 @@ import ReactFlow, {
   ReactFlowProvider,
   Panel,
 } from "reactflow";
-import "reactflow/dist/style.css";
 
-import { EventI } from "../../Slices/DataSlice";
 import { RootStoreI } from "../../Store";
+import { setSelectedEventVerbStart } from "../../Slices/TabSlice";
+import { EventI } from "../../Slices/DataSlice";
+
+import "reactflow/dist/style.css";
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
