@@ -10,16 +10,17 @@ const generateContent = (
   eventListInput: EventI[],
   paragraph: string,
   selectedEventVerbStart: number | null,
+  setVerbStart: (targetSelectedEventVerbStart: number | null) => {
+    payload: number | null;
+    type: string;
+  },
   openModal: (targetEventKey: string) => {
     payload: {
       targetEventKey: string;
     };
     type: string;
   },
-  setVerbStart: (targetSelectedEventVerbStart: number | null) => {
-    payload: number | null;
-    type: string;
-  },
+
   color: string,
   ref: React.RefObject<HTMLElement>
 ) => {
@@ -141,7 +142,6 @@ const generateContent = (
 
 const ReactiveParagraph = ({
   eventList,
-
   color,
 }: {
   eventList: EventI[];
@@ -161,9 +161,10 @@ const ReactiveParagraph = ({
       eventList,
       paragraph,
       selectedEventVerbStart,
-      (targetEventKey: string) => dispatch(openModal({ targetEventKey })),
       (targetSelectedEventVerbStart: number | null) =>
         dispatch(setSelectedEventVerbStart(targetSelectedEventVerbStart)),
+      (targetEventKey: string) => dispatch(openModal({ targetEventKey })),
+
       color,
       selectedHTMLElement
     );

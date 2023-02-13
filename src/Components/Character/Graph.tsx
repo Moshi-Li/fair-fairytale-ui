@@ -145,7 +145,9 @@ const ReactiveGraph = ({
     label: JSX.Element;
     eventVerbStart: number;
   }>([]);
+
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+
   const { selectedEventVerbStart } = useSelector(
     (store: RootStoreI) => store.tabReducer
   );
