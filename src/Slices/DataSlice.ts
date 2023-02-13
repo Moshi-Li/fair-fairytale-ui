@@ -247,6 +247,7 @@ export const dataSlice = createSlice({
 
       eventMajorList.forEach((item) => {
         const { corefId } = item;
+
         if (characterMeta[corefId]) {
           characterMeta[corefId].relatedEvents?.push(item);
         }

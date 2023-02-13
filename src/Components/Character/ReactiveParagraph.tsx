@@ -2,26 +2,28 @@ import React, { useMemo, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { EventI, TextOccurrenceI } from "../../Slices/DataSlice";
 import { openModal } from "../../Slices/ModalSlice";
+import { setSelectedEventVerbStart } from "../../Slices/TabSlice";
 import { RootStoreI } from "../../Store";
+
 //targetEventKey
 const generateContent = (
   eventListInput: EventI[],
   paragraph: string,
   selectedEventVerbStart: number | null,
-  setSelectedEventVerbStart: React.Dispatch<
-    React.SetStateAction<number | null>
-  >,
   openModal: (targetEventKey: string) => {
     payload: {
       targetEventKey: string;
     };
     type: string;
   },
+  setVerbStart: (targetSelectedEventVerbStart: number | null) => {
+    payload: number | null;
+    type: string;
+  },
   color: string,
   ref: React.RefObject<HTMLElement>
 ) => {
   const eventList: EventI[] = JSON.parse(JSON.stringify(eventListInput));
-
   const textOccurrenceMap: Record<string | number, TextOccurrenceI[]> = {};
   eventList.forEach((eventItem) => {
     const {
@@ -92,10 +94,12 @@ const generateContent = (
               ? "__selected"
               : ""
           }`}
+          tabIndex={0}
           style={{ backgroundColor: color }}
-          onClick={(e) => {
-            setSelectedEventVerbStart(textOccurrence.textStartIndex);
+          onFocus={() => {
+            setVerbStart(textOccurrence.textStartIndex);
           }}
+          onBlur={() => setVerbStart(null)}
           onDoubleClick={(e) => {
             openModal(`${textOccurrence.targetEventKey}`);
           }}
@@ -137,19 +141,19 @@ const generateContent = (
 
 const ReactiveParagraph = ({
   eventList,
-  selectedEventVerbStart,
-  setSelectedEventVerbStart,
+
   color,
 }: {
   eventList: EventI[];
-  selectedEventVerbStart: number | null;
-  setSelectedEventVerbStart: React.Dispatch<
-    React.SetStateAction<number | null>
-  >;
   color: string;
 }) => {
   const { paragraph } = useSelector((store: RootStoreI) => store.dataReducer);
   const selectedHTMLElement = useRef<HTMLElement>(null);
+
+  const { selectedEventVerbStart } = useSelector(
+    (store: RootStoreI) => store.tabReducer
+  );
+
   const dispatch = useDispatch();
 
   const memoizedContent = useMemo(() => {
@@ -157,19 +161,13 @@ const ReactiveParagraph = ({
       eventList,
       paragraph,
       selectedEventVerbStart,
-      setSelectedEventVerbStart,
       (targetEventKey: string) => dispatch(openModal({ targetEventKey })),
+      (targetSelectedEventVerbStart: number | null) =>
+        dispatch(setSelectedEventVerbStart(targetSelectedEventVerbStart)),
       color,
       selectedHTMLElement
     );
-  }, [
-    eventList,
-    paragraph,
-    selectedEventVerbStart,
-    setSelectedEventVerbStart,
-    dispatch,
-    color,
-  ]);
+  }, [eventList, paragraph, selectedEventVerbStart, dispatch, color]);
 
   useEffect(
     () =>

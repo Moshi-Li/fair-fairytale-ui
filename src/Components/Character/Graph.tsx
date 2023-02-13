@@ -1,6 +1,8 @@
 import React, { useEffect, useCallback } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import dagre from "dagre";
+import { setSelectedEventVerbStart } from "../../Slices/TabSlice";
 
 import ReactFlow, {
   useNodesState,
@@ -17,6 +19,7 @@ import ReactFlow, {
 import "reactflow/dist/style.css";
 
 import { EventI } from "../../Slices/DataSlice";
+import { RootStoreI } from "../../Store";
 
 const dagreGraph = new dagre.graphlib.Graph();
 dagreGraph.setDefaultEdgeLabel(() => ({}));
@@ -30,10 +33,11 @@ const Y_SPACE = 100;
 
 const getLayoutGraph = (
   eventListInput: EventI[],
-  setSelectedEventVerbStart: React.Dispatch<
-    React.SetStateAction<number | null>
-  >,
-  color: string
+  color: string,
+  setVerbStart: (targetSelectedEventVerbStart: number | null) => {
+    payload: number | null;
+    type: string;
+  }
 ) => {
   let eventList = JSON.parse(JSON.stringify(eventListInput)) as EventI[];
 
@@ -57,7 +61,9 @@ const getLayoutGraph = (
       data: {
         label: (
           <span
-            onClick={() => setSelectedEventVerbStart(item.verbStartByteText)}
+            tabIndex={0}
+            onFocus={() => setVerbStart(item.verbStartByteText)}
+            onBlur={() => setVerbStart(null)}
             style={{
               backgroundColor: "transparent",
               fontSize: "24px",
@@ -65,10 +71,12 @@ const getLayoutGraph = (
             }}
           >{`${item.event}`}</span>
         ),
+        eventVerbStart: item.verbStartByteText,
       },
       style: {
         backgroundColor: color,
-        borderRadius: item.argument === "subject" ? "0%" : "50%",
+        borderRadius:
+          color === "grey" ? "0%" : item.argument === "subject" ? "0%" : "50%",
       },
       position: { x: currentX, y: currentY },
     };
@@ -119,43 +127,59 @@ const GraphLegend = () => {
         <span>Object:</span>
         <div style={{ borderRadius: "50%" }}></div>
       </div>
-      <div className="graph--legend--row">
-        <span style={{ fontSize: "14px" }}>Subject & Object:</span>
-        <div style={{ borderRadius: "25%" }}></div>
-      </div>
     </div>
   );
 };
+
 const onInit = (reactFlowInstance: any) =>
   console.log("flow loaded:", reactFlowInstance);
 
 const ReactiveGraph = ({
   eventList,
-  setSelectedEventVerbStart,
   color,
 }: {
   eventList: EventI[];
-  setSelectedEventVerbStart: React.Dispatch<
-    React.SetStateAction<number | null>
-  >;
   color: string;
 }) => {
-  const [nodes, setNodes, onNodesChange] = useNodesState([]);
+  const [nodes, setNodes, onNodesChange] = useNodesState<{
+    label: JSX.Element;
+    eventVerbStart: number;
+  }>([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
+  const { selectedEventVerbStart } = useSelector(
+    (store: RootStoreI) => store.tabReducer
+  );
+
+  const dispatch = useDispatch();
+
   const reactFlowInstance = useReactFlow();
+
   useEffect(() => {
-    if (nodes.length) reactFlowInstance.fitView();
-  }, [nodes.length, reactFlowInstance]);
+    setTimeout(() => {
+      reactFlowInstance.fitView();
+    }, 100);
+  }, [color, reactFlowInstance]);
 
   useEffect(() => {
     const { nextNodes, nextEdges } = getLayoutGraph(
       eventList,
-      setSelectedEventVerbStart,
-      color
+      color,
+      (targetSelectedEventVerbStart: number | null) =>
+        dispatch(setSelectedEventVerbStart(targetSelectedEventVerbStart))
     );
     setNodes(nextNodes);
     setEdges(nextEdges);
-  }, [eventList, setNodes, setEdges, color, setSelectedEventVerbStart]);
+  }, [eventList, setNodes, setEdges, color, dispatch]);
+
+  useEffect(() => {
+    setNodes((nds) =>
+      nds.map((node) => {
+        node.selected = node.data.eventVerbStart === selectedEventVerbStart;
+        return node;
+      })
+    );
+    reactFlowInstance.fitView();
+  }, [selectedEventVerbStart, setNodes, reactFlowInstance]);
 
   const onConnect = useCallback(
     (params: any) =>
@@ -193,22 +217,14 @@ const ReactiveGraph = ({
 
 const Graph = ({
   eventList,
-  setSelectedEventVerbStart,
   color,
 }: {
   eventList: EventI[];
-  setSelectedEventVerbStart: React.Dispatch<
-    React.SetStateAction<number | null>
-  >;
   color: string;
 }) => {
   return (
     <ReactFlowProvider>
-      <ReactiveGraph
-        color={color}
-        eventList={eventList}
-        setSelectedEventVerbStart={setSelectedEventVerbStart}
-      ></ReactiveGraph>
+      <ReactiveGraph color={color} eventList={eventList}></ReactiveGraph>
     </ReactFlowProvider>
   );
 };
