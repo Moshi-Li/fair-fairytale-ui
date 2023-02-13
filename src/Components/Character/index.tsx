@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+
 import { RootStoreI } from "../../Store";
 import { EventI, CharacterStatI } from "../../Slices/DataSlice";
-import Graph from "./Graph";
+
 import Paragraph from "./ReactiveParagraph";
+import Graph from "./Graph";
 import Stat from "./Stat";
 import "./index.scss";
 
@@ -15,9 +17,6 @@ const Character = () => {
     null
   );
   const [selectedEvents, setSelectedEvents] = useState<EventI[]>([]);
-  const [selectedEventVerbStart, setSelectedEventVerbStart] = useState<
-    number | null
-  >(null);
   const [characterList, setCharacterList] = useState<null | CharacterStatI[]>(
     null
   );
@@ -53,15 +52,22 @@ const Character = () => {
   }, [setCharacterList, characterMeta]);
 
   useEffect(() => {
-    let eventList = JSON.parse(
-      JSON.stringify(
-        selectedCharacterId === null
-          ? Object.entries(characterMeta)
-              .map(([key, { relatedEvents }]) => relatedEvents)
-              .flat()
-          : characterMeta[selectedCharacterId].relatedEvents
-      )
-    ) as EventI[];
+    let eventList = [];
+    if (selectedCharacterId === null) {
+      const visitedMap: Record<number | string, any> = {};
+      eventList = Object.entries(characterMeta)
+        .map(([key, { relatedEvents }]) => relatedEvents)
+        .flat()
+        .filter((item) => {
+          if (item && visitedMap[item?.verbStartByteText] === undefined) {
+            visitedMap[item?.verbStartByteText] = true;
+            return true;
+          }
+          return false;
+        }) as EventI[];
+    } else {
+      eventList = characterMeta[selectedCharacterId].relatedEvents as EventI[];
+    }
     setSelectedEvents(eventList);
   }, [selectedCharacterId, characterMeta]);
 
@@ -110,8 +116,6 @@ const Character = () => {
             color={
               selectedCharacterId ? colorScheme[selectedCharacterId] : "grey"
             }
-            selectedEventVerbStart={selectedEventVerbStart}
-            setSelectedEventVerbStart={setSelectedEventVerbStart}
           />
         </div>
         <Graph
@@ -119,7 +123,6 @@ const Character = () => {
             selectedCharacterId ? colorScheme[selectedCharacterId] : "grey"
           }
           eventList={selectedEvents}
-          setSelectedEventVerbStart={setSelectedEventVerbStart}
         ></Graph>
       </div>
 

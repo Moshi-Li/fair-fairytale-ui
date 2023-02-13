@@ -98,7 +98,7 @@ const Stat = () => {
     <React.Fragment>
       {Object.keys(topEvents).map((key) => {
         return (
-          <React.Fragment>
+          <React.Fragment key={key}>
             <Statistics
               headerInfo={headerInfo}
               data={topEvents[key]}

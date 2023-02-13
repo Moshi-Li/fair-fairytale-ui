@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
 import { RootStoreI } from "../../Store";
-
 import { EventI } from "../../Slices/DataSlice";
+import { setSelectedEventVerbStart } from "../../Slices/TabSlice";
 
-import { VerticalDivider } from "../Utility";
 import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
 import Stat from "./Stat";
+
 import "./index.scss";
 
 const Gender = () => {
@@ -16,11 +17,7 @@ const Gender = () => {
     (store: RootStoreI) => store.dataReducer
   );
   const [selectedEvents, setSelectedEvents] = useState<EventI[]>([]);
-  const [selectedEventVerbStart, setSelectedEventVerbStart] = useState<
-    number | null
-  >(null);
-
-  //const [duplicatedEvent, setDuplicatedEvent] = useState<number[]>([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let result: any = {};
@@ -61,7 +58,7 @@ const Gender = () => {
               }`}
               onClick={(e) => {
                 setGender("male");
-                setSelectedEventVerbStart(null);
+                dispatch(setSelectedEventVerbStart(null));
               }}
             >
               Male
@@ -72,7 +69,7 @@ const Gender = () => {
               }`}
               onClick={(e) => {
                 setGender("female");
-                setSelectedEventVerbStart(null);
+                dispatch(setSelectedEventVerbStart(null));
               }}
             >
               Female
@@ -83,24 +80,16 @@ const Gender = () => {
               }`}
               onClick={(e) => {
                 setGender("mix");
-                setSelectedEventVerbStart(null);
+                dispatch(setSelectedEventVerbStart(null));
               }}
             >
               Mix
             </button>
           </div>
           <p className="section--label">Story</p>
-          <Paragraph
-            gender={gender}
-            eventList={selectedEvents}
-            selectedEventVerbStart={selectedEventVerbStart}
-            setSelectedEventVerbStart={setSelectedEventVerbStart}
-          />
+          <Paragraph gender={gender} eventList={selectedEvents} />
         </div>
-        <ReactiveGraph
-          eventList={selectedEvents}
-          setSelectedEventVerbStart={setSelectedEventVerbStart}
-        ></ReactiveGraph>
+        <ReactiveGraph eventList={selectedEvents}></ReactiveGraph>
       </div>
 
       <div className="gender--stat">

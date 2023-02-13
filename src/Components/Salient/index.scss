@@ -16,64 +16,34 @@
 }
 
 .report--reactive--paragraph {
-  text-align: left;
+  padding: 0 13px;
   width: 100%;
-  margin: 20px 0;
+  box-sizing: border-box;
+  text-align: left;
+  margin: 5px 0 10px 0;
   line-height: 55px;
-  height: 100%;
-  overflow-y: auto;
+  max-height: 50vh;
+  overflow-y: overlay;
   scroll-behavior: smooth;
 
   font-weight: 700;
   font-size: 24px;
   line-height: 32px;
   color: #000000;
-  .text--occurrence__male__primary {
+
+  .text--occurrence__primary {
     padding: 0 5px;
-    background-color: #8ac7ff;
     cursor: pointer;
-  }
-  .text--occurrence__male__primary__selected {
-    padding: 0 5px;
-    background-color: #8ac7ff;
-    border: 2px solid gold;
-    cursor: pointer;
-  }
-  .text--occurrence__male__secondary {
-    padding: 0 5px;
-    border: 2px solid #8ac7ff;
   }
 
-  .text--occurrence__female__primary {
+  .text--occurrence__primary__selected {
     padding: 0 5px;
-    background-color: #fc8e94;
+    border: 3px solid gold;
     cursor: pointer;
-  }
-  .text--occurrence__female__primary__selected {
-    padding: 0 5px;
-    background-color: #fc8e94;
-    border: 2px solid gold;
-    cursor: pointer;
-  }
-  .text--occurrence__female__secondary {
-    padding: 0 5px;
-    border: 2px solid #fc8e94;
   }
 
-  .text--occurrence__mix__primary {
-    padding: 0 5px;
-    background-color: #a7a7a7;
-    cursor: pointer;
-  }
-  .text--occurrence__mix__primary__selected {
-    padding: 0 5px;
-    background-color: #a7a7a7;
-    border: 2px solid gold;
-    cursor: pointer;
-  }
-  .text--occurrence__mix__secondary {
-    padding: 0 5px;
-    border: 2px solid #a7a7a7;
+  .text--occurrence__secondary {
+    border: 1px solid #000000;
   }
 }
 
@@ -82,6 +52,10 @@
   height: 100%;
   border: 5px solid #00b68a;
   background-color: white;
+  .selected {
+    border-width: 5px;
+    border-color: gold;
+  }
 }
 
 .graph-legend {
