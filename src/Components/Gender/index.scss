@@ -57,7 +57,7 @@
     overflow-y: overlay;
     scroll-behavior: smooth;
 
-    font-weight: 700;
+    font-weight: 100;
     font-size: 24px;
     line-height: 32px;
     color: #000000;
@@ -80,7 +80,7 @@
 
     .text--occurrence__female__primary {
       padding: 0 5px;
-      background-color: #fc8e94;
+      background-color: rgba($color: #fc8e94, $alpha: 0.2);
       cursor: pointer;
     }
     .text--occurrence__female__primary__selected {
@@ -96,7 +96,7 @@
 
     .text--occurrence__mix__primary {
       padding: 0 5px;
-      background-color: #a7a7a7;
+      background-color: rgba($color: #a7a7a7, $alpha: 0.2);
       cursor: pointer;
     }
     .text--occurrence__mix__primary__selected {

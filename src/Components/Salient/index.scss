@@ -26,13 +26,14 @@
   overflow-y: overlay;
   scroll-behavior: smooth;
 
-  font-weight: 700;
+  font-weight: 100;
   font-size: 24px;
   line-height: 32px;
   color: #000000;
 
   .text--occurrence__primary {
     padding: 0 5px;
+    background-color: rgba($color: #8ac7ff, $alpha: 0.2);
     cursor: pointer;
   }
 
