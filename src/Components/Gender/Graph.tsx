@@ -141,11 +141,11 @@ const GraphLegend = () => {
   return (
     <div className="graph--legend--container">
       <div className="graph--legend--row">
-        <span>Subject:</span>
+        <span>Agent:</span>
         <div></div>
       </div>
       <div className="graph--legend--row">
-        <span>Object:</span>
+        <span>Patient:</span>
         <div style={{ borderRadius: "50%" }}></div>
       </div>
     </div>
