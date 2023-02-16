@@ -64,7 +64,7 @@
 
     .text--occurrence__male__primary {
       padding: 0 5px;
-      background-color: #8ac7ff;
+      background-color: rgba($color: #8ac7ff, $alpha: 0.2);
       cursor: pointer;
     }
     .text--occurrence__male__primary__selected {
