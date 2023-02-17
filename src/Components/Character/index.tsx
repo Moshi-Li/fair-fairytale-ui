@@ -114,13 +114,13 @@ const Character = () => {
           <Paragraph
             eventList={selectedEvents}
             color={
-              selectedCharacterId ? colorScheme[selectedCharacterId] : "grey"
+              selectedCharacterId ? colorScheme[selectedCharacterId] : "rgba(128, 128, 128, 0.12)"
             }
           />
         </div>
         <Graph
           color={
-            selectedCharacterId ? colorScheme[selectedCharacterId] : "grey"
+            selectedCharacterId ? colorScheme[selectedCharacterId] : "rgba(128, 128, 128, 0.12)"
           }
           eventList={selectedEvents}
         ></Graph>

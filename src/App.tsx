@@ -38,21 +38,22 @@ function App() {
 
   return (
     <div className="app">
+      <h1>NECE: Narrative Event Chain Extraction Toolkit</h1>
       <StoryInput></StoryInput>
       {sourced && (
         <div
           ref={scrollDestination}
           className={`report--content ${TabBackground[tabIndex.toString()]}`}
         >
-          <h3>NECE: Narrative Event Chain Extraction Toolkit</h3>
+          <h3>NECE results</h3>
           <Tabs
             className={"tab--container"}
             onSelect={(index) => setTabIndex(index)}
           >
             <TabList className={"tab--list"}>
-              <Tab>SALIENT EVENTS</Tab>
-              <Tab>GENDER</Tab>
-              <Tab>CHARACTER</Tab>
+              <Tab>Salient events</Tab>
+              <Tab>Gender</Tab>
+              <Tab>Character</Tab>
             </TabList>
             <TabPanel>
               <Salient />

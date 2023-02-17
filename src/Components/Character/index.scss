@@ -1,5 +1,5 @@
 .character--container {
-  border: 5px solid #787878;
+  border: 2px solid #787878;
   border-top: none;
   padding: 35px;
   height: 66vh;
@@ -47,20 +47,21 @@
 }
 
 .report--reactive--paragraph {
-  padding: 0 13px;
+  padding: 0px 45px 0px 13px;
   width: 100%;
   box-sizing: border-box;
   text-align: left;
-  margin: 5px 0 10px 0;
+  margin: 5px 0 10px;
   line-height: 55px;
   max-height: 50vh;
   overflow-y: overlay;
   scroll-behavior: smooth;
 
   font-weight: 100;
-  font-size: 24px;
+  font-size: 20px;
   line-height: 32px;
   color: #000000;
+  text-align: justify;
 
   .text--occurrence__primary {
     padding: 0 5px;
@@ -70,7 +71,7 @@
 
   .text--occurrence__primary__selected {
     padding: 0 5px;
-    border: 3px solid gold;
+    border: 2px solid gold;
     cursor: pointer;
   }
 
@@ -82,12 +83,12 @@
 .directed--graph--character {
   width: 100%;
   height: 100%;
-  border: 5px solid #787878;
+  border: 2px solid #787878;
 
   background-color: white;
 
   .selected {
-    border-width: 5px;
+    border-width: 2px;
     border-color: gold;
   }
 }
@@ -133,6 +134,11 @@
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      font-family: "Source Sans Pro";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+
       div {
         margin-left: 5px;
         width: 50%;

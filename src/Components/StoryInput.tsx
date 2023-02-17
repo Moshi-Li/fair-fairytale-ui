@@ -101,12 +101,16 @@ const StoryInput = () => {
   return (
     <div className="story--input--container">
       <div className="example--container">
-        <p>Examples:</p>
+        <h2>Story examples</h2>
+        <p>Type in the name of a story or click on one below to see NECE results</p>
         <div className="search--bar--container">
+        <div className="form-field">
           <input
             className="search--bar--input"
             onChange={(e) => setSearchString(e.target.value)}
           ></input>
+           <span className="icon">🔍</span>
+          </div>    
           <p className="search--bar--result">
             {searchString === ""
               ? "displaying randomly selected 5 example results"
@@ -127,10 +131,11 @@ const StoryInput = () => {
           ))}
         </div>
         <div className="example--container--status">
-          <p>Server Status:</p>
+          <h2>Server status</h2>
           {serverStatus && <StatusIndicator Positive Pulse />}
           {!serverStatus && <StatusIndicator Negative Pulse />}
         </div>
+        <p>You can also paste a story to display NECE results</p>
       </div>
 
       <textarea

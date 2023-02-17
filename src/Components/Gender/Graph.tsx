@@ -93,10 +93,10 @@ const getLayoutGraph = (
       style: {
         backgroundColor:
           item.gender === "male"
-            ? "blue"
+            ? "#7cb3e5"
             : item.gender === "female"
-            ? "red"
-            : "silver",
+            ? "#e27f85"
+            : "#acacac",
         borderRadius: item.argument === "subject" ? "0%" : "50%",
       },
       position: { x: currentX, y: currentY },

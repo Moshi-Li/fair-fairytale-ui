@@ -103,7 +103,7 @@ const generateContent = (
           onDoubleClick={(e) => {
             openModal(`${textOccurrence.targetEventKey}`);
           }}
-          style={{ backgroundColor: "grey" }}
+          style={{ backgroundColor: 'rgba(167, 167, 167, 0.2)' }}
         >
           {paragraph.substring(
             textOccurrence.textStartIndex,
