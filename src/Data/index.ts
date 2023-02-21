@@ -38,10 +38,10 @@ const processCharacterMeta = (characters: any) => {
   const result: any = {};
   characters.forEach((character: any) => {
     const { coref_idx, total } = character;
-    result[coref_idx] = {
+    result[parseInt(coref_idx).toString()] = {
       ...character,
       total: parseInt(total),
-      coref_id: coref_idx,
+      coref_id: parseInt(coref_idx).toString(),
     };
   });
 
@@ -88,7 +88,7 @@ const processEventList = (events: any, paragraph: string) => {
       verb_start_byte_text: parseInt(verb_start_byte_text),
       verb_end_byte_text: parseInt(verb_end_byte_text),
 
-      coref_id,
+      coref_id: parseInt(coref_id).toString(),
       argument,
       arg_start_byte_text: parseInt(arg_start_byte_text),
       arg_end_byte_text: parseInt(arg_end_byte_text),
