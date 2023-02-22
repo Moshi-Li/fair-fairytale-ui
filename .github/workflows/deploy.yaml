@@ -1,28 +1,26 @@
-name: build-deploy-aws
+name: deployment-aws
 
 on:
   push:
     branches: [aws-deployment]
 
 jobs:
-  build:
+  deployment:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
-        with:
-          node-version: 14
-      - run: npm install -g yarn
-      - run: yarn install --frozen-lockfile
-      - run: yarn build
+      build-deploy:
+        - uses: actions/checkout@v2
+        - uses: actions/setup-node@v1
+          with:
+              node-version: 14
+        - run: npm install -g yarn
+        - run: yarn install --frozen-lockfile
+        - run: yarn build
 
-  deploy:
-      steps:
         - uses: aws-actions/configure-aws-credentials@v1
             with:
               aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
               aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
               aws-region: us-east-1
-        - run: aws s3 sync ./build s3://fair-fairytale-web
-
+          run: aws s3 sync ./build s3://fair-fairytale-web
