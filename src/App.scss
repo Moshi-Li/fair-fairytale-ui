@@ -20,9 +20,9 @@
   h3 {
     margin: 0;
     margin-bottom: 60px;
-    font-family: "Rasa";
-    font-weight: 700;
-    font-size: 48px;
+    font-family: "Source Sans Pro";
+    font-weight: bold;
+    font-size: 30px;
     line-height: 36px;
     color: #000000;
   }
@@ -69,10 +69,10 @@
   &.salient-event {
     background: linear-gradient(115.4deg, #c2fff0 3.64%, #ffffff 118.6%);
     .tab--list {
-      border-bottom: 5px solid #00b68a;
+      border-bottom: 2px solid #00b68a;
 
       .react-tabs__tab--selected {
-        border-width: 5px;
+        border-width: 2px;
         border-color: #00b68a;
         color: #00b68a;
       }
@@ -81,9 +81,9 @@
   &.gender {
     background: linear-gradient(116.44deg, #ffce6d -6.73%, #ffffff 170.41%);
     .tab--list {
-      border-bottom: 5px solid #ffce6d;
+      border-bottom: 2px solid #ffce6d;
       .react-tabs__tab--selected {
-        border-width: 5px;
+        border-width: 2px;
         border-color: #ffce6d;
         color: #ffce6d;
       }
@@ -92,9 +92,9 @@
   &.character {
     background: linear-gradient(114.12deg, #bfbfbf -10.32%, #ffffff 138.05%);
     .tab--list {
-      border-bottom: 5px solid #787878;
+      border-bottom: 2px solid #787878;
       .react-tabs__tab--selected {
-        border-width: 5px;
+        border-width: 2px;
         border-color: #787878;
       }
     }

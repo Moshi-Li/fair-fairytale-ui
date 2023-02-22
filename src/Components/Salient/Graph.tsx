@@ -89,7 +89,7 @@ const getLayoutGraph = (
         eventVerbStart: item.verbStartByteText,
       },
       style: {
-        backgroundColor: "silver",
+        backgroundColor: "#acacac",
       },
       position: { x: currentX, y: currentY },
     };

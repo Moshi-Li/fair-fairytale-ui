@@ -8,6 +8,7 @@ import { setSelectedEventVerbStart } from "../../Slices/TabSlice";
 import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
 import Stat from "./Stat";
+import RationGraph from "./RatioGraph";
 import { ScrollDownBtn } from "../Utility";
 
 import "./index.scss";
@@ -96,6 +97,7 @@ const Gender = () => {
       <div className="gender--stat">
         <Stat></Stat>
       </div>
+
       <ScrollDownBtn></ScrollDownBtn>
     </div>
   );

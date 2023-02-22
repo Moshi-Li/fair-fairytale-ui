@@ -107,6 +107,7 @@ const generateContent = (
               : ""
           }`}
           tabIndex={0}
+          //style={{ backgroundColor: color + '$alpha: 0.2'}}
           style={{ backgroundColor: color }}
           onFocus={() => {
             setVerbStart(textOccurrence.textStartIndex);

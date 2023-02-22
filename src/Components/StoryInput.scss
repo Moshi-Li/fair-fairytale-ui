@@ -8,15 +8,35 @@
   flex-direction: column;
 
   .example--container {
-    width: 40%;
+    width: 45%;
     display: flex;
     flex-direction: column;
-    margin-bottom: 25px;
+    margin-bottom: 5px;
     align-items: flex-start;
+
+    /*h2{*/
+    font-family: "Source Sans Pro";
+    font-style: normal;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 32px;
+    /*}*/
+
+    p{
+      text-align: left;
+      font-weight: 100;
+      font-size: 20px;
+    }
+
 
     .example--container--status {
       display: flex;
       align-items: center;
+      
+      h2{
+        margin-right: 8px;
+      }
+      
       div {
         width: 20px;
         height: 20px;
@@ -24,25 +44,39 @@
         background-color: red;
       }
     }
+
     .example--container--list {
       display: flex;
       flex-direction: row;
       align-items: flex-start;
       flex-wrap: wrap;
+      border: 10px red;
     }
+
+    .form-field {
+      position: relative;
+      display: inline-block;
+    }
+    
+    .icon {
+      position: absolute;
+      right: 13px;
+    }
+
     .search--bar--container {
       .search--bar--input {
-        width: 450px;
+        width: 530px;
         border-radius: 5px;
         height: 30px;
-        border: 1px solid gray;
-      }
+        border: 1px solid silver;
+      } 
+
       .search--bar--input:focus {
         outline: none;
       }
       .search--bar--result {
         margin: 2px 0px;
-        color: grey;
+        color: silver;
         font-size: 12px;
         text-align: left;
       }
@@ -50,9 +84,12 @@
   }
 
   .story--input--textarea {
-    width: 40%;
+    
+    width: 45%;
     height: 200px;
+    /*width: 530px;*/
     margin-bottom: 10px;
+    border: 1px solid silver;
   }
   .story--input--btn {
     width: 60px;

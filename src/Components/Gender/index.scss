@@ -1,6 +1,7 @@
 .gender--container {
+  border: 2px solid #ffce6d;
   position: relative;
-  border: 5px solid #ffce6d;
+
   border-top: none;
   padding: 35px;
   height: 66vh;
@@ -48,7 +49,7 @@
   }
 
   .report--reactive--paragraph {
-    padding: 0 13px;
+    padding: 0px 45px 0px 13px;
     width: 100%;
     box-sizing: border-box;
     text-align: left;
@@ -58,14 +59,15 @@
     overflow-y: overlay;
     scroll-behavior: smooth;
 
-    font-weight: 700;
-    font-size: 24px;
+    font-weight: 100;
+    font-size: 20px;
     line-height: 32px;
     color: #000000;
+    text-align: justify;
 
     .text--occurrence__male__primary {
       padding: 0 5px;
-      background-color: #8ac7ff;
+      background-color: rgba($color: #8ac7ff, $alpha: 0.2);
       cursor: pointer;
     }
     .text--occurrence__male__primary__selected {
@@ -81,7 +83,7 @@
 
     .text--occurrence__female__primary {
       padding: 0 5px;
-      background-color: #fc8e94;
+      background-color: rgba($color: #fc8e94, $alpha: 0.2);
       cursor: pointer;
     }
     .text--occurrence__female__primary__selected {
@@ -97,7 +99,7 @@
 
     .text--occurrence__mix__primary {
       padding: 0 5px;
-      background-color: #a7a7a7;
+      background-color: rgba($color: #a7a7a7, $alpha: 0.2);
       cursor: pointer;
     }
     .text--occurrence__mix__primary__selected {
@@ -116,12 +118,13 @@
 .directed--graph--gender {
   width: 100%;
   height: 100%;
-  border: 5px solid gold;
+  border: 2px solid gold;
+
   background-color: white;
   box-sizing: border-box;
 
   .selected {
-    border-width: 5px;
+    border-width: 2px;
     border-color: gold;
   }
 }
@@ -178,6 +181,10 @@ path.react-flow__edge-path {
       flex-direction: row;
       justify-content: space-between;
       align-items: center;
+      font-family: "Source Sans Pro";
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
       div {
         margin-left: 5px;
         width: 50%;
