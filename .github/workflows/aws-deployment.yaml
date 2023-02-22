@@ -5,7 +5,7 @@ on:
     branches: [aws-deployment]
 
 jobs:
-  deployment:
+  build-deploy:
     runs-on: ubuntu-latest
 
     steps:
