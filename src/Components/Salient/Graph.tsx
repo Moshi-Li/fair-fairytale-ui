@@ -72,7 +72,8 @@ const getLayoutGraph = (
   eventList.forEach((item, index) => {
     const nodeToBeAdded = {
       id: `${index}`,
-
+      targetPosition: "left",
+      sourcePosition: "right",
       data: {
         label: (
           <span
