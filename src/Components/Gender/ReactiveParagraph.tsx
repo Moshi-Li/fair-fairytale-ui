@@ -39,6 +39,7 @@ const generateContent = (
       argStartByteText,
       argEndByteText,
     } = eventItem;
+
     if (!textOccurrenceMap[verbStartByteText]) {
       textOccurrenceMap[verbStartByteText] = {
         type: "verb",
@@ -50,15 +51,17 @@ const generateContent = (
         targetEventKey: `${sentenceId}+${eventId}`,
       };
     }
-    textOccurrenceMap[argStartByteText] = {
-      type: argument,
-      occurrenceText: argText,
-      textStartIndex: argStartByteText,
-      textEndIndex: argEndByteText,
-      textLength: argText.length,
-      associatedStartIndex: [verbStartByteText],
-      targetEventKey: undefined,
-    };
+    if (!textOccurrenceMap[argStartByteText]) {
+      textOccurrenceMap[argStartByteText] = {
+        type: argument,
+        occurrenceText: argText,
+        textStartIndex: argStartByteText,
+        textEndIndex: argEndByteText,
+        textLength: argText.length,
+        associatedStartIndex: [verbStartByteText],
+        targetEventKey: undefined,
+      };
+    }
 
     textOccurrenceMap[verbStartByteText].associatedStartIndex.push(
       argStartByteText
@@ -74,13 +77,19 @@ const generateContent = (
   });
   textTextOccurrenceList.sort((a, b) => a.textStartIndex - b.textStartIndex);
 
-  const result = [];
-  let index = 0;
+  const result: any = [];
+  let indexPointer = 0;
 
-  textTextOccurrenceList.forEach((textOccurrence) => {
+  textTextOccurrenceList.forEach((textOccurrence, index) => {
+    if (indexPointer > textOccurrence.textStartIndex) {
+      result.pop();
+      result.pop();
+      indexPointer = textTextOccurrenceList[index - 2].textEndIndex;
+    }
+
     result.push(
-      <React.Fragment key={index}>
-        {paragraph.substring(index, textOccurrence.textStartIndex)}
+      <React.Fragment key={indexPointer}>
+        {paragraph.substring(indexPointer, textOccurrence.textStartIndex)}
       </React.Fragment>
     );
     if (textOccurrence.type === "verb") {
@@ -131,12 +140,12 @@ const generateContent = (
         </span>
       );
     }
-    index = textOccurrence.textEndIndex;
+    indexPointer = textOccurrence.textEndIndex;
   });
 
   result.push(
-    <React.Fragment key={index}>
-      {paragraph.substring(index, paragraph.length)}
+    <React.Fragment key={indexPointer}>
+      {paragraph.substring(indexPointer, paragraph.length)}
     </React.Fragment>
   );
   return result;

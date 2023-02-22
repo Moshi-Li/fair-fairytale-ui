@@ -153,6 +153,8 @@ const StoryInput = () => {
               .replaceAll("\n", " ")
               .trim()
               .replace(/ +(?= )/g, "")
+              .replace(`"`, `'`)
+              .replace(`"`, `'`)
           );
         }}
       ></textarea>

@@ -7,6 +7,8 @@ import { EventI, CharacterStatI } from "../../Slices/DataSlice";
 import Paragraph from "./ReactiveParagraph";
 import Graph from "./Graph";
 import Stat from "./Stat";
+import { ScrollDownBtn } from "../Utility";
+
 import "./index.scss";
 
 const RandomColor = () =>
@@ -129,6 +131,8 @@ const Character = () => {
       <div className="character--stat">
         <Stat setSelectedCharacterId={setSelectedCharacterId}></Stat>
       </div>
+
+      <ScrollDownBtn></ScrollDownBtn>
     </div>
   );
 };
