@@ -1,5 +1,5 @@
 .character--container {
-  border: 2px solid #787878;
+  border: 2px solid #a77dec;
   position: relative;
   border-top: none;
   padding: 35px;
@@ -66,7 +66,7 @@
 
   .text--occurrence__primary {
     padding: 0 5px;
-    background-color: rgba($color: #a7a7a7, $alpha: 0.2);
+    background-color: rgba($color: #a7a7a7c0, $alpha: 0.2);
     cursor: pointer;
   }
 
@@ -84,7 +84,7 @@
 .directed--graph--character {
   width: 100%;
   height: 100%;
-  border: 2px solid #787878;
+  border: 2px solid #a77dec;
 
   background-color: white;
   box-sizing: border-box;
