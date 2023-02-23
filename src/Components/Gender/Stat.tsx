@@ -91,7 +91,7 @@ const Stat = () => {
   const headerInfo = [
     { accessor: "eventLemma", header: "Event" },
     { accessor: "argument", header: "Argument" },
-    { accessor: "odds", header: "Odds Ratio" },
+    { accessor: "odds", header: "Odds ratio" },
   ];
 
   return (
@@ -117,7 +117,7 @@ const Stat = () => {
           { accessor: "total", header: "Total" },
         ]}
         data={counts}
-        label="Story Level Character Statistics"
+        label="Character statistics by gender"
       ></Statistics>
     </React.Fragment>
   );
