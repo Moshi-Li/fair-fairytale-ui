@@ -89,7 +89,7 @@ const getLayoutGraph = (
         eventVerbStart: item.verbStartByteText,
       },
       style: {
-        backgroundColor: "#acacac",
+        backgroundColor: "silver",
       },
       position: { x: currentX, y: currentY },
     };
@@ -194,7 +194,7 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
           attributionPosition="top-right"
           fitView
         >
-          <Background color="#aaa" gap={16} />
+          <Background color="silver" gap={16} />
           <Controls></Controls>
         </ReactFlow>
       </div>
