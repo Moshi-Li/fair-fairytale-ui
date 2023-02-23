@@ -66,7 +66,7 @@ const getLayoutGraph = (
             style={{
               backgroundColor: "transparent",
               fontSize: "24px",
-              color: "black",
+              color: "white",
             }}
           >{`${item.event}`}</span>
         ),
