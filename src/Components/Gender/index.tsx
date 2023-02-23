@@ -52,7 +52,7 @@ const Gender = () => {
     <div className="gender--container">
       <div className="gender--content">
         <div className="gender--content--left">
-          <p className="section--label">Gender Select</p>
+          <p className="section--label">Select gender</p>
           <div className="filter--container">
             <button
               className={`filter--btn ${
