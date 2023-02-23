@@ -102,7 +102,7 @@ const Stat = () => {
             <Statistics
               headerInfo={headerInfo}
               data={topEvents[key]}
-              label={`Top ${key.toUpperCase()} Character Events`}
+              label={`Top ${key} character events`}
             ></Statistics>
           </React.Fragment>
         );
@@ -112,8 +112,8 @@ const Stat = () => {
         headerInfo={[
           { accessor: "gender", header: "Gender" },
           { accessor: "importance", header: "Importance" },
-          { accessor: "subject", header: `As Agent` },
-          { accessor: "directObject", header: "As Patient" },
+          { accessor: "subject", header: `As agent` },
+          { accessor: "directObject", header: "As patient" },
           { accessor: "total", header: "Total" },
         ]}
         data={counts}
