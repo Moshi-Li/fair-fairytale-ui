@@ -1,5 +1,5 @@
 .gender--container {
-  border: 2px solid #ffce6d;
+  border: 2px solid #54b9e8;
   position: relative;
 
   border-top: none;
@@ -67,7 +67,7 @@
 
     .text--occurrence__male__primary {
       padding: 0 5px;
-      background-color: rgba($color: #8ac7ff, $alpha: 0.2);
+      background-color: rgba($color: #a7a7a7, $alpha: 0.2);
       cursor: pointer;
     }
     .text--occurrence__male__primary__selected {
@@ -83,7 +83,7 @@
 
     .text--occurrence__female__primary {
       padding: 0 5px;
-      background-color: rgba($color: #fc8e94, $alpha: 0.2);
+      background-color: rgba($color: #a7a7a7, $alpha: 0.2);
       cursor: pointer;
     }
     .text--occurrence__female__primary__selected {
@@ -118,7 +118,7 @@
 .directed--graph--gender {
   width: 100%;
   height: 100%;
-  border: 2px solid gold;
+  border: 2px solid #54b9e8;
 
   background-color: white;
   box-sizing: border-box;
