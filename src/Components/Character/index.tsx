@@ -88,7 +88,7 @@ const Character = () => {
                   setSelectedCharacterId(null);
                 }}
               >
-                Alł
+                All
               </button>
             )}
             {characterList?.map((item) => {
