@@ -72,13 +72,13 @@
     }
     .text--occurrence__male__primary__selected {
       padding: 0 5px;
-      background-color: #8ac7ff;
-      border: 2px solid gold;
+      background-color: rgba($color: #a7a7a7, $alpha: 0.2);
+      border: 1px solid gold;
       cursor: pointer;
     }
     .text--occurrence__male__secondary {
       padding: 0 5px;
-      border: 2px solid #8ac7ff;
+      border: 1px solid #54b9e8;
     }
 
     .text--occurrence__female__primary {
@@ -88,13 +88,13 @@
     }
     .text--occurrence__female__primary__selected {
       padding: 0 5px;
-      background-color: #fc8e94;
-      border: 2px solid gold;
+      background-color: rgba($color: #a7a7a7, $alpha: 0.2);
+      border: 1px solid gold;
       cursor: pointer;
     }
     .text--occurrence__female__secondary {
       padding: 0 5px;
-      border: 2px solid #fc8e94;
+      border: 1px solid #54b9e8;
     }
 
     .text--occurrence__mix__primary {
@@ -104,13 +104,13 @@
     }
     .text--occurrence__mix__primary__selected {
       padding: 0 5px;
-      background-color: #a7a7a7;
-      border: 2px solid gold;
+      background-color: rgba($color: #a7a7a7, $alpha: 0.2);
+      border: 1px solid gold;
       cursor: pointer;
     }
     .text--occurrence__mix__secondary {
       padding: 0 5px;
-      border: 2px solid #a7a7a7;
+      border: 1px solid #54b9e8;
     }
   }
 }
@@ -124,7 +124,7 @@
   box-sizing: border-box;
 
   .selected {
-    border-width: 2px;
+    border-width: 1px;
     border-color: gold;
   }
 }
