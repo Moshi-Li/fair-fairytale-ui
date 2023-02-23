@@ -67,7 +67,7 @@
   }
 
   &.salient-event {
-    background: linear-gradient(115.4deg, #c2fff0 3.64%, #ffffff 118.6%);
+    background: linear-gradient(115.4deg, #d2fff4 3.64%, #ffffff 118.6%);
     .tab--list {
       border-bottom: 2px solid #00b68a;
 
@@ -79,23 +79,24 @@
     }
   }
   &.gender {
-    background: linear-gradient(116.44deg, #ffce6d -6.73%, #ffffff 170.41%);
+    background: linear-gradient(116.44deg, #c2f2ff -6.73%, #ffffff 170.41%);
     .tab--list {
-      border-bottom: 2px solid #ffce6d;
+      border-bottom: 2px solid #54b9e8;
       .react-tabs__tab--selected {
         border-width: 2px;
-        border-color: #ffce6d;
-        color: #ffce6d;
+        border-color: #54b9e8;
+        color: #54b9e8;
       }
     }
   }
   &.character {
-    background: linear-gradient(114.12deg, #bfbfbf -10.32%, #ffffff 138.05%);
+    background: linear-gradient(114.12deg, #e6d7ff -10.32%, #ffffff 138.05%);
     .tab--list {
-      border-bottom: 2px solid #787878;
+      border-bottom: 2px solid #a77dec;
       .react-tabs__tab--selected {
         border-width: 2px;
-        border-color: #787878;
+        border-color: #a77dec;
+        color:#a77dec;
       }
     }
   }
