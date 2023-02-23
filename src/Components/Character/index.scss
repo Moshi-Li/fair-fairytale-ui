@@ -66,13 +66,13 @@
 
   .text--occurrence__primary {
     padding: 0 5px;
-    background-color: rgba($color: #a7a7a7c0, $alpha: 0.2);
+    background-color: rgba($color: #a7a7a7, $alpha: 0.2);
     cursor: pointer;
   }
 
   .text--occurrence__primary__selected {
     padding: 0 5px;
-    border: 2px solid gold;
+    border: 1px solid gold;
     cursor: pointer;
   }
 
