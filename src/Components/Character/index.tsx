@@ -77,7 +77,7 @@ const Character = () => {
     <div className="character--container">
       <div className="character--content">
         <div className="character--content--left">
-          <p className="section--label">Character Select</p>
+          <p className="section--label">Select character</p>
           <div className="character--list">
             {characterList && characterList.length && (
               <button
