@@ -1,54 +1,69 @@
-import React, { useEffect, useCallback } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import React, { useEffect, useMemo } from "react";
+import { useSelector } from "react-redux";
 import Plotly from "plotly.js-dist-min";
 import { RootStoreI } from "../../Store";
 
 const RatioGraph = () => {
-  const { dataReducer } = useSelector((store: RootStoreI) => store);
+  const { topEvents } = useSelector(
+    (store: RootStoreI) => store.dataReducer.storyMeta
+  );
 
-  //console.log(dataReducer.characterMeta);
-  //console.log(dataReducer.eventMajorList);
-  //console.log(dataReducer.eventMeta);
+  const dataPack = useMemo<Plotly.Data[]>(
+    () =>
+      Object.entries(topEvents)
+        .map((item) => {
+          const [, events] = item;
 
-  const res: any[] = Object.keys(dataReducer.storyMeta).map((key) => {
-    const { topEvents, counts } = dataReducer.storyMeta;
+          return events.length
+            ? {
+                x: events.map((item) => item.odds),
+                y: events.map((item) => item.eventLemma),
+                type: "bar",
+                textPosition: "outside",
+                orientation: "h",
+              }
+            : undefined;
+        })
+        .filter((item) => item !== undefined) as Plotly.Data[],
+    [topEvents]
+  );
 
-    return {
-      tevents: topEvents,
-      counts: counts,
-    };
-  });
-
-  console.log(dataReducer.storyMeta);
-
-  var trace1: Plotly.Data = {
-    x: res.map((item) => {
-      return item.counts.total;
-    }),
-    y: res.map((item) => {
-      return item.counts.subject;
-    }),
-    type: "bar",
-  };
-
-  var trace2: Plotly.Data = {
-    x: [10, 20, 15],
-    y: [90, 40, 60],
-    type: "bar",
-  };
-
-  var data = [trace1, trace2];
-
-  var layout = {
-    title: "To be decided",
-    showlegend: false,
-  };
+  const layouts = useMemo<Plotly.Layout[]>(
+    () =>
+      Object.entries(topEvents)
+        .map((item) => {
+          const [key, events] = item;
+          return events.length
+            ? {
+                title: `Top ${key} character events`,
+                showlegend: false,
+              }
+            : undefined;
+        })
+        .filter((item) => item !== undefined) as Plotly.Layout[],
+    [topEvents]
+  );
 
   useEffect(() => {
-    Plotly.newPlot("plotly--mount", data, layout, { scrollZoom: true });
-  });
+    dataPack.forEach((data, index) => {
+      Plotly.newPlot(
+        `plotly--mount--${layouts[index].title}`,
+        [data],
+        layouts[index],
+        {
+          scrollZoom: true,
+        }
+      );
+    });
+  }, [dataPack, layouts]);
 
-  return <div id="plotly--mount" className="ratio--graph"></div>;
+  return (
+    <React.Fragment>
+      {layouts.map((item) => (
+        <div id={`plotly--mount--${item.title}`} className="ratio--graph"></div>
+      ))}
+    </React.Fragment>
+  );
 };
 
 export default RatioGraph;

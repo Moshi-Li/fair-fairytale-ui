@@ -96,18 +96,6 @@ const Stat = () => {
 
   return (
     <React.Fragment>
-      {Object.keys(topEvents).map((key) => {
-        return (
-          <React.Fragment key={key}>
-            <Statistics
-              headerInfo={headerInfo}
-              data={topEvents[key]}
-              label={`Top ${key} character events`}
-            ></Statistics>
-          </React.Fragment>
-        );
-      })}
-
       <Statistics
         headerInfo={[
           { accessor: "gender", header: "Gender" },
@@ -119,6 +107,17 @@ const Stat = () => {
         data={counts}
         label="Character statistics by gender"
       ></Statistics>
+      {Object.keys(topEvents).map((key) => {
+        return topEvents[key] ? (
+          <React.Fragment key={key}>
+            <Statistics
+              headerInfo={headerInfo}
+              data={topEvents[key]}
+              label={`Top ${key} character events`}
+            ></Statistics>
+          </React.Fragment>
+        ) : null;
+      })}
     </React.Fragment>
   );
 };
