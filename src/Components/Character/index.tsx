@@ -13,7 +13,7 @@ import "./index.scss";
 import RatioGraph from "./RatioGraph";
 
 const RandomColor = () =>
-  "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
+  "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0") + "e0";
 
 const Character = () => {
   const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(
