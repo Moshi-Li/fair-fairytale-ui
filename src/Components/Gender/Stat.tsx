@@ -108,7 +108,7 @@ const Stat = () => {
         label="Character statistics by gender"
       ></Statistics>
       {Object.keys(topEvents).map((key) => {
-        return topEvents[key] ? (
+        return topEvents[key] && topEvents[key].length ? (
           <React.Fragment key={key}>
             <Statistics
               headerInfo={headerInfo}
