@@ -12,9 +12,9 @@ const RatioGraph = () => {
   console.log(dataReducer.eventMeta);
 
   var trace1: Plotly.Data = {
-    x: ["2020-10-04", "2021-11-04", "2023-12-04"],
+    x: [10, 20, 15],
     y: [90, 40, 60],
-    type: "scatter",
+    type: "bar",
   };
 
   var data = [trace1];

@@ -10,6 +10,7 @@ import Stat from "./Stat";
 import { ScrollDownBtn } from "../Utility";
 
 import "./index.scss";
+import RatioGraph from "./RatioGraph";
 
 const RandomColor = () =>
   "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
@@ -131,7 +132,7 @@ const Character = () => {
       <div className="character--stat">
         <Stat setSelectedCharacterId={setSelectedCharacterId}></Stat>
       </div>
-
+      <RatioGraph></RatioGraph>
       <ScrollDownBtn></ScrollDownBtn>
     </div>
   );
