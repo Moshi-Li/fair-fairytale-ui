@@ -12,6 +12,7 @@ import RationGraph from "./RatioGraph";
 import { ScrollDownBtn } from "../Utility";
 
 import "./index.scss";
+import RatioGraph from "./RatioGraph";
 
 const Gender = () => {
   const [gender, setGender] = useState<"male" | "female" | "mix">("male");
@@ -52,7 +53,7 @@ const Gender = () => {
     <div className="gender--container">
       <div className="gender--content">
         <div className="gender--content--left">
-          <p className="section--label">Gender Select</p>
+          <p className="section--label">Select gender</p>
           <div className="filter--container">
             <button
               className={`filter--btn ${
@@ -97,7 +98,7 @@ const Gender = () => {
       <div className="gender--stat">
         <Stat></Stat>
       </div>
-
+      <RatioGraph></RatioGraph>
       <ScrollDownBtn></ScrollDownBtn>
     </div>
   );

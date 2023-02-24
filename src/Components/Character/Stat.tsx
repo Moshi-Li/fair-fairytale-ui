@@ -147,7 +147,7 @@ const Stat = ({
         setSelectedCharacterId={setSelectedCharacterId}
         headerInfo={headerInfo}
         data={data}
-        label="Story level character Statistics"
+        label="Character statistics"
       ></Statistics>
     </React.Fragment>
   );

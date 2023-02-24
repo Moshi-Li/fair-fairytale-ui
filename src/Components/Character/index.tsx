@@ -10,6 +10,7 @@ import Stat from "./Stat";
 import { ScrollDownBtn } from "../Utility";
 
 import "./index.scss";
+import RatioGraph from "./RatioGraph";
 
 const RandomColor = () =>
   "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
@@ -77,7 +78,7 @@ const Character = () => {
     <div className="character--container">
       <div className="character--content">
         <div className="character--content--left">
-          <p className="section--label">Character Select</p>
+          <p className="section--label">Select character</p>
           <div className="character--list">
             {characterList && characterList.length && (
               <button
@@ -88,7 +89,7 @@ const Character = () => {
                   setSelectedCharacterId(null);
                 }}
               >
-                Alł
+                All
               </button>
             )}
             {characterList?.map((item) => {
@@ -116,13 +117,15 @@ const Character = () => {
           <Paragraph
             eventList={selectedEvents}
             color={
-              selectedCharacterId ? colorScheme[selectedCharacterId] : "rgba(128, 128, 128, 0.12)"
+              selectedCharacterId
+                ? colorScheme[selectedCharacterId]
+                : "rgba(167, 167, 167, 0.2)"
             }
           />
         </div>
         <Graph
           color={
-            selectedCharacterId ? colorScheme[selectedCharacterId] : "rgba(128, 128, 128, 0.12)"
+            selectedCharacterId ? colorScheme[selectedCharacterId] : "silver"
           }
           eventList={selectedEvents}
         ></Graph>
@@ -131,7 +134,7 @@ const Character = () => {
       <div className="character--stat">
         <Stat setSelectedCharacterId={setSelectedCharacterId}></Stat>
       </div>
-
+      <RatioGraph></RatioGraph>
       <ScrollDownBtn></ScrollDownBtn>
     </div>
   );

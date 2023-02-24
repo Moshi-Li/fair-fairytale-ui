@@ -1,5 +1,5 @@
 .character--container {
-  border: 2px solid #787878;
+  border: 2px solid #a77dec;
   position: relative;
   border-top: none;
   padding: 35px;
@@ -72,7 +72,7 @@
 
   .text--occurrence__primary__selected {
     padding: 0 5px;
-    border: 2px solid gold;
+    border: 1px solid gold;
     cursor: pointer;
   }
 
@@ -84,7 +84,7 @@
 .directed--graph--character {
   width: 100%;
   height: 100%;
-  border: 2px solid #787878;
+  border: 2px solid #a77dec;
 
   background-color: white;
   box-sizing: border-box;
@@ -96,9 +96,15 @@
 }
 
 .character--stat {
-  width: 50%;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
   margin-top: 40px;
+  justify-content: space-between;
+
   .character--table {
+    margin-top: 40px;
     table {
       border: 1px solid white;
       width: 100%;
@@ -106,6 +112,8 @@
 
     tbody {
       border-bottom: 1px solid white;
+      font-weight: 100;
+      font-size: 20px;
     }
 
     th {
