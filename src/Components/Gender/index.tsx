@@ -8,11 +8,10 @@ import { setSelectedEventVerbStart } from "../../Slices/TabSlice";
 import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
 import Stat from "./Stat";
-import RationGraph from "./RatioGraph";
+import RatioGraph from "./RatioGraph";
 import { ScrollDownBtn } from "../Utility";
 
 import "./index.scss";
-import RatioGraph from "./RatioGraph";
 
 const Gender = () => {
   const [gender, setGender] = useState<"male" | "female" | "mix">("male");
@@ -97,8 +96,9 @@ const Gender = () => {
 
       <div className="gender--stat">
         <Stat></Stat>
+        <RatioGraph></RatioGraph>
       </div>
-      <RatioGraph></RatioGraph>
+
       <ScrollDownBtn></ScrollDownBtn>
     </div>
   );
