@@ -72,7 +72,8 @@ const getLayoutGraph = (
   eventList.forEach((item, index) => {
     const nodeToBeAdded = {
       id: `${index}`,
-
+      targetPosition: "left",
+      sourcePosition: "right",
       data: {
         label: (
           <span
@@ -89,7 +90,7 @@ const getLayoutGraph = (
         eventVerbStart: item.verbStartByteText,
       },
       style: {
-        backgroundColor: "silver",
+        backgroundColor: "#acacac",
       },
       position: { x: currentX, y: currentY },
     };

@@ -4,27 +4,30 @@ import Plotly from "plotly.js-dist-min";
 import { RootStoreI } from "../../Store";
 
 const RatioGraph = () => {
-
   const { dataReducer } = useSelector((store: RootStoreI) => store);
 
   //console.log(dataReducer.characterMeta);
   //console.log(dataReducer.eventMajorList);
   //console.log(dataReducer.eventMeta);
 
-   const res: any[] = Object.keys(dataReducer.storyMeta).map((key) => {
-   const { topEvents, counts } = dataReducer.storyMeta;
+  const res: any[] = Object.keys(dataReducer.storyMeta).map((key) => {
+    const { topEvents, counts } = dataReducer.storyMeta;
 
-      return {
-        tevents: topEvents,
-        counts: counts
-      };
-    });
+    return {
+      tevents: topEvents,
+      counts: counts,
+    };
+  });
 
-    console.log(dataReducer.storyMeta);
+  console.log(dataReducer.storyMeta);
 
   var trace1: Plotly.Data = {
-    x: res.map(item=>{return item.counts.total}),
-    y: res.map(item=>{return item.counts.subject}),
+    x: res.map((item) => {
+      return item.counts.total;
+    }),
+    y: res.map((item) => {
+      return item.counts.subject;
+    }),
     type: "bar",
   };
 
