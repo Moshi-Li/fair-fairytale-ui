@@ -195,7 +195,7 @@ const ReactiveGraph = ({ eventList }: { eventList: EventI[] }) => {
           attributionPosition="top-right"
           fitView
         >
-          <Background color="#aaa" gap={16} />
+          <Background color="silver" gap={16} />
           <Controls></Controls>
         </ReactFlow>
       </div>

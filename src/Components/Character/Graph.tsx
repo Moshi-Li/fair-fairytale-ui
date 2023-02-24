@@ -68,7 +68,7 @@ const getLayoutGraph = (
             style={{
               backgroundColor: "transparent",
               fontSize: "24px",
-              color: "black",
+              color: "white",
             }}
           >{`${item.event}`}</span>
         ),
@@ -77,7 +77,7 @@ const getLayoutGraph = (
       style: {
         backgroundColor: color,
         borderRadius:
-          color === "grey" ? "0%" : item.argument === "subject" ? "0%" : "50%",
+          color === "silver" ? "0%" : item.argument === "subject" ? "0%" : "50%",
       },
       position: { x: currentX, y: currentY },
     };
@@ -208,7 +208,7 @@ const ReactiveGraph = ({
         fitView
         attributionPosition="top-right"
       >
-        <Background color="#aaa" gap={16} />
+        <Background color="silver" gap={16} />
         <Controls></Controls>
         <Panel position="bottom-right" className="graph-legend">
           <GraphLegend></GraphLegend>
