@@ -86,7 +86,7 @@ const Statistics = ({
 
 const Stat = () => {
   const { storyMeta } = useSelector((store: RootStoreI) => store.dataReducer);
-  const { topEvents, counts } = storyMeta;
+  const { topEvents } = storyMeta;
 
   const headerInfo = [
     { accessor: "eventLemma", header: "Event" },

@@ -8,26 +8,50 @@ const RatioGraph = () => {
     (store: RootStoreI) => store.dataReducer.storyMeta
   );
 
-  const dataPack = useMemo<Plotly.Data[]>(
+  const dataPack = useMemo<any[][]>(
     () =>
       Object.entries(topEvents)
+        .filter((item) => {
+          const [, events] = item;
+          return events.length >= 1;
+        })
         .map((item) => {
           const [, events] = item;
-
-          return events.length
-            ? {
-                y: events.map((item) => item.odds),
-                x: events.map((item) => item.eventLemma),
-                type: "bar",
-                text: events.map((item) => {
+          return [
+            {
+              y: events
+                .filter((events) => events.argument === "subject")
+                .map((item) => item.odds),
+              x: events
+                .filter((events) => events.argument === "subject")
+                .map((item) => item.eventLemma),
+              type: "bar",
+              text: events
+                .filter((events) => events.argument === "subject")
+                .map((item) => {
                   return item.odds;
                 }),
-                textPosition: "outside",
-                /*orientation: "h",*/
-              }
-            : undefined;
-        })
-        .filter((item) => item !== undefined) as Plotly.Data[],
+              textPosition: "outside",
+              /*orientation: "h",*/
+            },
+            {
+              y: events
+                .filter((events) => events.argument === "direct_object")
+                .map((item) => item.odds),
+              x: events
+                .filter((events) => events.argument === "direct_object")
+                .map((item) => item.eventLemma),
+              type: "bar",
+              text: events
+                .filter((events) => events.argument === "direct_object")
+                .map((item) => {
+                  return item.odds;
+                }),
+              textPosition: "outside",
+              /*orientation: "h",*/
+            },
+          ];
+        }),
     [topEvents]
   );
 
@@ -50,9 +74,11 @@ const RatioGraph = () => {
 
   useEffect(() => {
     dataPack.forEach((data, index) => {
+      console.log(data);
+      console.log(index);
       Plotly.newPlot(
         `plotly--mount--${layouts[index].title}`,
-        [data],
+        [...data],
         layouts[index],
         {
           scrollZoom: true,
