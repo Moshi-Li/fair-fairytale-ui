@@ -1,5 +1,6 @@
 import React, { useMemo, useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import hexRgb from "hex-rgb";
 
 import { RootStoreI } from "../../Store";
 import { EventI, TextOccurrenceI } from "../../Slices/DataSlice";
@@ -80,7 +81,8 @@ const generateContent = (
 
   const result: any = [];
   let indexPointer = 0;
-
+  console.log(color);
+  console.log(hexRgb(color, { alpha: 0.1, format: "css" }));
   textTextOccurrenceList.forEach((textOccurrence, index) => {
     if (indexPointer > textOccurrence.textStartIndex) {
       result.pop();
@@ -107,8 +109,9 @@ const generateContent = (
               : ""
           }`}
           tabIndex={0}
-          //style={{ backgroundColor: color + '$alpha: 0.2'}}
-          style={{ backgroundColor: color }}
+          style={{
+            backgroundColor: hexRgb(color, { alpha: 0.1, format: "css" }),
+          }}
           onFocus={() => {
             setVerbStart(textOccurrence.textStartIndex);
           }}

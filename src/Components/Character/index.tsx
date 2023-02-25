@@ -13,7 +13,7 @@ import "./index.scss";
 import RatioGraph from "./RatioGraph";
 
 const RandomColor = () =>
-  "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
+  "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0") + "e6";
 
 const Character = () => {
   const [selectedCharacterId, setSelectedCharacterId] = useState<string | null>(
@@ -117,9 +117,7 @@ const Character = () => {
           <Paragraph
             eventList={selectedEvents}
             color={
-              selectedCharacterId
-                ? colorScheme[selectedCharacterId]
-                : "rgba(167, 167, 167, 0.2)"
+              selectedCharacterId ? colorScheme[selectedCharacterId] : "#a7a7a7"
             }
           />
         </div>

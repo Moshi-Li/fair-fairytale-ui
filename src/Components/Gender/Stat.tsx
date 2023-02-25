@@ -96,19 +96,8 @@ const Stat = () => {
 
   return (
     <React.Fragment>
-      <Statistics
-        headerInfo={[
-          { accessor: "gender", header: "Gender" },
-          { accessor: "importance", header: "Importance" },
-          { accessor: "subject", header: `As agent` },
-          { accessor: "directObject", header: "As patient" },
-          { accessor: "total", header: "Total" },
-        ]}
-        data={counts}
-        label="Character statistics by gender"
-      ></Statistics>
       {Object.keys(topEvents).map((key) => {
-        return topEvents[key] ? (
+        return topEvents[key] && topEvents[key].length ? (
           <React.Fragment key={key}>
             <Statistics
               headerInfo={headerInfo}
