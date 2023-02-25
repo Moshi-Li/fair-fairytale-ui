@@ -16,11 +16,14 @@ const RatioGraph = () => {
 
           return events.length
             ? {
-                x: events.map((item) => item.odds),
-                y: events.map((item) => item.eventLemma),
+                y: events.map((item) => item.odds),
+                x: events.map((item) => item.eventLemma),
                 type: "bar",
+                text: events.map((item) => {
+                  return item.odds;
+                }),
                 textPosition: "outside",
-                orientation: "h",
+                /*orientation: "h",*/
               }
             : undefined;
         })
@@ -37,6 +40,7 @@ const RatioGraph = () => {
             ? {
                 title: `Top ${key} character events`,
                 showlegend: false,
+                xaxis: {title: {text: 'odds ratio'}, visible: true},
               }
             : undefined;
         })
