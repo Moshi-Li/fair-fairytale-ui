@@ -109,7 +109,6 @@ const generateContent = (
               : ""
           }`}
           tabIndex={0}
-          //style={{ backgroundColor: color + '$alpha: 0.2'}}
           style={{
             backgroundColor: hexRgb(color, { alpha: 0.1, format: "css" }),
           }}
