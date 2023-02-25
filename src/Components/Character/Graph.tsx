@@ -54,11 +54,14 @@ const getLayoutGraph = (
   let currentX = X_INIT_POS;
   let currentY = Y_INIT_POS;
 
+  let layoutDirection = true;
+  let nodeCount = 0;
+
   eventList.forEach((item, index) => {
     const nodeToBeAdded = {
       id: `${index}`,
-      targetPosition: "left",
-      sourcePosition: "right",
+      targetPosition: layoutDirection ? "left" : "right",
+      sourcePosition: layoutDirection ? "right" : "left",
       data: {
         label: (
           <span
@@ -77,17 +80,25 @@ const getLayoutGraph = (
       style: {
         backgroundColor: color,
         borderRadius:
-          color === "silver" ? "0%" : item.argument === "subject" ? "0%" : "50%",
+          color === "silver"
+            ? "0%"
+            : item.argument === "subject"
+            ? "0%"
+            : "50%",
       },
       position: { x: currentX, y: currentY },
     };
     nodes.push(nodeToBeAdded);
 
-    currentX = currentX + X_SPACE;
-    if (currentX > X_SPACE * ROW_COUNT_LIMIT) {
-      currentX = X_INIT_POS;
+    currentX = layoutDirection ? currentX + X_SPACE : currentX - X_SPACE;
+    nodeCount = nodeCount + 1;
+    if (nodeCount >= ROW_COUNT_LIMIT) {
+      nodeCount = 0;
+      currentX = layoutDirection ? currentX - X_SPACE : currentX + X_SPACE;
+      layoutDirection = !layoutDirection;
       currentY = currentY + Y_SPACE;
     }
+
     if (index < eventList.length - 1) {
       const edgeToBeAdded = {
         id: `e${index}-${index + 1}`,
