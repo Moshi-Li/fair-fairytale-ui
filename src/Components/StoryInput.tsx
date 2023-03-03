@@ -74,8 +74,7 @@ const StoryInput = () => {
 
   useEffect(() => {
     if (serverStatus === 0 || serverStatus === 1) return;
-    console.log(new Date().getTime());
-    console.log(serverStatus);
+
     const pointer = setInterval(
       () =>
         setRemainingTime(

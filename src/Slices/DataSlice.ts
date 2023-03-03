@@ -207,15 +207,12 @@ export const checkServerStatus = createAsyncThunk<
   void,
   { state: RootStoreI }
 >("dataSlice/checkServerStatus", async (args, thunkAPI) => {
-  let result = 1;
   try {
     const { data } = await Axios.get(`${API_URL}/status`);
     return data.taskStartTime;
   } catch (e) {
-    thunkAPI.rejectWithValue(0);
+    return 0;
   }
-
-  return result;
 });
 
 export const dataSlice = createSlice({

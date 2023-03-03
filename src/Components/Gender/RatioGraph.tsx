@@ -74,8 +74,6 @@ const RatioGraph = () => {
 
   useEffect(() => {
     dataPack.forEach((data, index) => {
-      console.log(data);
-      console.log(index);
       Plotly.newPlot(
         `plotly--mount--${layouts[index].title}`,
         [...data],

@@ -81,8 +81,7 @@ const generateContent = (
 
   const result: any = [];
   let indexPointer = 0;
-  console.log(color);
-  console.log(hexRgb(color, { alpha: 0.1, format: "css" }));
+
   textTextOccurrenceList.forEach((textOccurrence, index) => {
     if (indexPointer > textOccurrence.textStartIndex) {
       result.pop();
