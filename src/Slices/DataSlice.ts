@@ -119,8 +119,8 @@ const dataDefaultState: DataI = {
   serverStatus: 0,
 };
 
-const API_URL = "http://192.168.0.12:8000";
-//const API_URL = "https://d3tvz53x8u8tnu.cloudfront.net";
+//const API_URL = "http://192.168.0.12:8000";
+const API_URL = "https://d3tvz53x8u8tnu.cloudfront.net";
 
 export const fetchData = createAsyncThunk<
   RawDataI,
