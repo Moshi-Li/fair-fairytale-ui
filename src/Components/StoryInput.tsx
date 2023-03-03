@@ -68,9 +68,23 @@ const StoryInput = () => {
 
   const [searchString, setSearchString] = useState("");
   const [storyInput, setStoryInput] = useState("");
+  const [remainingTime, setRemainingTime] = useState(0);
   const [displayingResults, setDisplayingResults] = useState<Array<string>>([]);
   const appDispatchAction = useAppDispatch();
 
+  useEffect(() => {
+    if (serverStatus === 0 || serverStatus === 1) return;
+    console.log(new Date().getTime());
+    console.log(serverStatus);
+    const pointer = setInterval(
+      () =>
+        setRemainingTime(
+          parseInt((new Date().getTime() / 1000 - serverStatus).toString())
+        ),
+      100
+    );
+    return () => clearInterval(pointer);
+  }, [setRemainingTime, serverStatus]);
   useEffect(() => {
     const nextDisplayingResults =
       searchString === ""
@@ -102,15 +116,17 @@ const StoryInput = () => {
     <div className="story--input--container">
       <div className="example--container">
         <h2>Story examples</h2>
-        <p>Type in the name of a story or click on one below to see NECE results</p>
+        <p>
+          Type in the name of a story or click on one below to see NECE results
+        </p>
         <div className="search--bar--container">
-        <div className="form-field">
-          <input
-            className="search--bar--input"
-            onChange={(e) => setSearchString(e.target.value)}
-          ></input>
-           <span className="icon">🔍</span>
-          </div>    
+          <div className="form-field">
+            <input
+              className="search--bar--input"
+              onChange={(e) => setSearchString(e.target.value)}
+            ></input>
+            <span className="icon">🔍</span>
+          </div>
           <p className="search--bar--result">
             {searchString === ""
               ? "displaying randomly selected 5 example results"
@@ -132,7 +148,13 @@ const StoryInput = () => {
         </div>
         <div className="example--container--status">
           <h2>Server status</h2>
-          {serverStatus && <StatusIndicator Positive Pulse />}
+          {serverStatus === 1 && <StatusIndicator Positive Pulse />}
+          {serverStatus > 1 && (
+            <React.Fragment>
+              <StatusIndicator Intermediary Pulse />
+              <span>{`Last task had started for ${remainingTime}s`}</span>
+            </React.Fragment>
+          )}
           {!serverStatus && <StatusIndicator Negative Pulse />}
         </div>
         <p>You can also paste a story to display NECE results</p>
@@ -158,6 +180,7 @@ const StoryInput = () => {
           );
         }}
       ></textarea>
+
       {!fetching && (
         <button
           className="story--input--btn"
@@ -165,7 +188,7 @@ const StoryInput = () => {
           onClick={(e) => {
             appDispatchAction(runPipeline(storyInput));
           }}
-          disabled={!serverStatus}
+          disabled={serverStatus !== 1}
         >
           Test
         </button>

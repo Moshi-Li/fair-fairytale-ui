@@ -96,7 +96,7 @@ interface RawDataI {
 interface DataI extends RawDataI {
   sourced: boolean;
   fetching: boolean;
-  serverStatus: boolean;
+  serverStatus: number;
 }
 
 export interface CharacterStatI {
@@ -116,10 +116,10 @@ const dataDefaultState: DataI = {
 
   sourced: false,
   fetching: false,
-  serverStatus: false,
+  serverStatus: 0,
 };
 
-//const API_URL = "http://52.202.240.216";
+//const API_URL = "http://192.168.0.12:8000";
 const API_URL = "https://d3tvz53x8u8tnu.cloudfront.net";
 
 export const fetchData = createAsyncThunk<
@@ -203,16 +203,16 @@ export const runPipeline = createAsyncThunk<
 });
 
 export const checkServerStatus = createAsyncThunk<
-  boolean,
+  number,
   void,
   { state: RootStoreI }
 >("dataSlice/checkServerStatus", async (args, thunkAPI) => {
-  let result = true;
+  let result = 1;
   try {
-    await Axios.get(`${API_URL}/status`);
+    const { data } = await Axios.get(`${API_URL}/status`);
+    return data.taskStartTime;
   } catch (e) {
-    result = false;
-    thunkAPI.rejectWithValue(false);
+    thunkAPI.rejectWithValue(0);
   }
 
   return result;
@@ -321,7 +321,7 @@ export const dataSlice = createSlice({
       state.serverStatus = action.payload;
     });
     builder.addCase(checkServerStatus.rejected, (state, action) => {
-      state.serverStatus = false;
+      state.serverStatus = 0;
     });
   },
 });
