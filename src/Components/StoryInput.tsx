@@ -146,12 +146,12 @@ const StoryInput = () => {
           ))}
         </div>
         <div className="example--container--status">
-          <h2>Server status</h2>
+          <h2>Server status:</h2>
           {serverStatus === 1 && <StatusIndicator Positive Pulse />}
           {serverStatus > 1 && (
             <React.Fragment>
               <StatusIndicator Intermediary Pulse />
-              <span>{`Last task had started for ${remainingTime}s`}</span>
+              <span className="status--pending--msg">{`Last task had started for ${remainingTime}s`}</span>
             </React.Fragment>
           )}
           {!serverStatus && <StatusIndicator Negative Pulse />}

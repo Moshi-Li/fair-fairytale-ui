@@ -22,26 +22,29 @@
     line-height: 32px;
     /*}*/
 
-    p{
+    p {
       text-align: left;
       font-weight: 100;
       font-size: 20px;
     }
 
-
     .example--container--status {
       display: flex;
       align-items: center;
-      
-      h2{
+
+      h2 {
         margin-right: 8px;
       }
-      
+
       div {
         width: 20px;
         height: 20px;
         border-radius: 50%;
         background-color: red;
+      }
+      .status--pending--msg {
+        font-weight: 500;
+        margin-left: 6px;
       }
     }
 
@@ -57,7 +60,7 @@
       position: relative;
       display: inline-block;
     }
-    
+
     .icon {
       position: absolute;
       right: 13px;
@@ -69,7 +72,7 @@
         border-radius: 5px;
         height: 30px;
         border: 1px solid silver;
-      } 
+      }
 
       .search--bar--input:focus {
         outline: none;
@@ -84,7 +87,6 @@
   }
 
   .story--input--textarea {
-    
     width: 45%;
     height: 200px;
     /*width: 530px;*/
