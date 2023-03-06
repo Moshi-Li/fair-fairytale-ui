@@ -6,10 +6,6 @@ import { RootStoreI } from "../../Store";
 const RatioGraph = () => {
   const { dataReducer } = useSelector((store: RootStoreI) => store);
 
-  //console.log(dataReducer.characterMeta);
-  //console.log(dataReducer.eventMajorList);
-  //console.log(dataReducer.eventMeta);
-
   const result: any[] = Object.keys(dataReducer.characterMeta).map((key) => {
     const { easyName, total } = dataReducer.characterMeta[key];
 
