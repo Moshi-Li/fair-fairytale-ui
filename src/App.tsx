@@ -1,9 +1,14 @@
 import React, { useRef, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import {
+  ReactNotifications,
+  Store as notificationStore,
+} from "react-notifications-component";
 
 import "react-tabs/style/react-tabs.css";
 
+import "react-notifications-component/dist/theme.css";
 import "./App.scss";
 
 import StoryInput from "./Components/StoryInput";
@@ -36,8 +41,34 @@ function App() {
     }
   }, [sourced]);
 
+  useEffect(() => {
+    notificationStore.addNotification({
+      title: "Welcome to NECE",
+      message: (
+        <p>
+          {`Before you start please note that:`}
+          <br></br>
+          {`1). Please note that the analytical server is configure to process maximum of one request at any time.`}
+          <br></br>
+          {`2) All requests will be dropped after 60s`}
+        </p>
+      ),
+      type: "info",
+      insert: "top",
+      container: "top-center",
+      animationIn: ["animate__animated", "animate__fadeIn"],
+      animationOut: ["animate__animated", "animate__fadeOut"],
+      dismiss: {
+        duration: 10000,
+        onScreen: true,
+      },
+      width: 600,
+    });
+  }, []);
+
   return (
     <div className="app">
+      <ReactNotifications></ReactNotifications>
       <h1>NECE: Narrative Event Chain Extraction Toolkit</h1>
       <StoryInput></StoryInput>
       {sourced && (

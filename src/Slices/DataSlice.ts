@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import camelcaseKeys from "camelcase-keys";
+import { Store as notificationStore } from "react-notifications-component";
+
 import { RootStoreI } from "../Store";
 import { processStory } from "../Data";
 import Axios from "axios";
@@ -230,6 +232,7 @@ export const dataSlice = createSlice({
       state.eventMeta = {};
       state.eventMajorList = [];
       state.paragraph = "";
+      window.alert("Req Failed, check console for more info");
 
       state.fetching = true;
       state.sourced = false;
@@ -310,8 +313,20 @@ export const dataSlice = createSlice({
 
       state.fetching = false;
       state.sourced = false;
-
-      window.alert("Req Failed, check console for more info");
+      notificationStore.addNotification({
+        title: "Welcome to NECE",
+        message: "Request Failed, check console for more info",
+        type: "danger",
+        insert: "top",
+        container: "top-center",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 10000,
+          onScreen: true,
+        },
+        width: 600,
+      });
     });
 
     builder.addCase(checkServerStatus.fulfilled, (state, action) => {
