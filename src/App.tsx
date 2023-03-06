@@ -48,7 +48,7 @@ function App() {
         <p>
           {`Before you start please note that:`}
           <br></br>
-          {`1). Please note that the analytical server is configure to process maximum of one request at any time.`}
+          {`1). Please note that the analytical server is configured to process maximum of one request at any time.`}
           <br></br>
           {`2) All requests will be dropped after 60s`}
         </p>
