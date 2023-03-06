@@ -232,8 +232,6 @@ export const dataSlice = createSlice({
       state.eventMeta = {};
       state.eventMajorList = [];
       state.paragraph = "";
-      window.alert("Req Failed, check console for more info");
-
       state.fetching = true;
       state.sourced = false;
     });
@@ -265,6 +263,19 @@ export const dataSlice = createSlice({
     builder.addCase(fetchData.rejected, (state, action) => {
       state.fetching = false;
       state.sourced = false;
+      notificationStore.addNotification({
+        message: "Request Failed, check console for more info",
+        type: "danger",
+        insert: "top",
+        container: "top-center",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 10000,
+          onScreen: true,
+        },
+        width: 600,
+      });
     });
 
     //Run pipeline
@@ -314,7 +325,6 @@ export const dataSlice = createSlice({
       state.fetching = false;
       state.sourced = false;
       notificationStore.addNotification({
-        title: "Welcome to NECE",
         message: "Request Failed, check console for more info",
         type: "danger",
         insert: "top",
