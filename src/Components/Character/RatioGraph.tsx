@@ -15,8 +15,6 @@ const RatioGraph = () => {
     };
   });
 
-  //console.log(result);
-
   var trace1: Plotly.Data = {
     x: result.map((item) => {
       return item.appearance;

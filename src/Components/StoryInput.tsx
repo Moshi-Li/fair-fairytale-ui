@@ -136,7 +136,7 @@ const StoryInput = () => {
         <div className="example--container--list">
           {displayingResults.map((name, index) => (
             <button
-              key={name}
+              key={index}
               onClick={() =>
                 appDispatchAction(fetchData(name.split(" ").join("-")))
               }
