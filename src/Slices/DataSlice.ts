@@ -133,7 +133,7 @@ export const fetchData = createAsyncThunk<
     `https://fairytale-examples.s3.amazonaws.com/${storyName}/${storyName}.${fileName}`;
 
   const storyMeta = (
-    await Axios.get(urlGenerator(storyName, "story_major_statistics.json"))
+    await Axios.get(urlGenerator(storyName, "story_statistics.json"))
   ).data;
 
   const characterMeta = (
@@ -179,7 +179,7 @@ export const runPipeline = createAsyncThunk<
     const response = await Axios.post(`${API_URL}/result`, {
       story_content: storyInput,
     });
-    const storyMeta = response.data.story_major_statistics;
+    const storyMeta = response.data.story_statistics;
 
     const characterMeta = response.data.character_attributes;
 

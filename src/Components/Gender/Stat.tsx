@@ -22,7 +22,12 @@ const Statistics = ({
   const columns = headerInfo.map(({ accessor, header }) => {
     return characterColumnHelper.accessor(accessor, {
       header: () => header,
-      cell: (info) => info.getValue(),
+      cell: (info) =>
+        info.getValue() === "direct_object"
+          ? "patient"
+          : info.getValue() === "subject"
+          ? "agent"
+          : info.getValue(),
     });
   });
 
@@ -55,11 +60,14 @@ const Statistics = ({
         <tbody>
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
+              {row.getVisibleCells().map((cell) => {
+                console.log(cell.getContext());
+                return (
+                  <td key={cell.id}>
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </td>
+                );
+              })}
             </tr>
           ))}
         </tbody>
