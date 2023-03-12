@@ -36,7 +36,7 @@ const Statistics = ({
   });
 
   return (
-    <div className="character--table">
+    <div className="character--table--container">
       <p className="section--label">{label}</p>
       <table>
         <thead>
