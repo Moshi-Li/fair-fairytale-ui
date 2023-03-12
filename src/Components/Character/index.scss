@@ -104,11 +104,28 @@
   margin-top: 40px;
   justify-content: space-between;
 
-  .character--table {
+  .character--table--container {
     margin-top: 40px;
+    width: 50%;
+
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+
+    .section--label {
+      position: sticky;
+      top: 0;
+      background-color: white;
+    }
+
     table {
       border: 1px solid white;
       width: 100%;
+    }
+
+    thead {
+      position: sticky;
+      top: 33px;
     }
 
     tbody {
@@ -131,6 +148,11 @@
     tfoot th {
       font-weight: normal;
     }
+  }
+
+  .ratio--graph {
+    min-height: 400px;
+    max-height: 800px;
   }
 }
 

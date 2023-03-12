@@ -38,9 +38,9 @@ const Statistics = ({
   });
 
   return (
-    <div className="gender--table">
+    <div className="gender--table--container">
       <p className="section--label">{label}</p>
-      <table>
+      <table className="gender--table">
         <thead>
           {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>

@@ -131,8 +131,9 @@ const Character = () => {
 
       <div className="character--stat">
         <Stat setSelectedCharacterId={setSelectedCharacterId}></Stat>
+        <RatioGraph></RatioGraph>
       </div>
-      <RatioGraph></RatioGraph>
+
       <ScrollDownBtn></ScrollDownBtn>
     </div>
   );
