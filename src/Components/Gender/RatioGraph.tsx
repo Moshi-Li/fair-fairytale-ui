@@ -67,8 +67,8 @@ const RatioGraph = () => {
                 title: `Top ${key} character events`,
                 showlegend: true,
                 /*patient é blue*/
-                xaxis: { title: { text: "Odds ratio" }, visible: true },
-                yaxis: { title: { text: "Events" }, visible: true },
+                yaxis: { title: { text: "Odds ratio" }, visible: true },
+                xaxis: { title: { text: "Events" }, visible: true },
               }
             : undefined;
         })
