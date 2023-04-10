@@ -33,6 +33,7 @@ const RatioGraph = () => {
                 }),
               textPosition: "outside",
               /*orientation: "h",*/
+              name: "Patient"
             },
             {
               y: events
@@ -49,6 +50,7 @@ const RatioGraph = () => {
                 }),
               textPosition: "outside",
               /*orientation: "h",*/
+              name: "Agent"
             },
           ];
         }),
@@ -63,8 +65,10 @@ const RatioGraph = () => {
           return events.length
             ? {
                 title: `Top ${key} character events`,
-                showlegend: false,
-                xaxis: { title: { text: "odds ratio" }, visible: true },
+                showlegend: true,
+                /*patient é blue*/
+                xaxis: { title: { text: "Odds ratio" }, visible: true },
+                yaxis: { title: { text: "Events" }, visible: true },
               }
             : undefined;
         })
