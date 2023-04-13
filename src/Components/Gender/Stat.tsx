@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootStoreI } from "../../Store";
+import { Store as notificationStore } from "react-notifications-component";
 import {
   createColumnHelper,
   flexRender,
   getCoreRowModel,
   useReactTable,
 } from "@tanstack/react-table";
+
+import { RootStoreI } from "../../Store";
 
 const Statistics = ({
   headerInfo,
@@ -100,6 +102,25 @@ const Stat = () => {
     { accessor: "argument", header: "Argument" },
     { accessor: "odds", header: "Odds ratio" },
   ];
+
+  useEffect(() => {
+    if (Object.keys(topEvents).length === 0) {
+      notificationStore.addNotification({
+        message:
+          "No enough information to generate bias analysis. Please try longer stories.",
+        type: "danger",
+        insert: "top",
+        container: "top-center",
+        animationIn: ["animate__animated", "animate__fadeIn"],
+        animationOut: ["animate__animated", "animate__fadeOut"],
+        dismiss: {
+          duration: 10000,
+          onScreen: true,
+        },
+        width: 600,
+      });
+    }
+  }, [topEvents]);
 
   return (
     <React.Fragment>
