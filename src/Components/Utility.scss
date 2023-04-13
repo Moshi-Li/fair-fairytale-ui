@@ -29,7 +29,9 @@ $base: 0.6rem;
 .scroll--down--btn {
   position: absolute;
   top: 84%;
-  left: 610px;
+  left: 20px;
+  height: $base * 5;
+  width: $base * 1.9;
 
   cursor: pointer;
 

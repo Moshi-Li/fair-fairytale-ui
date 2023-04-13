@@ -96,16 +96,15 @@ const Character = () => {
               return (
                 <button
                   key={item.corefId}
-                  className={`filter--btn ${
-                    selectedCharacterId === item.corefId
-                      ? "filter-btn__selected"
-                      : ""
-                  }`}
+                  className={`filter--btn`}
                   onClick={(e: React.MouseEvent<HTMLElement>) => {
                     setSelectedCharacterId(item.corefId);
                   }}
                   style={{
-                    borderColor: colorScheme[item.corefId],
+                    borderColor:
+                      selectedCharacterId === item.corefId
+                        ? "#000000"
+                        : colorScheme[item.corefId],
                   }}
                 >
                   {item.name}

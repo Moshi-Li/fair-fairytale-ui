@@ -54,6 +54,13 @@
       align-items: flex-start;
       flex-wrap: wrap;
       border: 10px red;
+
+      button {
+        min-width: 144px;
+        height: 32px;
+        cursor: pointer;
+        margin-right: 6px;
+      }
     }
 
     .form-field {
