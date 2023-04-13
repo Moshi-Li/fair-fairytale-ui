@@ -18,6 +18,8 @@ const Gender = () => {
   const { eventMajorList } = useSelector(
     (store: RootStoreI) => store.dataReducer
   );
+  const { storyMeta } = useSelector((store: RootStoreI) => store.dataReducer);
+  const { topEvents } = storyMeta;
   const [selectedEvents, setSelectedEvents] = useState<EventI[]>([]);
   const dispatch = useDispatch();
 
@@ -99,7 +101,7 @@ const Gender = () => {
         <RatioGraph></RatioGraph>
       </div>
 
-      <ScrollDownBtn></ScrollDownBtn>
+      {Object.keys(topEvents).length !== 0 && <ScrollDownBtn></ScrollDownBtn>}
     </div>
   );
 };

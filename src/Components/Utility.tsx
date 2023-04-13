@@ -36,12 +36,14 @@ export const ScrollDownBtn = () => {
     });
     setShowScrollBtn(false);
   };
+
+  /*
   useEffect(() => {
     const pointer = setTimeout(() => {
       setShowScrollBtn(false);
     }, 10 * 1000);
     return () => clearTimeout(pointer);
-  }, []);
+  }, []);*/
 
   return (
     <React.Fragment>
