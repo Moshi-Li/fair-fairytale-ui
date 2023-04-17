@@ -166,17 +166,24 @@ const StoryInput = () => {
           setStoryInput(e.target.value)
         }
         onBlur={(e: React.FocusEvent<HTMLTextAreaElement>) => {
-          setStoryInput(
-            e.target.value
-              .replaceAll("\n\n", " ")
-              .replaceAll("\n", " ")
-              .replaceAll("\r\r", " ")
-              .replaceAll("\n", " ")
-              .trim()
-              .replace(/ +(?= )/g, "")
-              .replace(`"`, `'`)
-              .replace(`"`, `'`)
-          );
+          let input = e.target.value
+            .replaceAll("\n\n", " ")
+            .replaceAll("\n", " ")
+            .replaceAll("\r\r", " ")
+            .replaceAll("\n", " ")
+            .trim()
+            .replace(/ +(?= )/g, "")
+            .replace(`"`, `'`)
+            .replace(`"`, `'`);
+
+          while (
+            input.indexOf("[") !== -1 &&
+            input.indexOf("[") < input.indexOf("]")
+          ) {
+            input = input.replace(/\[.*?\]/, "");
+          }
+
+          setStoryInput(input);
         }}
       ></textarea>
 
