@@ -173,14 +173,8 @@ const StoryInput = () => {
             .replaceAll("\n", " ")
             .trim()
             .replace(/ +(?= )/g, "")
+            .replace(/\[.*?\]/g, "")
             .replaceAll(`"`, `'`);
-
-          while (
-            input.indexOf("[") !== -1 &&
-            input.indexOf("[") < input.indexOf("]")
-          ) {
-            input = input.replace(/\[.*?\]/, "");
-          }
 
           setStoryInput(input);
         }}
