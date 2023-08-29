@@ -8,6 +8,9 @@ import { fetchData, runPipeline, checkServerStatus } from "../Slices/DataSlice";
 import "./StoryInput.scss";
 
 const storyNames = [
+  "cnn200",
+  "cnn201",
+  "cnn202",
   "a-fish-story",
   "a-french-puck",
   "a-legend-of-confucius",
@@ -50,9 +53,6 @@ const storyNames = [
   "old-sultan",
   "skalunda-giant",
   "the-mouse-the-bird-and-the-sausage",
-  "cnn200",
-  "cnn201",
-  "cnn202",
 ];
 
 const randomSelectFromArray = (arr: Array<any>, count: number) => {
