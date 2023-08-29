@@ -41,7 +41,8 @@ function App() {
     }
   }, [sourced]);
 
-  useEffect(() => {
+  /**
+   *   useEffect(() => {
     notificationStore.addNotification({
       title: "Welcome to NECE",
       message: (
@@ -65,11 +66,11 @@ function App() {
       width: 600,
     });
   }, []);
+   */
 
   return (
     <div className="app">
       <ReactNotifications></ReactNotifications>
-      <h1>NECE: Narrative Event Chain Extraction Toolkit</h1>
       <StoryInput></StoryInput>
       {sourced && (
         <div

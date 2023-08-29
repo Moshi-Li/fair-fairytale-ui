@@ -22,7 +22,6 @@ const storyNames = [
   "black-sheep",
   "bokwewa-the-humpback",
   "buckwheat",
-
   "old-hop-giant",
   "yuletide-specters",
   "the-fire-god",
@@ -57,7 +56,11 @@ const storyNames = [
 
 const randomSelectFromArray = (arr: Array<any>, count: number) => {
   if (count > arr.length) return [];
-  const result = [];
+  const result: any[] = [];
+
+  result.push("cnn200");
+  result.push("cnn201");
+  result.push("cnn202");
   for (let i = 0; i < count; i++) {
     result.push(arr[Math.floor(Math.random() * arr.length)]);
   }
@@ -90,7 +93,7 @@ const StoryInput = () => {
   useEffect(() => {
     const nextDisplayingResults =
       searchString === ""
-        ? randomSelectFromArray(storyNames, 5).map((name) =>
+        ? randomSelectFromArray(storyNames, 2).map((name) =>
             name.split("-").join(" ")
           )
         : storyNames
@@ -116,6 +119,7 @@ const StoryInput = () => {
 
   return (
     <div className="story--input--container">
+      <h1>NECE: Narrative Event Chain Extraction Toolkit</h1>
       <div className="example--container">
         <h2>Story examples</h2>
         <p>
@@ -148,7 +152,10 @@ const StoryInput = () => {
             </button>
           ))}
         </div>
-        <div className="example--container--status">
+
+        {/**
+         * 
+         *         <div className="example--container--status">
           <h2>Server status:</h2>
           {serverStatus === 1 && <StatusIndicator Positive Pulse />}
           {serverStatus > 1 && (
@@ -160,9 +167,12 @@ const StoryInput = () => {
           {!serverStatus && <StatusIndicator Negative Pulse />}
         </div>
         <p>You can also paste a story to display NECE results</p>
+         */}
       </div>
 
-      <textarea
+      {/**
+       * 
+       *       <textarea
         className="story--input--textarea"
         value={storyInput}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
@@ -196,6 +206,7 @@ const StoryInput = () => {
         </button>
       )}
       {fetching && <AiOutlineLoading3Quarters className="loader" />}
+       */}
     </div>
   );
 };
