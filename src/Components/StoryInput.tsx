@@ -50,6 +50,9 @@ const storyNames = [
   "old-sultan",
   "skalunda-giant",
   "the-mouse-the-bird-and-the-sausage",
+  "cnn200",
+  "cnn201",
+  "cnn202",
 ];
 
 const randomSelectFromArray = (arr: Array<any>, count: number) => {
