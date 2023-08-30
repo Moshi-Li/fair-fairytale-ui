@@ -108,6 +108,7 @@ const StoryInput = () => {
     setDisplayingResults(nextDisplayingResults);
   }, [searchString]);
 
+  /*
   useEffect(() => {
     appDispatchAction(checkServerStatus());
     const serverStatusChecker = setInterval(() => {
@@ -115,7 +116,7 @@ const StoryInput = () => {
     }, 10 * 1000);
 
     return () => clearInterval(serverStatusChecker);
-  }, [appDispatchAction]);
+  }, [appDispatchAction]);*/
 
   return (
     <div className="story--input--container">
