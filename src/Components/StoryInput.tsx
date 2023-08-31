@@ -4,55 +4,9 @@ import { AiOutlineLoading3Quarters } from "react-icons/ai";
 import StatusIndicator from "react-status-indicator";
 import { RootStoreI, useAppDispatch } from "../Store";
 import { fetchData, runPipeline, checkServerStatus } from "../Slices/DataSlice";
+import storyNames from "./storynames.json";
 
 import "./StoryInput.scss";
-
-const storyNames = [
-  "cnn200",
-  "cnn201",
-  "cnn202",
-  "a-fish-story",
-  "a-french-puck",
-  "a-legend-of-confucius",
-  "a-legend-of-knockmany",
-  "ali-baba-and-forty-thieves",
-  "alleleiraugh-or-the-many-furred-creature",
-  "bamboo-cutter-moon-child",
-  "black-arts",
-  "black-sheep",
-  "bokwewa-the-humpback",
-  "buckwheat",
-  "old-hop-giant",
-  "yuletide-specters",
-  "the-fire-god",
-  "the-story-of-miss-moppet",
-  "skipper-and-sir-urian",
-  "troll-wedding",
-  "girl-and-snake",
-  "the-winter-spirit-and-his-visitor",
-  "the-death-of-the-hen",
-  "tale-of-tom-kitten",
-  "the-favorite-of-fortune-and-the-child-of-ill-luck",
-  "grandmother",
-  "the-flying-ogre",
-  "stompe-pilt",
-  "the-straw-the-coal-and-the-bean",
-  "finn-the-giant-and-the-minister-of-lund",
-  "the-abbot-of-inisfalen",
-  "starkad-bale",
-  "the-king-of-the-ants",
-  "the-miserly-farmer",
-  "mr-korbes",
-  "self-did-it",
-  "spectre-fjelkinge",
-  "a-fish-story",
-  "laotsze",
-  "the-teapot",
-  "buckwheat",
-  "old-sultan",
-  "skalunda-giant",
-  "the-mouse-the-bird-and-the-sausage",
-];
 
 const randomSelectFromArray = (arr: Array<any>, count: number) => {
   if (count > arr.length) return [];
@@ -103,6 +57,7 @@ const StoryInput = () => {
                 .join(" ")
                 .includes(searchString.toLocaleLowerCase());
             })
+            .slice(0, 20)
             .map((name) => name.split("-").join(" "));
 
     setDisplayingResults(nextDisplayingResults);
