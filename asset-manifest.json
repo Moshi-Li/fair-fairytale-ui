@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/fair-fairytale-ui/static/css/main.1d52f42a.css",
-    "main.js": "/fair-fairytale-ui/static/js/main.d75eaadc.js",
+    "main.js": "/fair-fairytale-ui/static/js/main.bc8ba0f6.js",
     "index.html": "/fair-fairytale-ui/index.html",
     "main.1d52f42a.css.map": "/fair-fairytale-ui/static/css/main.1d52f42a.css.map",
-    "main.d75eaadc.js.map": "/fair-fairytale-ui/static/js/main.d75eaadc.js.map"
+    "main.bc8ba0f6.js.map": "/fair-fairytale-ui/static/js/main.bc8ba0f6.js.map"
   },
   "entrypoints": [
     "static/css/main.1d52f42a.css",
-    "static/js/main.d75eaadc.js"
+    "static/js/main.bc8ba0f6.js"
   ]
 }
