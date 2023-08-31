@@ -1,5 +1,5 @@
 import React from "react";
-import ReactJson from "react-json-view";
+
 import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-modal";
 import { closeModal } from "../Slices/ModalSlice";
@@ -32,7 +32,8 @@ const EventModal = () => {
   return (
     <div>
       <Modal isOpen={open} style={customStyles} ariaHideApp={false}>
-        <div className="modal--container">
+        {/*
+              <div className="modal--container">
           <ReactJson
             src={eventMeta[selectedEventKey] ? eventMeta[selectedEventKey] : {}}
             theme="monokai"
@@ -46,6 +47,7 @@ const EventModal = () => {
           />
           <button onClick={() => dispatch(closeModal())}>Close</button>
         </div>
+      */}
       </Modal>
     </div>
   );

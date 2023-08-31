@@ -1,9 +1,7 @@
-import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { AiOutlineLoading3Quarters } from "react-icons/ai";
-import StatusIndicator from "react-status-indicator";
-import { RootStoreI, useAppDispatch } from "../Store";
-import { fetchData, runPipeline, checkServerStatus } from "../Slices/DataSlice";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
+import Button from "@mui/joy/Button";
 import storyNames from "./storynames.json";
 
 import "./StoryInput.scss";
@@ -22,28 +20,10 @@ const randomSelectFromArray = (arr: Array<any>, count: number) => {
 };
 
 const StoryInput = () => {
-  const { fetching, serverStatus } = useSelector(
-    (store: RootStoreI) => store.dataReducer
-  );
-
   const [searchString, setSearchString] = useState("");
-  const [storyInput, setStoryInput] = useState("");
-  const [remainingTime, setRemainingTime] = useState(0);
+  const navigate = useNavigate();
   const [displayingResults, setDisplayingResults] = useState<Array<string>>([]);
-  const appDispatchAction = useAppDispatch();
 
-  useEffect(() => {
-    if (serverStatus === 0 || serverStatus === 1) return;
-
-    const pointer = setInterval(
-      () =>
-        setRemainingTime(
-          parseInt((new Date().getTime() / 1000 - serverStatus).toString())
-        ),
-      100
-    );
-    return () => clearInterval(pointer);
-  }, [setRemainingTime, serverStatus]);
   useEffect(() => {
     const nextDisplayingResults =
       searchString === ""
@@ -62,16 +42,6 @@ const StoryInput = () => {
 
     setDisplayingResults(nextDisplayingResults);
   }, [searchString]);
-
-  /*
-  useEffect(() => {
-    appDispatchAction(checkServerStatus());
-    const serverStatusChecker = setInterval(() => {
-      appDispatchAction(checkServerStatus());
-    }, 10 * 1000);
-
-    return () => clearInterval(serverStatusChecker);
-  }, [appDispatchAction]);*/
 
   return (
     <div className="story--input--container">
@@ -97,72 +67,17 @@ const StoryInput = () => {
         </div>
 
         <div className="example--container--list">
-          {displayingResults.map((name, index) => (
-            <button
-              key={index}
-              onClick={() =>
-                appDispatchAction(fetchData(name.split(" ").join("-")))
-              }
+          {displayingResults.map((name) => (
+            <Button
+              key={name}
+              onClick={() => navigate(`${name.split(" ").join("-")}`)}
+              size="lg"
             >
               {name}
-            </button>
+            </Button>
           ))}
         </div>
-
-        {/**
-         * 
-         *         <div className="example--container--status">
-          <h2>Server status:</h2>
-          {serverStatus === 1 && <StatusIndicator Positive Pulse />}
-          {serverStatus > 1 && (
-            <React.Fragment>
-              <StatusIndicator Intermediary Pulse />
-              <span className="status--pending--msg">{`Last task had started for ${remainingTime}s`}</span>
-            </React.Fragment>
-          )}
-          {!serverStatus && <StatusIndicator Negative Pulse />}
-        </div>
-        <p>You can also paste a story to display NECE results</p>
-         */}
       </div>
-
-      {/**
-       * 
-       *       <textarea
-        className="story--input--textarea"
-        value={storyInput}
-        onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
-          setStoryInput(e.target.value)
-        }
-        onBlur={(e: React.FocusEvent<HTMLTextAreaElement>) => {
-          let input = e.target.value
-            .replaceAll("\n\n", " ")
-            .replaceAll("\n", " ")
-            .replaceAll("\r\r", " ")
-            .replaceAll("\n", " ")
-            .trim()
-            .replace(/ +(?= )/g, "")
-            .replace(/\[.*?\]/g, "")
-            .replaceAll(`"`, `'`);
-
-          setStoryInput(input);
-        }}
-      ></textarea>
-
-      {!fetching && (
-        <button
-          className="story--input--btn"
-          title="Server is down"
-          onClick={(e) => {
-            appDispatchAction(runPipeline(storyInput));
-          }}
-          disabled={serverStatus !== 1}
-        >
-          Test
-        </button>
-      )}
-      {fetching && <AiOutlineLoading3Quarters className="loader" />}
-       */}
     </div>
   );
 };

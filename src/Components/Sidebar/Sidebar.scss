@@ -1,0 +1,34 @@
+.menu--icon {
+  position: fixed;
+  left: 8px;
+  top: 8px;
+  cursor: pointer;
+  svg {
+    height: 40px;
+    width: 40px;
+    color: #319795;
+  }
+}
+
+.delete--icon {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  cursor: pointer;
+  svg {
+    height: 40px;
+    width: 40px;
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.input--container {
+  padding: 50px 20px 8px 20px;
+  background: linear-gradient(115.4deg, #d2fff4 3.64%, #ffffff 118.6%);
+}
+
+.ps-sidebar-container {
+  background: linear-gradient(115.4deg, #d2fff4 3.64%, #ffffff 118.6%);
+}
