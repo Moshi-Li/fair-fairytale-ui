@@ -22,19 +22,24 @@ export default function Report() {
   const appDispatchAction = useAppDispatch();
   const { storyId } = useParams();
   const navigate = useNavigate();
-  const { sourced } = useSelector((store: RootStoreI) => store.dataReducer);
+  const { sourced, error } = useSelector(
+    (store: RootStoreI) => store.dataReducer
+  );
   const [tabIndex, setTabIndex] = useState<number>(0);
 
   useEffect(() => {
     if (storyId) appDispatchAction(fetchData(storyId));
   }, [appDispatchAction, storyId]);
+  useEffect(() => {
+    if (error) navigate("/fair-fairytale-ui/404");
+  }, [error, navigate]);
 
   if (!sourced) return <Loader />;
   return (
     <div className={`report--content ${TabBackground[tabIndex.toString()]}`}>
       <h3
         onClick={() => {
-          navigate("/");
+          navigate("/fair-fairytale-ui");
         }}
         title="home"
       >

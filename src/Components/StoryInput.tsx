@@ -70,7 +70,9 @@ const StoryInput = () => {
           {displayingResults.map((name) => (
             <Button
               key={name}
-              onClick={() => navigate(`${name.split(" ").join("-")}`)}
+              onClick={() =>
+                navigate(`/fair-fairytale-ui/${name.split(" ").join("-")}`)
+              }
               size="lg"
             >
               {name}

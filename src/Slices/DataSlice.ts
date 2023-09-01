@@ -99,6 +99,7 @@ interface DataI extends RawDataI {
   sourced: boolean;
   fetching: boolean;
   serverStatus: number;
+  error: boolean;
 }
 
 export interface CharacterStatI {
@@ -118,6 +119,7 @@ const dataDefaultState: DataI = {
 
   sourced: false,
   fetching: false,
+  error: false,
   serverStatus: 0,
 };
 
@@ -225,6 +227,7 @@ export const dataSlice = createSlice({
       state.sourced = true;
     },
   },
+
   extraReducers: (builder) => {
     builder.addCase(fetchData.pending, (state, action) => {
       state.storyMeta = { counts: [], topEvents: {} };
@@ -259,10 +262,13 @@ export const dataSlice = createSlice({
       state.paragraph = paragraph;
       state.sourced = true;
       state.fetching = false;
+      state.error = false;
     });
+
     builder.addCase(fetchData.rejected, (state, action) => {
       state.fetching = false;
       state.sourced = false;
+      state.error = true;
       notificationStore.addNotification({
         message: "Request Failed, check console for more info",
         type: "danger",

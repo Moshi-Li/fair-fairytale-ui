@@ -60,7 +60,7 @@ export default function SideBar() {
             <MenuItem
               onClick={() => {
                 setToggled(false);
-                navigate(`/${name.split(" ").join("-")}`);
+                navigate(`/fair-fairytale-ui/${name.split(" ").join("-")}`);
               }}
               color="white"
               rootStyles={{

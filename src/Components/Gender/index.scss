@@ -24,7 +24,6 @@
     align-items: flex-start;
     height: 100%;
     text-align: left;
-    flex-wrap: wrap;
 
     .gender--content--left {
       width: 100%;
@@ -74,7 +73,8 @@
     .text--occurrence__male__primary__selected {
       padding: 0 5px;
       background-color: rgba($color: #0e547cb5, $alpha: 0.2);
-      border: 1px solid gold;
+      border: 2px solid gold;
+      font-weight: 600;
       cursor: pointer;
     }
     .text--occurrence__male__secondary {
@@ -90,7 +90,8 @@
     .text--occurrence__female__primary__selected {
       padding: 0 5px;
       background-color: rgba($color: #44a6ce, $alpha: 0.2);
-      border: 1px solid gold;
+      border: 2px solid gold;
+      font-weight: 600;
       cursor: pointer;
     }
     .text--occurrence__female__secondary {
@@ -106,7 +107,8 @@
     .text--occurrence__mix__primary__selected {
       padding: 0 5px;
       background-color: rgba($color: #357adf3b, $alpha: 0.2);
-      border: 1px solid gold;
+      border: 2px solid gold;
+      font-weight: 600;
       cursor: pointer;
     }
     .text--occurrence__mix__secondary {

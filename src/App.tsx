@@ -9,10 +9,11 @@ import "./App.scss";
 import StoryInput from "./Components/StoryInput";
 import Report from "./Components/Report";
 import SideBar from "./Components/Sidebar";
+import PageNotFound from "./Components/404";
 
 const router = createBrowserRouter([
   {
-    path: "/",
+    path: "/fair-fairytale-ui",
     element: (
       <>
         <SideBar />
@@ -21,7 +22,7 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: ":storyId",
+    path: "/fair-fairytale-ui/:storyId",
     element: (
       <>
         <SideBar />
@@ -29,6 +30,7 @@ const router = createBrowserRouter([
       </>
     ),
   },
+  { path: "/fair-fairytale-ui/404", element: <PageNotFound /> },
 ]);
 
 const chakraTheme = extendTheme({
