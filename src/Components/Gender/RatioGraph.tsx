@@ -8,6 +8,7 @@ const RatioGraph = () => {
     (store: RootStoreI) => store.dataReducer.storyMeta
   );
 
+  console.log(topEvents);
   const dataPack = useMemo<any[][]>(
     () =>
       Object.entries(topEvents)
@@ -33,7 +34,7 @@ const RatioGraph = () => {
                 }),
               textPosition: "outside",
               /*orientation: "h",*/
-              name: "Patient"
+              name: "Patient",
             },
             {
               y: events
@@ -50,7 +51,7 @@ const RatioGraph = () => {
                 }),
               textPosition: "outside",
               /*orientation: "h",*/
-              name: "Agent"
+              name: "Agent",
             },
           ];
         }),
@@ -92,7 +93,12 @@ const RatioGraph = () => {
   return (
     <React.Fragment>
       {layouts.map((item) => (
-        <div id={`plotly--mount--${item.title}`} className="ratio--graph"></div>
+        <div className="gender--table--container">
+          <div
+            id={`plotly--mount--${item.title}`}
+            className="ratio--graph"
+          ></div>
+        </div>
       ))}
     </React.Fragment>
   );

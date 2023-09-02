@@ -2,10 +2,10 @@
   border: 2px solid #a77dec;
   position: relative;
   border-top: none;
-  padding: 35px;
+
   height: 66vh;
   overflow-y: auto;
-
+  height: 85vh;
   background: white;
   .section--label {
     font-family: "Source Sans Pro";
@@ -22,9 +22,55 @@
     align-items: flex-start;
     height: 100%;
     text-align: left;
+    padding: 16px;
+    box-sizing: border-box;
+    gap: 50px;
 
     .character--content--left {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      .report--paragraph--container {
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        padding: 20px;
+        box-sizing: border-box;
+
+        .report--reactive--paragraph {
+          width: 100%;
+          box-sizing: border-box;
+          text-align: left;
+          line-height: 55px;
+          overflow-y: overlay;
+          scroll-behavior: smooth;
+
+          font-weight: 100;
+          font-size: 20px;
+          line-height: 32px;
+          color: #000000;
+          text-align: justify;
+
+          .text--occurrence__primary {
+            padding: 0 5px;
+            background-color: rgba($color: #a7a7a7, $alpha: 0.1);
+            cursor: pointer;
+          }
+
+          .text--occurrence__primary__selected {
+            padding: 0 5px;
+            border: 2px solid gold;
+            font-weight: 600;
+            background-color: rgba($color: #a7a7a7, $alpha: 0.2);
+            cursor: pointer;
+          }
+
+          .text--occurrence__secondary {
+            border: 1px solid #000000;
+          }
+        }
+      }
     }
 
     .character--list {
@@ -44,42 +90,6 @@
         border: 3px solid #000000;
       }
     }
-  }
-}
-
-.report--reactive--paragraph {
-  padding: 0px 45px 0px 13px;
-  width: 100%;
-  box-sizing: border-box;
-  text-align: left;
-  margin: 5px 0 10px;
-  line-height: 55px;
-  max-height: 50vh;
-  overflow-y: overlay;
-  scroll-behavior: smooth;
-
-  font-weight: 100;
-  font-size: 20px;
-  line-height: 32px;
-  color: #000000;
-  text-align: justify;
-
-  .text--occurrence__primary {
-    padding: 0 5px;
-    background-color: rgba($color: #a7a7a7, $alpha: 0.1);
-    cursor: pointer;
-  }
-
-  .text--occurrence__primary__selected {
-    padding: 0 5px;
-    border: 2px solid gold;
-    font-weight: 600;
-    background-color: rgba($color: #a7a7a7, $alpha: 0.2);
-    cursor: pointer;
-  }
-
-  .text--occurrence__secondary {
-    border: 1px solid #000000;
   }
 }
 

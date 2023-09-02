@@ -1,0 +1,9 @@
+.flex--section {
+  height: 100%;
+  display: flex;
+}
+.flex--section--item {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}

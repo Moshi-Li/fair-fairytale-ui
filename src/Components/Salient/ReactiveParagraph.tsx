@@ -112,7 +112,7 @@ const generateContent = (
           onDoubleClick={(e) => {
             openModal(`${textOccurrence.targetEventKey}`);
           }}
-          style={{ backgroundColor: '#48cfaf36' }}
+          style={{ backgroundColor: "#48cfaf36" }}
         >
           {paragraph.substring(
             textOccurrence.textStartIndex,
@@ -182,7 +182,9 @@ const ReactiveParagraph = ({ eventList }: { eventList: EventI[] }) => {
 
   return (
     <React.Fragment>
-      <p className="report--reactive--paragraph">{memoizedContent}</p>
+      <div className="report--paragraph--container">
+        <p className="report--reactive--paragraph">{memoizedContent}</p>
+      </div>
     </React.Fragment>
   );
 };

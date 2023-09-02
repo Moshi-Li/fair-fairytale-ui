@@ -1,3 +1,15 @@
 h3 {
   cursor: pointer;
 }
+
+.flex--section {
+  height: 100%;
+  display: flex;
+  min-height: 0;
+  .flex--section--item {
+    flex: 1;
+
+    /* <------------------- required */
+    overflow-y: auto;
+  }
+}

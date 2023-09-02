@@ -3,10 +3,11 @@
   position: relative;
 
   border-top: none;
-  padding: 35px;
+
   height: 66vh;
   overflow-y: auto;
 
+  height: 85vh;
   background: white;
   .section--label {
     font-family: "Source Sans Pro";
@@ -20,13 +21,93 @@
   .gender--content {
     display: flex;
     flex-direction: row;
-    width: 100%;
     align-items: flex-start;
-    height: 100%;
+    justify-content: center;
     text-align: left;
+    gap: 50px;
+
+    height: 85vh;
+    padding: 16px;
+    box-sizing: border-box;
 
     .gender--content--left {
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+
+      .report--paragraph--container {
+        height: 100%;
+        width: 100%;
+        overflow: auto;
+        padding: 20px;
+        box-sizing: border-box;
+
+        .report--reactive--paragraph {
+          width: 100%;
+          box-sizing: border-box;
+          text-align: left;
+          margin: 5px 0 10px 0;
+          line-height: 55px;
+
+          font-weight: 100;
+          font-size: 20px;
+          line-height: 32px;
+          color: #000000;
+          text-align: justify;
+
+          .text--occurrence__male__primary {
+            padding: 0 5px;
+            background-color: rgba($color: #0e547cb5, $alpha: 0.1);
+            cursor: pointer;
+          }
+          .text--occurrence__male__primary__selected {
+            padding: 0 5px;
+            background-color: rgba($color: #0e547cb5, $alpha: 0.2);
+            border: 2px solid gold;
+            font-weight: 600;
+            cursor: pointer;
+          }
+          .text--occurrence__male__secondary {
+            padding: 0 5px;
+            border: 1px solid #54b9e8;
+          }
+
+          .text--occurrence__female__primary {
+            padding: 0 5px;
+            background-color: rgba($color: #44a6ce, $alpha: 0.1);
+            cursor: pointer;
+          }
+          .text--occurrence__female__primary__selected {
+            padding: 0 5px;
+            background-color: rgba($color: #44a6ce, $alpha: 0.2);
+            border: 2px solid gold;
+            font-weight: 600;
+            cursor: pointer;
+          }
+          .text--occurrence__female__secondary {
+            padding: 0 5px;
+            border: 1px solid #54b9e8;
+          }
+
+          .text--occurrence__mix__primary {
+            padding: 0 5px;
+            background-color: rgba($color: #357adf3b, $alpha: 0.1);
+            cursor: pointer;
+          }
+          .text--occurrence__mix__primary__selected {
+            padding: 0 5px;
+            background-color: rgba($color: #357adf3b, $alpha: 0.2);
+            border: 2px solid gold;
+            font-weight: 600;
+            cursor: pointer;
+          }
+          .text--occurrence__mix__secondary {
+            padding: 0 5px;
+            border: 1px solid #54b9e8;
+          }
+        }
+      }
     }
   }
 
@@ -47,73 +128,24 @@
       border: 3px solid #000000;
     }
   }
+}
 
-  .report--reactive--paragraph {
-    padding: 0px 45px 0px 13px;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: left;
-    margin: 5px 0 10px 0;
-    line-height: 55px;
-    max-height: 50vh;
-    overflow-y: overlay;
-    scroll-behavior: smooth;
-
-    font-weight: 100;
-    font-size: 20px;
-    line-height: 32px;
-    color: #000000;
-    text-align: justify;
-
-    .text--occurrence__male__primary {
-      padding: 0 5px;
-      background-color: rgba($color: #0e547cb5, $alpha: 0.1);
-      cursor: pointer;
+@media screen and (max-width: 1024px) {
+  .gender--container {
+    padding: 6px;
+    .gender--content {
+      flex-wrap: wrap;
+      gap: 12px;
+      height: auto;
     }
-    .text--occurrence__male__primary__selected {
-      padding: 0 5px;
-      background-color: rgba($color: #0e547cb5, $alpha: 0.2);
-      border: 2px solid gold;
-      font-weight: 600;
-      cursor: pointer;
+    .directed--graph--gender {
+      height: 66vh;
     }
-    .text--occurrence__male__secondary {
-      padding: 0 5px;
-      border: 1px solid #54b9e8;
-    }
-
-    .text--occurrence__female__primary {
-      padding: 0 5px;
-      background-color: rgba($color: #44a6ce, $alpha: 0.1);
-      cursor: pointer;
-    }
-    .text--occurrence__female__primary__selected {
-      padding: 0 5px;
-      background-color: rgba($color: #44a6ce, $alpha: 0.2);
-      border: 2px solid gold;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .text--occurrence__female__secondary {
-      padding: 0 5px;
-      border: 1px solid #54b9e8;
-    }
-
-    .text--occurrence__mix__primary {
-      padding: 0 5px;
-      background-color: rgba($color: #357adf3b, $alpha: 0.1);
-      cursor: pointer;
-    }
-    .text--occurrence__mix__primary__selected {
-      padding: 0 5px;
-      background-color: rgba($color: #357adf3b, $alpha: 0.2);
-      border: 2px solid gold;
-      font-weight: 600;
-      cursor: pointer;
-    }
-    .text--occurrence__mix__secondary {
-      padding: 0 5px;
-      border: 1px solid #54b9e8;
+    .gender--stat {
+      justify-content: center;
+      .ratio--graph {
+        max-width: 300px;
+      }
     }
   }
 }
@@ -139,13 +171,15 @@
   flex-wrap: wrap;
   margin-top: 40px;
   justify-content: space-between;
+  gap: 6px;
 
   .gender--table--container {
     margin-top: 40px;
-    width: 50%;
+    width: 40%;
 
     min-height: 200px;
     max-height: 400px;
+    min-width: 350px;
     overflow-y: auto;
 
     .section--label {
@@ -189,6 +223,23 @@
   .ratio--graph {
     min-height: 300px;
     max-height: 600px;
+    width: 100%;
+  }
+}
+
+.gender--statistics {
+  width: 100%;
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-top: 32px;
+
+  justify-content: space-between;
+  .block {
+    background-color: white;
+    border: 1px solid rgba(0, 10, 20, 0.1);
+    padding: 6px;
+    max-width: 40%;
   }
 }
 

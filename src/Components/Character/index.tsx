@@ -75,7 +75,7 @@ const Character = () => {
   }, [selectedCharacterId, characterMeta]);
 
   return (
-    <div className="character--container">
+    <>
       <div className="character--content">
         <div className="character--content--left">
           <p className="section--label">Select character</p>
@@ -113,12 +113,16 @@ const Character = () => {
             })}
           </div>
           <p className="section--label">Story</p>
-          <Paragraph
-            eventList={selectedEvents}
-            color={
-              selectedCharacterId ? colorScheme[selectedCharacterId] : "#a7a7a7"
-            }
-          />
+          <div className={"report--paragraph--container"}>
+            <Paragraph
+              eventList={selectedEvents}
+              color={
+                selectedCharacterId
+                  ? colorScheme[selectedCharacterId]
+                  : "#a7a7a7"
+              }
+            />
+          </div>
         </div>
         <Graph
           color={
@@ -134,7 +138,7 @@ const Character = () => {
       </div>
 
       <ScrollDownBtn></ScrollDownBtn>
-    </div>
+    </>
   );
 };
 

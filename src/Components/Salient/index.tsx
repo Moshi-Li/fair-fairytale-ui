@@ -2,6 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { RootStoreI } from "../../Store";
 
+import { FlexBox, FlexItem } from "@/Components/Utils/FlexBox";
 import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
 
@@ -13,11 +14,9 @@ const Salient = () => {
   );
 
   return (
-    <div className="salient-container">
-      <div className="salient-content">
-        <Paragraph eventList={eventMajorList} />
-        <ReactiveGraph eventList={eventMajorList}></ReactiveGraph>
-      </div>
+    <div className="salient-content">
+      <Paragraph eventList={eventMajorList} />
+      <ReactiveGraph eventList={eventMajorList}></ReactiveGraph>
     </div>
   );
 };

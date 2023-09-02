@@ -41,7 +41,7 @@ export default function SideBar() {
         onBackdropClick={() => setToggled(false)}
         toggled={toggled}
         breakPoint="always"
-        width="400px"
+        width={window.innerWidth < 500 ? "100%" : "500px"}
         collapsedWidth={"0px"}
         rootStyles={{
           background:

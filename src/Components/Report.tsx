@@ -7,7 +7,7 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Salient from "./Salient";
 import Gender from "./Gender";
 import Character from "./Character";
-import Loader from "./Loader";
+import Loader from "./Utils/Loader";
 
 import { RootStoreI, useAppDispatch } from "../Store";
 import "./Report.scss";
@@ -30,9 +30,12 @@ export default function Report() {
   useEffect(() => {
     if (storyId) appDispatchAction(fetchData(storyId));
   }, [appDispatchAction, storyId]);
+
   useEffect(() => {
     if (error) navigate("/fair-fairytale-ui/404");
   }, [error, navigate]);
+
+  console.log(tabIndex);
 
   if (!sourced) return <Loader />;
   return (
@@ -54,13 +57,13 @@ export default function Report() {
           <Tab>Gender</Tab>
           <Tab>Character</Tab>
         </TabList>
-        <TabPanel>
+        <TabPanel className={tabIndex === 0 ? "salient-container" : ""}>
           <Salient />
         </TabPanel>
-        <TabPanel>
+        <TabPanel className={tabIndex === 1 ? "gender--container" : ""}>
           <Gender></Gender>
         </TabPanel>
-        <TabPanel>
+        <TabPanel className={tabIndex === 2 ? "character--container" : ""}>
           <Character />
         </TabPanel>
       </Tabs>

@@ -7,7 +7,7 @@ import { setSelectedEventVerbStart } from "../../Slices/TabSlice";
 
 import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
-import Stat from "./Stat";
+import StatisticTable from "./StatisticTable";
 import RatioGraph from "./RatioGraph";
 import { ScrollDownBtn } from "../Utility";
 
@@ -51,7 +51,7 @@ const Gender = () => {
   }, [gender, eventMajorList]);
 
   return (
-    <div className="gender--container">
+    <>
       <div className="gender--content">
         <div className="gender--content--left">
           <p className="section--label">Select gender</p>
@@ -91,18 +91,25 @@ const Gender = () => {
             </button>
           </div>
           <p className="section--label">Story</p>
-          <Paragraph gender={gender} eventList={selectedEvents} />
+
+          <div className={"report--paragraph--container"}>
+            <Paragraph gender={gender} eventList={selectedEvents} />
+          </div>
         </div>
         <ReactiveGraph eventList={selectedEvents}></ReactiveGraph>
       </div>
 
-      <div className="gender--stat">
-        <Stat></Stat>
-        <RatioGraph></RatioGraph>
-      </div>
-
-      {Object.keys(topEvents).length !== 0 && <ScrollDownBtn></ScrollDownBtn>}
-    </div>
+      {Object.keys(topEvents).length !== 0 && (
+        <>
+          <div className="gender--statistics">
+            {/*        <Stat></Stat>
+      <RatioGraph></RatioGraph> */}
+            <StatisticTable />
+          </div>
+          <ScrollDownBtn></ScrollDownBtn>
+        </>
+      )}
+    </>
   );
 };
 

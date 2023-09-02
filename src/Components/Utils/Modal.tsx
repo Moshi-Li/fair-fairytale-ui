@@ -1,9 +1,6 @@
-import React from "react";
-
 import { useSelector, useDispatch } from "react-redux";
 import Modal from "react-modal";
-import { closeModal } from "../Slices/ModalSlice";
-import { RootStoreI } from "../Store";
+import { RootStoreI } from "@/Store";
 
 import "./Modal.scss";
 
