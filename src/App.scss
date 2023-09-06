@@ -37,6 +37,7 @@
     line-height: 32px;
     color: #000000;
     background-color: transparent;
+    width: 100%;
 
     border-radius: 10px;
 
@@ -103,4 +104,41 @@
       }
     }
   }
+}
+
+@media screen and (max-width: 1024px) {
+  .report--content {
+    padding: 0px 20px 24px 20px;
+    align-items: center;
+    .tab--container {
+      font-size: 12px;
+    }
+    h3 {
+      width: 50px;
+      font-size: 16px;
+      margin-top: 6px;
+      margin-bottom: 6px;
+      text-align: center;
+    }
+  }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
 }

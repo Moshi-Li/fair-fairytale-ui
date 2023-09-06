@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 import { Table, Typography, Sheet } from "@mui/joy";
 import { RootStoreI } from "../../Store";
@@ -6,10 +6,11 @@ import { RootStoreI } from "../../Store";
 export default function StatisticTable() {
   const { storyMeta } = useSelector((store: RootStoreI) => store.dataReducer);
   const { topEvents } = storyMeta;
-
+  const keys = ["male", "female", "unbiased", ""];
   return (
     <>
-      {Object.keys(topEvents).map((key) => {
+      {keys.map((key) => {
+        if (key === "") return <div className={"block empty"}></div>;
         if (topEvents[key].length === 0) return null;
 
         return (

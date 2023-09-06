@@ -32,3 +32,17 @@
 .ps-sidebar-container {
   background: linear-gradient(115.4deg, #d2fff4 3.64%, #ffffff 118.6%);
 }
+
+@media screen and (max-width: 1024px) {
+  .menu--icon {
+    position: fixed;
+    left: 4px;
+    top: 4px;
+    cursor: pointer;
+    svg {
+      height: 20px;
+      width: 20px;
+      color: #319795;
+    }
+  }
+}

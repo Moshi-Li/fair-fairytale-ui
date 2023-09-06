@@ -79,7 +79,11 @@ const RatioGraph = () => {
     Plotly.newPlot("plotly--mount", data, layout, { responsive: true }); //
   });
 
-  return <div id="plotly--mount" className="ratio--graph"></div>;
+  return (
+    <div className={"block"}>
+      <div id="plotly--mount" className="ratio--graph"></div>
+    </div>
+  );
 };
 
 export default RatioGraph;

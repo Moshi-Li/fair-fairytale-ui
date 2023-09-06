@@ -6,11 +6,10 @@ import { EventI, CharacterStatI } from "../../Slices/DataSlice";
 
 import Paragraph from "./ReactiveParagraph";
 import Graph from "./Graph";
-import Stat from "./Stat";
-import { ScrollDownBtn } from "../Utility";
+import RatioGraph from "./RatioGraph";
+import StatisticTable from "./StatisticTable";
 
 import "./index.scss";
-import RatioGraph from "./RatioGraph";
 
 const RandomColor = () =>
   "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0") + "e6";
@@ -132,12 +131,10 @@ const Character = () => {
         ></Graph>
       </div>
 
-      <div className="character--stat">
-        <Stat setSelectedCharacterId={setSelectedCharacterId}></Stat>
+      <div className="character--statistics">
+        <StatisticTable />
         <RatioGraph></RatioGraph>
       </div>
-
-      <ScrollDownBtn></ScrollDownBtn>
     </>
   );
 };

@@ -1,12 +1,8 @@
 .gender--container {
   border: 2px solid #54b9e8;
   position: relative;
-
   border-top: none;
-
-  height: 66vh;
   overflow-y: auto;
-
   height: 85vh;
   background: white;
   .section--label {
@@ -25,7 +21,6 @@
     justify-content: center;
     text-align: left;
     gap: 50px;
-
     height: 85vh;
     padding: 16px;
     box-sizing: border-box;
@@ -36,22 +31,41 @@
       flex-direction: column;
       height: 100%;
 
+      .filter--container {
+        padding: 6px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 6px;
+
+        .filter--btn {
+          background: #ffffff;
+          border: 3px solid #999999;
+          border-radius: 4px;
+          min-width: 144px;
+          height: 32px;
+          cursor: pointer;
+          margin-right: 6px;
+        }
+        .filter-btn__selected {
+          border: 3px solid #000000;
+        }
+      }
+
       .report--paragraph--container {
         height: 100%;
-        width: 100%;
         overflow: auto;
-        padding: 20px;
         box-sizing: border-box;
 
         .report--reactive--paragraph {
           width: 100%;
           box-sizing: border-box;
           text-align: left;
-          margin: 5px 0 10px 0;
+          margin: 0px;
           line-height: 55px;
 
           font-weight: 100;
-          font-size: 20px;
+          font-size: 24px;
           line-height: 32px;
           color: #000000;
           text-align: justify;
@@ -109,58 +123,81 @@
         }
       }
     }
+
+    .directed--graph--gender {
+      width: 100%;
+      height: 100%;
+      border: 2px solid #54b9e8;
+
+      background-color: white;
+      box-sizing: border-box;
+
+      .selected {
+        border-width: 4px;
+        border-color: gold;
+        color: black;
+      }
+    }
   }
 
-  .filter--container {
+  .gender--statistics {
     width: 100%;
-    padding: 6px;
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+    margin-top: 32px;
+    padding: 24px;
+    box-sizing: border-box;
+    justify-content: space-around;
 
-    .filter--btn {
-      background: #ffffff;
-      border: 3px solid #999999;
-      border-radius: 4px;
-      min-width: 144px;
-      height: 32px;
-      cursor: pointer;
-      margin-right: 6px;
-    }
-    .filter-btn__selected {
-      border: 3px solid #000000;
+    .block {
+      background-color: white;
+      border: 1px solid rgba(0, 10, 20, 0.1);
+      padding: 6px;
+      width: 45%;
+      min-width: 400px;
+
+      &.empty {
+        border: none;
+      }
     }
   }
 }
 
 @media screen and (max-width: 1024px) {
   .gender--container {
-    padding: 6px;
     .gender--content {
       flex-wrap: wrap;
-      gap: 12px;
+      padding-bottom: 16px;
       height: auto;
-    }
-    .directed--graph--gender {
-      height: 66vh;
-    }
-    .gender--stat {
-      justify-content: center;
-      .ratio--graph {
-        max-width: 300px;
+      padding: 24px;
+
+      .gender--content--left {
+        height: 85vh;
+        .filter--container {
+          .filter--btn {
+            min-width: 50px;
+          }
+        }
+
+        .report--paragraph--container {
+          .report--reactive--paragraph {
+            font-size: 16px;
+            line-height: 24px;
+          }
+        }
+      }
+      .directed--graph--gender {
+        height: 85vh;
       }
     }
-  }
-}
 
-.directed--graph--gender {
-  width: 100%;
-  height: 100%;
-  border: 2px solid #54b9e8;
-
-  background-color: white;
-  box-sizing: border-box;
-
-  .selected {
-    border-width: 1px;
-    border-color: gold;
+    .gender--statistics {
+      .block {
+        width: 100%;
+        min-width: 0;
+      }
+    }
   }
 }
 
@@ -224,22 +261,6 @@
     min-height: 300px;
     max-height: 600px;
     width: 100%;
-  }
-}
-
-.gender--statistics {
-  width: 100%;
-  display: flex;
-  gap: 32px;
-  flex-wrap: wrap;
-  margin-top: 32px;
-
-  justify-content: space-between;
-  .block {
-    background-color: white;
-    border: 1px solid rgba(0, 10, 20, 0.1);
-    padding: 6px;
-    max-width: 40%;
   }
 }
 

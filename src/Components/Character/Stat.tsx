@@ -117,6 +117,7 @@ const Stat = ({
     (store: RootStoreI) => store.dataReducer
   );
 
+  console.log(data);
   const headerInfo = [
     { accessor: "name", header: "Name" },
     { accessor: "gender", header: "Gender" },

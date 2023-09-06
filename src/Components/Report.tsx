@@ -35,8 +35,6 @@ export default function Report() {
     if (error) navigate("/fair-fairytale-ui/404");
   }, [error, navigate]);
 
-  console.log(tabIndex);
-
   if (!sourced) return <Loader />;
   return (
     <div className={`report--content ${TabBackground[tabIndex.toString()]}`}>
@@ -46,7 +44,7 @@ export default function Report() {
         }}
         title="home"
       >
-        NECE: Narrative Event Chain Extraction Toolkit
+        NECE
       </h3>
       <Tabs
         className={"tab--container"}

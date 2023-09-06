@@ -73,7 +73,7 @@ const StoryInput = () => {
               onClick={() =>
                 navigate(`/fair-fairytale-ui/${name.split(" ").join("-")}`)
               }
-              size="lg"
+              size={window.innerWidth > 1024 ? "lg" : "sm"}
             >
               {name}
             </Button>

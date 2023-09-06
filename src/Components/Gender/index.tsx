@@ -9,7 +9,6 @@ import Paragraph from "./ReactiveParagraph";
 import ReactiveGraph from "./Graph";
 import StatisticTable from "./StatisticTable";
 import RatioGraph from "./RatioGraph";
-import { ScrollDownBtn } from "../Utility";
 
 import "./index.scss";
 
@@ -106,7 +105,6 @@ const Gender = () => {
       <RatioGraph></RatioGraph> */}
             <StatisticTable />
           </div>
-          <ScrollDownBtn></ScrollDownBtn>
         </>
       )}
     </>

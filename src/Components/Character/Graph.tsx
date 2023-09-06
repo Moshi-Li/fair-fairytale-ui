@@ -143,9 +143,6 @@ const GraphLegend = () => {
   );
 };
 
-const onInit = (reactFlowInstance: any) =>
-  console.log("flow loaded:", reactFlowInstance);
-
 const ReactiveGraph = ({
   eventList,
   color,
@@ -213,7 +210,6 @@ const ReactiveGraph = ({
         edges={edges}
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
-        onInit={onInit}
         onConnect={onConnect}
         connectionLineType={ConnectionLineType.Straight}
         fitView
